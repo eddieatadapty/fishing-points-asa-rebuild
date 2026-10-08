@@ -281,7 +281,6 @@ a{color:inherit}
 .s-fa:not(.s-tidev) .s-tide,.s-fa.s-tidev .s-act{display:none!important}
 .s-fhd{display:flex;align-items:flex-start;justify-content:space-between;padding:56px 18px 0;flex:none}
 .s-ftt{font:700 29px/1.1 var(--b-font);margin:0;letter-spacing:-.3px;white-space:nowrap}
-.s-ftt.s-long{font-size:20px;padding-top:6px}
 .s-floc{display:flex;align-items:center;gap:5px;font:600 14px var(--b-font);margin-top:4px}
 .s-floc svg{width:13px;height:13px}
 .s-floc small{font-weight:400;opacity:.75;margin-left:4px}
@@ -762,8 +761,8 @@ html.embed .phone{box-shadow:none}
  "app": "Fishing Points",
  "liveUrl": "https://eddieatadapty.github.io/fishing-points-asa-rebuild/",
  "asaUrl": "https://asa.adapty.io/fishbrain",
- "langs": [["en","EN","English"],["es","ES","Spanish"]],
- "langNote": "Spanish screens use your Spain App Store prices (19,99 € a year, 3,99 € a month) and your own Spanish Premium table and reviews from fishingpoints.app/es; the rest of the Spanish is our translation. The earlier audit ran in English and Brazilian Portuguese, so there were no Spanish strings to reuse.",
+ "langs": [["en","EN","English"]],
+ "langNote": "English only, with your published US App Store prices.",
  "kw": {
   "a": {"q": "fishbrain", "short": "Fishbrain", "who": "Someone comparing fishing apps who searched another app by name. Ready to switch, and wants to see what Fishing Points does well."},
   "b": {"q": "tide charts", "short": "Tides", "who": "Someone who wants tide times for their spot today. A utility search, with little intent to pay."}
@@ -922,7 +921,7 @@ html.embed .phone{box-shadow:none}
 
 <div class="foot">
   <div class="wrap">
-    Impact ranges are Adapty’s expected effect from teardowns and A/B tests across subscription apps, not measured lift for Fishing Points; they overlap, so they don’t add up. Every price, rating, review and feature line here and in the prototype comes from Fishing Points’ own US and Spanish App Store listings (8 October 2026), fishingpoints.app (the Premium page and the Tides and Solunar pages, in English and Spanish) and your iOS onboarding as recorded by ScreensDesign and rebuilt in our earlier audit. The App Store ad screenshots are cut from your App Store screenshots, with our captions; the tide, moon and map images are fishingpoints.app renders, and Tampa, the 98 and the tide times are the example data in those renders. Apple Ads keywords are the ones we saw running for Fishing Points; the 77.8% share of voice comes from Adapty’s public Fishbrain research at asa.adapty.io/fishbrain. No new products are needed: every plan and trial shown (Yearly $49.99 and Monthly $9.99, each with 7 free days) is on sale today, and Basic ($29.99) and Advanced ($49.99) Premium are left out because their contents appear on no screen or page. Spanish prices come from your Spain storefront: 19,99 € a year, and 3,99 € read as the monthly plan because it matches the US 5:1 ratio (the listing does not show periods); we assume the Spanish monthly plan carries the same 7 free days. Light mode only: we have no dark-mode frames of your app, so there is no Dark switch.
+    Impact ranges are Adapty’s expected effect from teardowns and A/B tests across subscription apps, not measured lift for Fishing Points; they overlap, so they don’t add up. Every price, rating, review and feature line here and in the prototype comes from Fishing Points’ own US App Store listing (8 October 2026), fishingpoints.app (the Premium page and the Tides and Solunar pages) and your iOS onboarding as recorded by ScreensDesign and rebuilt in our earlier audit. The App Store ad screenshots are cut from your App Store screenshots, with our captions; the tide, moon and map images are fishingpoints.app renders, and Tampa, the 98 and the tide times are the example data in those renders. Apple Ads keywords are the ones we saw running for Fishing Points; the 77.8% share of voice comes from Adapty’s public Fishbrain research at asa.adapty.io/fishbrain. No new products are needed: every plan and trial shown (Yearly $49.99 and Monthly $9.99, each with 7 free days) is on sale today, and Basic ($29.99) and Advanced ($49.99) Premium are left out because their contents appear on no screen or page. Light mode only: we have no dark-mode frames of your app, so there is no Dark switch.
   </div>
 </div>
 </div><!-- /view-over -->
@@ -1210,8 +1209,7 @@ html.embed .phone{box-shadow:none}
 <script>
 /* ================= COPY (EDIT): phone-screen copy, one entry per language in META.langs order =================
    data-t="key" sets textContent, data-th="key" sets innerHTML; {tokens} are filled by t(key,{...}).
-   {yr} {mo} {yrmo} {save} are that storefront's prices (PRICE below). Spanish is our translation except
-   where fishingpoints.app/es has their own words (the Premium table, the reviews, the proof lines). */
+   {yr} {mo} {yrmo} {save} are the US App Store prices (PRICE below). */
 var META = JSON.parse(document.getElementById('meta').textContent);
 var LANGS = META.langs.map(function(l){ return l[0]; });
 function langName(c){ return (META.langs.filter(function(l){ return l[0]===c; })[0]||[c,c,c])[2]; }
@@ -1235,162 +1233,161 @@ function langName(c){ return (META.langs.filter(function(l){ return l[0]===c; })
   var segs=function(attr){ return META.langs.map(function(l,i){ return '<button '+attr+'="'+l[0]+'"'+(i?'':' class="on"')+'>'+l[1]+'</button>'; }).join(''); };
   document.querySelectorAll('.seg[data-hseg=lang]').forEach(function(s){ s.innerHTML=segs('data-hlang'); });
   if(el('segLang')) el('segLang').innerHTML=segs('data-lang');
+  if(META.langs.length<2) document.querySelectorAll('.seg[data-hseg=lang],#segLang').forEach(function(s){ s.remove(); });  /* one language: no switch */
 })();
-/* each storefront's published In-App Purchase prices: US listing and Spain listing, 8 October 2026 */
-var PRICE = {en:{yr:'$49.99',mo:'$9.99',yrmo:'$4.17',save:'58%'}, es:{yr:'19,99 €',mo:'3,99 €',yrmo:'1,67 €',save:'58 %'}};
+/* published In-App Purchase prices on the US App Store listing, 8 October 2026 */
+var PRICE = {en:{yr:'$49.99',mo:'$9.99',yrmo:'$4.17',save:'58%'}};
 var T = {
- 'as.cancel':["Cancel","Cancelar"],
- 'as.ad':   ["Ad","Anuncio"],
- 'as.get':  ["Get","Obtener"],
- 'as.open': ["Open","Abrir"],
- 'as.name': ["Fishing Points: Map & Forecast","Fishing Points: Pesca Mejor"],
- 'as.sub':  ["Fish Spots, Tides & Best Times","Mapas, Mareas & Tiempo"],
- 'as.cnt':  ["31K","2,2 mil"],
- 'as.a1':   ["Fish activity forecasts","Previsión de actividad de los peces"],
- 'as.a2':   ["Worldwide nautical charts","Cartas náuticas de todo el mundo"],
- 'as.a3':   ["Tides for any spot","Mareas en cualquier lugar"],
- 'as.b1':   ["Tide charts for your spot","Mareas para tu lugar"],
- 'as.b2':   ["Daily highs and lows","Pleamares y bajamares diarias"],
- 'as.b3':   ["Sun and moon times","Horas del sol y la luna"],
- 'wl.h':    ["Welcome to<br>Fishing Points!","¡Bienvenido a<br>Fishing Points!"],
- 'wl.s':    ["Your new ultimate tool to fish better -<br>everywhere and anytime","Tu nueva herramienta definitiva para pescar mejor, en cualquier lugar y en cualquier momento"],
- 'wl.legal':["By using this application, you agree to our <a>Terms of Use</a> &amp;&nbsp;<a>Privacy Policy</a>","Al usar esta aplicación, aceptas nuestros <a>Términos de uso</a> y la <a>Política de privacidad</a>"],
- 'wl.cta':  ["Continue","Continuar"],
- 'ty.h':    ["What type of fisherman<br>are you?","¿Qué tipo de pescador<br>eres?"],
- 'ty.salt': ["Saltwater","Agua salada"],
- 'ty.fresh':["Freshwater","Agua dulce"],
- 'ty.both': ["Both","Ambos"],
- 'ty.not':  ["Not a fisherman","No soy pescador"],
- 'fc.h':    ["Which forecasts interest<br>you most?","¿Qué previsiones te<br>interesan más?"],
- 'fc.sub':  ["You can select multiple answers","Puedes elegir varias respuestas"],
- 'cont':    ["Continue","Continuar"],
- 'more':    ["+{n} more","+{n}"],
- 'ld.t':    ["Preparing fishing maps...","Preparando mapas de pesca..."],
- 'ld.salt': ["Saltwater spots","Lugares de agua salada"],
- 'ld.fresh':["Freshwater spots","Lugares de agua dulce"],
- 'ld.both': ["Saltwater & freshwater spots","Lugares de agua salada y dulce"],
- 'ld.any':  ["Fishing maps for your area","Mapas de pesca de tu zona"],
- 'ld.fc':   ["{l} forecasts","Previsiones: {l}"],
- 'ld.fc0':  ["Today’s forecasts","Previsiones de hoy"],
- 'ld.tide': ["Nearest of 10,000+ tide stations","La estación mareográfica más cercana"],
- 'ld.map':  ["Map tools","Herramientas de mapa"],
- 'po.hw':   ["Your {w} toolkit","Tu kit para {w}"],
- 'po.h0':   ["Your fishing toolkit","Tu kit de pesca"],
- 'po.pick': ["{n} picks","{n} elecciones"],
- 'po.pick1':["1 pick","1 elección"],
- 'po.lab':  ["You picked","Elegiste"],
- 'fa.t':    ["Fish activity","Actividad de los peces"],
- 'fa.ex':   ["example spot","lugar de ejemplo"],
- 'fa.st':   ["Very high fish activity","Actividad de los peces muy alta"],
- 'td.t':    ["Tides","Mareas"],
- 'td.next': ["Next high tide","Próxima pleamar"],
- 'td.now':  ["Tide right now","Marea ahora"],
- 'td.rise': ["Rising","Subiendo"],
- 'td.cur':  ["Tidal current","Corriente"],
- 'pv.h':    ["Today is free.","Hoy es gratis."],
- 'pv.s':    ["Tomorrow, the weekend and the next 3 months come with Premium.","Mañana, el fin de semana y los próximos 3 meses vienen con Premium."],
- 'pv.c1':   ["Your picks","Tus elecciones"],
- 'pv.c2':   ["Free","Gratis"],
- 'pv.cta':  ["See Premium","Ver Premium"],
- 'pw.back': ["Back","Atrás"],
- 'pw.restore':["Restore","Restaurar"],
- 'pw.h':    ["Unlock Fishing Points","Desbloquea Fishing Points"],
- 'pw.tri':  ["7-Day Free Trial","7 días gratis"],
- 'pw.cm':   ["Catch More Fish","Pesca más peces"],
- 'pw.sub':  ["Know exactly when fish are most active, up to 3 months ahead for {trip}.","Sabe exactamente cuándo están más activos los peces, hasta 3 meses antes, para {trip}."],
- 'pw.trip': ["your {w} trips","tus salidas de pesca en {w}"],
- 'pw.trip0':["your fishing trips","tus salidas de pesca"],
- 'sl.1':    ["Tides 3 months ahead","Mareas a 3 meses vista"],
- 'sl.1s':   ["High and low tides for your spot, every day, up to 3 months ahead.","Pleamares y bajamares de tu lugar, cada día, hasta 3 meses antes."],
- 'sl.2':    ["Sun and moon, every day","Sol y luna, cada día"],
- 'sl.2s':   ["Moonrise, moonset and moon phases next to your tides.","Salida y puesta de la luna y fases lunares junto a tus mareas."],
- 'sl.3':    ["Know when fish are most active","Sabe cuándo están más activos los peces"],
- 'sl.3s':   ["Fish activity from solunar theory, tides and other factors.","Actividad de los peces según la teoría solunar, las mareas y otros factores."],
- 'pw.rate': ["4.7 · 230K+ ratings","4,7 · más de 230 000 reseñas"],
- 'pw.dl':   ["12+ million downloads on iOS and Android","12+ millones de descargas en iOS y Android"],
- 'pw.ton':  ["Free Trial Enabled","Prueba gratis activada"],
- 'pw.toff': ["Not sure? Enable Free Trial.","¿No lo tienes claro? Activa la prueba gratis."],
- 'pw.off':  ["{save} OFF","{save} DE DESCUENTO"],
- 'pw.yr':   ["Yearly","Anual"],
- 'pw.yrt':  ["7 days free, then {yr}/year","7 días gratis, luego {yr}/año"],
- 'pw.yrn':  ["{yr}/year","{yr}/año"],
- 'pw.yrpm': ["{yrmo}/month","{yrmo}/mes"],
- 'pw.mo':   ["Monthly","Mensual"],
- 'pw.mot':  ["7 days free, then {mo}/month","7 días gratis, luego {mo}/mes"],
- 'pw.mon':  ["{mo}/month","{mo}/mes"],
- 'pw.mopm': ["{mo}/month","{mo}/mes"],
- 'pw.ctat': ["Try free and subscribe","Prueba gratis y suscríbete"],
- 'pw.ctan': ["Subscribe","Suscribirse"],
- 'pw.trustt':["No payment now · ","Nada que pagar ahora · "],
- 'pw.trust':["Cancel anytime in Settings","Cancela cuando quieras en Ajustes"],
- 'terms':   ["Terms of Use","Términos de uso"],
- 'privacy': ["Privacy Policy","Política de privacidad"],
- 'of.h':    ["Not ready for a<br>full year?","¿Aún no quieres<br>un año entero?"],
- 'of.t':    ["Try Premium free for 7 days","Prueba Premium gratis 7 días"],
- 'of.p':    ["Then {mo}/month. No commitment.","Luego {mo}/mes. Sin compromiso."],
- 'of.d0':   ["Today","Hoy"],
- 'of.d7':   ["Day 7","Día 7"],
- 'of.d7s':  ["Monthly plan starts at {mo}/month","Empieza el plan mensual: {mo}/mes"],
- 'of.da':   ["Anytime","Cuando quieras"],
- 'of.full': ["Full Premium: ","Premium completo: "],
- 'of.rv':   ["“An excellent tool! I’ve been using it since 2018 and have the Premium version. No regrets at all, it’s worth every penny.”","“¡Una herramienta excelente! La uso desde 2018 y tengo la versión Premium. No me arrepiento en absoluto, vale cada centavo.”"],
- 'of.rvc':  ["Germany","Alemania"],
- 'of.cta':  ["Start my free week","Empezar mi semana gratis"],
- 'of.free': ["Continue with the free version","Seguir con la versión gratis"],
- 'ac.h':    ["Sign in to<br>Fishing Points","Inicia sesión en<br>Fishing Points"],
- 'ac.ok':   ["You’re all set. Your purchase was successful.","Todo listo. Tu compra se ha completado."],
- 'ac.free': ["Free version: today’s forecasts and up to 5 saved locations.","Versión gratis: previsiones de hoy y hasta 5 ubicaciones guardadas."],
- 'ac.p':    ["Log in or create Fishing Points account to never lose your saved fishing spots and catches.","Inicia sesión o crea una cuenta de Fishing Points para no perder nunca tus lugares de pesca y capturas guardados."],
- 'ac.ap':   ["Sign in with Apple","Iniciar sesión con Apple"],
- 'ac.go':   ["Sign in with Google","Iniciar sesión con Google"],
- 'ac.fb':   ["Sign in with Facebook","Iniciar sesión con Facebook"],
- 'ac.em':   ["Sign in with email","Iniciar sesión con correo"],
- 'ac.nn':   ["Not now","Ahora no"],
- 'ac.lg':   ["By continuing, you are indicating that you accept our <a>Terms of Service</a> and <a>Privacy Policy</a>.","Al continuar, aceptas nuestros <a>Términos del servicio</a> y la <a>Política de privacidad</a>."]
+ 'as.cancel':["Cancel"],
+ 'as.ad':   ["Ad"],
+ 'as.get':  ["Get"],
+ 'as.open': ["Open"],
+ 'as.name': ["Fishing Points: Map & Forecast"],
+ 'as.sub':  ["Fish Spots, Tides & Best Times"],
+ 'as.cnt':  ["31K"],
+ 'as.a1':   ["Fish activity forecasts"],
+ 'as.a2':   ["Worldwide nautical charts"],
+ 'as.a3':   ["Tides for any spot"],
+ 'as.b1':   ["Tide charts for your spot"],
+ 'as.b2':   ["Daily highs and lows"],
+ 'as.b3':   ["Sun and moon times"],
+ 'wl.h':    ["Welcome to<br>Fishing Points!"],
+ 'wl.s':    ["Your new ultimate tool to fish better -<br>everywhere and anytime"],
+ 'wl.legal':["By using this application, you agree to our <a>Terms of Use</a> &amp;&nbsp;<a>Privacy Policy</a>"],
+ 'wl.cta':  ["Continue"],
+ 'ty.h':    ["What type of fisherman<br>are you?"],
+ 'ty.salt': ["Saltwater"],
+ 'ty.fresh':["Freshwater"],
+ 'ty.both': ["Both"],
+ 'ty.not':  ["Not a fisherman"],
+ 'fc.h':    ["Which forecasts interest<br>you most?"],
+ 'fc.sub':  ["You can select multiple answers"],
+ 'cont':    ["Continue"],
+ 'more':    ["+{n} more"],
+ 'ld.t':    ["Preparing fishing maps..."],
+ 'ld.salt': ["Saltwater spots"],
+ 'ld.fresh':["Freshwater spots"],
+ 'ld.both': ["Saltwater & freshwater spots"],
+ 'ld.any':  ["Fishing maps for your area"],
+ 'ld.fc':   ["{l} forecasts"],
+ 'ld.fc0':  ["Today’s forecasts"],
+ 'ld.tide': ["Nearest of 10,000+ tide stations"],
+ 'ld.map':  ["Map tools"],
+ 'po.hw':   ["Your {w} toolkit"],
+ 'po.h0':   ["Your fishing toolkit"],
+ 'po.pick': ["{n} picks"],
+ 'po.pick1':["1 pick"],
+ 'po.lab':  ["You picked"],
+ 'fa.t':    ["Fish activity"],
+ 'fa.ex':   ["example spot"],
+ 'fa.st':   ["Very high fish activity"],
+ 'td.t':    ["Tides"],
+ 'td.next': ["Next high tide"],
+ 'td.now':  ["Tide right now"],
+ 'td.rise': ["Rising"],
+ 'td.cur':  ["Tidal current"],
+ 'pv.h':    ["Today is free."],
+ 'pv.s':    ["Tomorrow, the weekend and the next 3 months come with Premium."],
+ 'pv.c1':   ["Your picks"],
+ 'pv.c2':   ["Free"],
+ 'pv.cta':  ["See Premium"],
+ 'pw.back': ["Back"],
+ 'pw.restore':["Restore"],
+ 'pw.h':    ["Unlock Fishing Points"],
+ 'pw.tri':  ["7-Day Free Trial"],
+ 'pw.cm':   ["Catch More Fish"],
+ 'pw.sub':  ["Know exactly when fish are most active, up to 3 months ahead for {trip}."],
+ 'pw.trip': ["your {w} trips"],
+ 'pw.trip0':["your fishing trips"],
+ 'sl.1':    ["Tides 3 months ahead"],
+ 'sl.1s':   ["High and low tides for your spot, every day, up to 3 months ahead."],
+ 'sl.2':    ["Sun and moon, every day"],
+ 'sl.2s':   ["Moonrise, moonset and moon phases next to your tides."],
+ 'sl.3':    ["Know when fish are most active"],
+ 'sl.3s':   ["Fish activity from solunar theory, tides and other factors."],
+ 'pw.rate': ["4.7 · 230K+ ratings"],
+ 'pw.dl':   ["12+ million downloads on iOS and Android"],
+ 'pw.ton':  ["Free Trial Enabled"],
+ 'pw.toff': ["Not sure? Enable Free Trial."],
+ 'pw.off':  ["{save} OFF"],
+ 'pw.yr':   ["Yearly"],
+ 'pw.yrt':  ["7 days free, then {yr}/year"],
+ 'pw.yrn':  ["{yr}/year"],
+ 'pw.yrpm': ["{yrmo}/month"],
+ 'pw.mo':   ["Monthly"],
+ 'pw.mot':  ["7 days free, then {mo}/month"],
+ 'pw.mon':  ["{mo}/month"],
+ 'pw.mopm': ["{mo}/month"],
+ 'pw.ctat': ["Try free and subscribe"],
+ 'pw.ctan': ["Subscribe"],
+ 'pw.trustt':["No payment now · "],
+ 'pw.trust':["Cancel anytime in Settings"],
+ 'terms':   ["Terms of Use"],
+ 'privacy': ["Privacy Policy"],
+ 'of.h':    ["Not ready for a<br>full year?"],
+ 'of.t':    ["Try Premium free for 7 days"],
+ 'of.p':    ["Then {mo}/month. No commitment."],
+ 'of.d0':   ["Today"],
+ 'of.d7':   ["Day 7"],
+ 'of.d7s':  ["Monthly plan starts at {mo}/month"],
+ 'of.da':   ["Anytime"],
+ 'of.full': ["Full Premium: "],
+ 'of.rv':   ["“An excellent tool! I’ve been using it since 2018 and have the Premium version. No regrets at all, it’s worth every penny.”"],
+ 'of.rvc':  ["Germany"],
+ 'of.cta':  ["Start my free week"],
+ 'of.free': ["Continue with the free version"],
+ 'ac.h':    ["Sign in to<br>Fishing Points"],
+ 'ac.ok':   ["You’re all set. Your purchase was successful."],
+ 'ac.free': ["Free version: today’s forecasts and up to 5 saved locations."],
+ 'ac.p':    ["Log in or create Fishing Points account to never lose your saved fishing spots and catches."],
+ 'ac.ap':   ["Sign in with Apple"],
+ 'ac.go':   ["Sign in with Google"],
+ 'ac.fb':   ["Sign in with Facebook"],
+ 'ac.em':   ["Sign in with email"],
+ 'ac.nn':   ["Not now"],
+ 'ac.lg':   ["By continuing, you are indicating that you accept our <a>Terms of Service</a> and <a>Privacy Policy</a>."]
 };
 /* their forecast options, their order (recorded onboarding), and the type words */
 var FC = [
-  ['radar',  ["Rain radar","Radar de lluvia"]],
-  ['waves',  ["Waves","Olas"]],
-  ['river',  ["River Data","Datos de ríos"]],
-  ['weather',["Weather","Tiempo"]],
-  ['fishact',["Fish activity","Actividad de los peces"]],
-  ['tides',  ["Tides","Mareas"]],
-  ['sun',    ["Sun and moon","Sol y luna"]],
-  ['none',   ["None","Ninguna"]]
+  ['radar',  ["Rain radar"]],
+  ['waves',  ["Waves"]],
+  ['river',  ["River Data"]],
+  ['weather',["Weather"]],
+  ['fishact',["Fish activity"]],
+  ['tides',  ["Tides"]],
+  ['sun',    ["Sun and moon"]],
+  ['none',   ["None"]]
 ];
-var TW = {salt:["saltwater","agua salada"], fresh:["freshwater","agua dulce"], both:["saltwater & freshwater","agua salada y dulce"]};
+var TW = {salt:["saltwater"], fresh:["freshwater"], both:["saltwater & freshwater"]};
 /* what each pick does (condensed from fishingpoints.app) */
 var INFO = {
-  fishact:[["Fish activity","When fish will be most active during the day, based on solunar theory, tides and other factors."],["Actividad de los peces","Cuándo estarán más activos los peces durante el día, según la teoría solunar, las mareas y otros factores."]],
-  tides:  [["Tides","High and low tide times and daily extremes."],["Mareas","Horas de pleamar y bajamar y extremos diarios."]],
-  waves:  [["Waves","Wave conditions for the days ahead."],["Olas","Condiciones de oleaje para los próximos días."]],
-  weather:[["Weather","Weather and wind forecast."],["Tiempo","Previsión del tiempo y del viento."]],
-  sun:    [["Sun and moon","Sunrise, sunset, moonrise and moon phase."],["Sol y luna","Salida y puesta del sol, salida de la luna y fase lunar."]],
-  radar:  [["Rain radar","Real-time rain radar to stay safe on the water."],["Radar de lluvia","Radar de lluvia en tiempo real para pescar con seguridad."]],
-  river:  [["River Data","River heights and flows."],["Datos de ríos","Niveles y caudal de los ríos."]]
+  fishact:[["Fish activity","When fish will be most active during the day, based on solunar theory, tides and other factors."]],
+  tides:  [["Tides","High and low tide times and daily extremes."]],
+  waves:  [["Waves","Wave conditions for the days ahead."]],
+  weather:[["Weather","Weather and wind forecast."]],
+  sun:    [["Sun and moon","Sunrise, sunset, moonrise and moon phase."]],
+  radar:  [["Rain radar","Real-time rain radar to stay safe on the water."]],
+  river:  [["River Data","River heights and flows."]]
 };
-/* Free vs Premium, from "What’s Included in Premium" on fishingpoints.app/premium (EN) and /es/premium (their Spanish) */
+/* Free vs Premium, from "What’s Included in Premium" on fishingpoints.app/premium */
 var CMP = {
-  fishact:[["Best fishing times","Today","3 months"],["Mejores horas para pescar","Hoy","3 meses"]],
-  tides:  [["Tides & daily extremes","Today","3 months"],["Mareas y extremos diarios","Hoy","3 meses"]],
-  waves:  [["Wave conditions","Today","7 days"],["Condiciones de oleaje","Hoy","7 días"]],
-  weather:[["Weather & wind","Today","7 days"],["Tiempo y viento","Hoy","7 días"]],
-  sun:    [["Sun & moon data","Today","3 months"],["Datos del sol y la luna","Hoy","3 meses"]],
-  radar:  [["Rain radar","Current","2 hours"],["Radar de lluvia","Actual","2 horas"]],
-  river:  [["River heights & flows","✕","✓"],["Niveles y flujo de ríos","✕","✓"]],
-  nautical:[["Nautical maps","✕","✓"],["Cartas náuticas","✕","✓"]],
-  locations:[["Saving locations","Up to 5","Unlimited"],["Guardar ubicaciones","Hasta 5","Ilimitado"]]
+  fishact:[["Best fishing times","Today","3 months"]],
+  tides:  [["Tides & daily extremes","Today","3 months"]],
+  waves:  [["Wave conditions","Today","7 days"]],
+  weather:[["Weather & wind","Today","7 days"]],
+  sun:    [["Sun & moon data","Today","3 months"]],
+  radar:  [["Rain radar","Current","2 hours"]],
+  river:  [["River heights & flows","✕","✓"]],
+  nautical:[["Nautical maps","✕","✓"]],
+  locations:[["Saving locations","Up to 5","Unlimited"]]
 };
-var TODAY = {fishact:["3-month fish activity","actividad de los peces a 3 meses"], tides:["3-month tides","mareas a 3 meses"], waves:["7-day waves","olas a 7 días"],
-  weather:["7-day weather","tiempo a 7 días"], sun:["3-month sun & moon","sol y luna a 3 meses"], radar:["2-hour rain radar","radar de lluvia de 2 horas"],
-  river:["river data","datos de ríos"], nautical:["nautical maps","cartas náuticas"], locations:["unlimited locations","ubicaciones ilimitadas"]};
-var DAYS = [[['15','Sun'],['16','Mon'],['17','Tue'],['18','Today'],['19','Thu'],['20','Fri'],['21','Sat']],
-            [['15','dom'],['16','lun'],['17','mar'],['18','Hoy'],['19','jue'],['20','vie'],['21','sáb']]];
-/* the proof their loader cycles today; the review is verbatim from fishingpoints.app (and its Spanish version) */
+var TODAY = {fishact:["3-month fish activity"], tides:["3-month tides"], waves:["7-day waves"],
+  weather:["7-day weather"], sun:["3-month sun & moon"], radar:["2-hour rain radar"],
+  river:["river data"], nautical:["nautical maps"], locations:["unlimited locations"]};
+var DAYS = [[['15','Sun'],['16','Mon'],['17','Tue'],['18','Today'],['19','Thu'],['20','Fri'],['21','Sat']]];
+/* the proof their loader cycles today; the review is verbatim from fishingpoints.app */
 var PROOF = [
-  [['12+ million downloads','On iOS and Android'],['★ 4.7 stars','Average rating · 230K+ ratings'],['★★★★★','“I used and tested many apps but I felt this app to be the most accurate in terms of fish activity. Thanks.” · United States']],
-  [['12+ millones de descargas','En iOS y Android'],['★ 4,7 estrellas','Valoración media · Más de 230 000 reseñas'],['★★★★★','“He usado y probado muchas aplicaciones, pero esta me pareció la más precisa en cuanto a la actividad de los peces. Gracias.” · Estados Unidos']]
+  [['12+ million downloads','On iOS and Android'],['★ 4.7 stars','Average rating · 230K+ ratings'],['★★★★★','“I used and tested many apps but I felt this app to be the most accurate in terms of fish activity. Thanks.” · United States']]
 ];
 /* their site renders: the payoff header follows the water they fish */
 var RENDER = {salt:'assets/site/Fishing_Points_Nautical3_97b0a0b56e.webp', fresh:'assets/site/Fishing_Points_Satellite1_e113f15de1.webp',
@@ -1429,23 +1426,23 @@ if(EMBED) document.documentElement.classList.add('embed');
 var FLOW = (location.search.match(/[?&]flow=(a|b)/)||[])[1] || '';
 var FT = {
  a:{
-  'wl.h':  ["Forecasts, maps<br>&amp; tides in one app.","Previsiones, mapas<br>y mareas en una app."],
-  'wl.s':  ["Fish activity, worldwide nautical charts and tides from 10,000+ stations. Start free.","Actividad de los peces, cartas náuticas de todo el mundo y mareas de más de 10.000 estaciones. Empieza gratis."],
-  'wl.cta':["See my forecast","Ver mi previsión"]
+  'wl.h':  ["Forecasts, maps<br>&amp; tides in one app."],
+  'wl.s':  ["Fish activity, worldwide nautical charts and tides from 10,000+ stations. Start free."],
+  'wl.cta':["See my forecast"]
  },
  b:{
-  'wl.h':  ["Tides for your<br>spot, today.","Las mareas de tu<br>lugar, hoy."],
-  'wl.s':  ["High and low tides from 10,000+ tide stations. Today’s tides are free.","Pleamares y bajamares de más de 10.000 estaciones mareográficas. Las mareas de hoy son gratis."],
-  'wl.cta':["See today’s tides","Ver las mareas de hoy"],
-  'fc.sub':["We ticked Tides from your search. Add any others.","Marcamos Mareas por tu búsqueda. Añade otras."],
-  'pv.h':  ["Today’s tides are free.","Las mareas de hoy son gratis."],
-  'pv.s':  ["Tomorrow’s tides, the weekend and the next 3 months come with Premium.","Las mareas de mañana, el fin de semana y los próximos 3 meses vienen con Premium."],
-  'of.h':  ["Today’s tides<br>stay free.","Las mareas de hoy<br>siguen gratis."],
-  'of.t':  ["Want the whole week of tides?","¿Quieres las mareas de toda la semana?"],
-  'of.p':  ["Premium Monthly: 7 days free, then {mo}/month.","Premium mensual: 7 días gratis, luego {mo}/mes."],
-  'of.rv': ["“Absolutely worth the download. Spot on with the tides. Locks and stores all of my spots. Definitely recommend.”","“Vale la pena descargarla. Da en el clavo con las mareas. Bloquea y guarda todos mis puntos. La recomiendo sin duda.”"],
-  'of.rvc':["United States","Estados Unidos"],
-  'of.free':["Keep my free tides","Seguir con las mareas gratis"]
+  'wl.h':  ["Tides for your<br>spot, today."],
+  'wl.s':  ["High and low tides from 10,000+ tide stations. Today’s tides are free."],
+  'wl.cta':["See today’s tides"],
+  'fc.sub':["We ticked Tides from your search. Add any others."],
+  'pv.h':  ["Today’s tides are free."],
+  'pv.s':  ["Tomorrow’s tides, the weekend and the next 3 months come with Premium."],
+  'of.h':  ["Today’s tides<br>stay free."],
+  'of.t':  ["Want the whole week of tides?"],
+  'of.p':  ["Premium Monthly: 7 days free, then {mo}/month."],
+  'of.rv': ["“Absolutely worth the download. Spot on with the tides. Locks and stores all of my spots. Definitely recommend.”"],
+  'of.rvc':["United States"],
+  'of.free':["Keep my free tides"]
  }
 };
 if(FT[FLOW]) Object.keys(FT[FLOW]).forEach(function(k){ T[k]=FT[FLOW][k]; });
@@ -1465,7 +1462,7 @@ var S0 = {lang:'en', theme:'light'};
 var S = defaults();
 function L(){ return LANGS.indexOf(S.lang); }
 function t(k,v){ var s=(T[k]||[k])[L()]; if(v) Object.keys(v).forEach(function(x){ s=s.split('{'+x+'}').join(v[x]); });
-  var P=PRICE[S.lang]||PRICE.en; return s.replace(/\{(yr|mo|yrmo|save)\}/g,function(m,x){ return P[x]; }); }
+  var P=PRICE.en; return s.replace(/\{(yr|mo|yrmo|save)\}/g,function(m,x){ return P[x]; }); }
 function picks(){ return S.fc.filter(function(k){ return k!=='none'; }); }
 function fcName(k){ return FC.filter(function(f){ return f[0]===k; })[0][1][L()]; }
 function listOf(a,max){ return a.length>max ? a.slice(0,max).join(', ')+' '+t('more',{n:a.length-max}) : a.join(', '); }
@@ -1506,7 +1503,6 @@ function applyStatic(){
   document.querySelector('.s-one').classList.toggle('hidden',FLOW==='b');
   document.getElementById('car').classList.toggle('hidden',FLOW!=='b');
   document.getElementById('dots').classList.toggle('hidden',FLOW!=='b');
-  document.querySelectorAll('.s-ftt').forEach(function(e){ e.classList.toggle('s-long',S.lang==='es' && e.dataset.t==='fa.t'); });
 }
 function buildShots(){ document.getElementById('asShots').innerHTML=SHOTS.map(function(x){
   return '<div class="as-shot"><img src="'+x[0]+'" alt="" style="object-position:'+x[2]+'"><b>'+t(x[1])+'</b></div>'; }).join(''); }
@@ -1761,7 +1757,6 @@ function paintPanel(){
     }
     h += '<div class="pn-kept"><b>Your design, unchanged.</b> '+d.kept+'</div>';
   }
-  if(S.lang!=='en') h += '<div class="pn-kept"><b>Language.</b> Screens are shown in '+langName(S.lang)+' to show one flow serving every market. '+META.langNote+'</div>';
   h += '<div class="pn-foot">Ranges are Adapty’s expected effect from tests across 30,000+ subscription apps, not measured lift for '+META.app+'. '
      + 'Prices, ratings, reviews and feature lines come from your own published material.</div>';
   document.getElementById('panel').innerHTML = h;
@@ -1846,7 +1841,6 @@ function paintHostPanel(){
     if(d.note) h+='<div class="pn-note">'+d.note+'</div>';
     h+='<div class="pn-kept"><b>Your design, unchanged.</b> '+b.kept+'</div>';
   }
-  if(H.lang!=='en') h+='<div class="pn-kept"><b>Language.</b> Screens are shown in '+langName(H.lang)+' to show both flows serving every market. '+META.langNote+'</div>';
   h+='<div class="pn-foot">Ranges are Adapty’s expected effect from tests across 30,000+ subscription apps, not measured lift for '+META.app+'. Prices, ratings, quotes and feature lines come from your own published material.</div>';
   var p=document.getElementById('hPanel'); var wasOpen=p.querySelector('details.sh[open]'); p.innerHTML=h;
   if(wasOpen) p.querySelector('details.sh').open=true;
