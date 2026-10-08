@@ -1,0 +1,1982 @@
+<!doctype html>
+<!--
+  asa-rebuild-v1 "Search to Pro" page for Fishing Points: Map & Forecast (App Store id 1203032512).
+  Two Apple Ads keywords, "fishbrain" (flow a) and "tide charts" (flow b), each with its own onboarding,
+  paywall and offer on close, built on the five ideas of the earlier Fishing Points growth audit
+  (eddieatadapty.github.io/fishing-points-flow-rebuild-v2). Screens, tokens and copy are ported from that volume.
+  URL: ?open=proto lands on the prototype, &step=<screen-id> opens both phones there,
+       ?embed=1&flow=a&step=<id> renders one phone alone (what shoot.sh uses).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<title>Search to Pro · Fishing Points</title>
+<meta name="description" content="Two Apple Ads searches, two onboarding flows for Fishing Points, built on five onboarding and paywall ideas. Prepared by Adapty.">
+<link rel="icon" href="assets/brand/appstore-icon.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* BRAND:START (EDIT) — screen tokens --b-* sampled off their screens; shell tokens in their palette */
+:root{
+  color-scheme: only light;
+  /* ---- Fishing Points, sampled from their recorded iOS onboarding (earlier volume), App Store shots and site renders ---- */
+  --b-primary:#1e74c4;       /* in-app blue: quiz CTA, selected border, welcome bg */
+  --b-primary-ink:#ffffff;
+  --b-bg:#ffffff; --b-surface:#ffffff;
+  --b-ink:#000000;
+  --b-ink2:#6c6a6d;          /* paywall secondary text */
+  --b-line:#dadadb;          /* quiz row border */
+  --b-accent2:#f8d20b;       /* yellow: welcome Continue, "Premium", "7-Day Free Trial" */
+  --b-tint:#e3edf9;          /* selected quiz row */
+  --b-track:#f3f2f3;         /* progress track */
+  --b-sheet:#f2f0f3;         /* paywall plan sheet */
+  --b-toggle:#e2e0e3;        /* paywall free-trial row */
+  --b-grad:linear-gradient(180deg,#235d98 0%,#0d3862 30%,#0b284a 52%,#061e3b 100%);
+  --b-navy:#0b284a;
+  --b-glass:#3683cf; --b-glass-mid:#1670c8; --b-glass-low:#1566b6;   /* Liquid Glass Fish activity */
+  --b-tidebg:#f3f3f7; --b-tidetop:#eff7ff;                             /* their Tides screen (fishingpoints.app render) */
+  --b-apple:#000000; --b-google:#f7f5f8; --b-fb:#1267f8; --b-mail:#ed2736;   /* their sign-in buttons */
+  --b-as1:#9feefd; --b-as2:#16adf2; --b-as3:#1179cd; --b-cap:#0e4b86;  /* App Store screenshot sky + caption navy */
+  --b-radius:6px; --b-card:12px; --b-btn:5px; --b-pill:999px;
+  --b-font:-apple-system,'SF Pro Display','SF Pro Text',Inter,system-ui,sans-serif;
+  /* ---- the report shell, in Fishing Points' navy, blue and yellow ---- */
+  --bg:#F3F6F8; --bg2:#FFFFFF; --surf:#FFFFFF;
+  --hair:rgba(11,40,74,.09); --hair2:rgba(11,40,74,.16);
+  --ink:#0b284a; --ink2:#3d5168; --ink3:#7b8896;
+  --accent:#1e74c4; --accent-lift:#155ea3;
+  --panel:#FFFFFF; --panel-ink:#0b1f36; --panel-muted:#5b6a7a; --panel-line:#E7EBEE;
+  --accent-ink:#11528f;
+}
+/* BRAND:END */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);
+  font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 32px}
+@media(max-width:700px){.wrap{padding:0 20px}}
+
+/* ============ top bar ============ */
+.nav{position:sticky;top:0;z-index:70;background:rgba(243,246,248,.86);backdrop-filter:blur(18px) saturate(160%);
+  border-bottom:1px solid var(--hair)}
+.nav-in{max-width:1080px;margin:0 auto;padding:0 32px;height:58px;display:flex;align-items:center;gap:18px}
+@media(max-width:700px){.nav-in{padding:0 20px;gap:12px}}
+.nav-brand{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:600;letter-spacing:-.01em}
+.nav-brand .mk{width:26px;height:26px;flex:none;display:block;border-radius:7px}
+.nav-brand span{color:var(--ink2);font-weight:500}
+.nav-brand b{color:var(--ink);font-weight:600}
+.nav-links{margin-left:auto;display:flex;gap:2px;align-items:center}
+.nav-links button{padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--ink3);transition:.16s}
+.nav-links button:hover{color:var(--ink)}
+.nav-links button.on{color:var(--ink);background:#fff;box-shadow:0 1px 4px rgba(11,40,74,.08)}
+@media(max-width:640px){.nav-brand span{display:none}}
+
+.view{display:none}
+.view.on{display:block}
+
+/* ============ hero ============ */
+.hero{padding:104px 0 0;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-340px;left:50%;transform:translateX(-50%);
+  width:1100px;height:640px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(30,116,196,.14),transparent 72%)}
+.hero::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(40% 50% at 8% 20%,rgba(140,190,230,.32),transparent 70%),
+   radial-gradient(38% 45% at 92% 18%,rgba(11,40,74,.10),transparent 70%)}
+.hero>*{position:relative;z-index:1}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-lift);margin-bottom:26px}
+.hero h1{font-size:76px;line-height:.98;font-weight:700;letter-spacing:-.045em;margin:0 0 24px}
+@media(max-width:820px){.hero h1{font-size:50px}.hero{padding-top:70px}}
+.hero .lede{font-size:20px;line-height:1.5;font-weight:400;color:var(--ink2);max-width:600px;margin:0 auto;letter-spacing:-.012em}
+@media(max-width:820px){.hero .lede{font-size:17px}}
+.hero .meta{margin-top:30px;font-size:12.5px;color:var(--ink3);letter-spacing:.02em}
+.hero .meta b{color:var(--ink2);font-weight:600}
+
+.stats{display:flex;justify-content:center;gap:0;margin:70px auto 0;max-width:760px;
+  border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.stat{flex:1;padding:26px 14px;text-align:center;border-left:1px solid var(--hair)}
+.stat:first-child{border-left:none}
+.stat b{display:block;font-size:26px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
+.stat span{display:block;font-size:11.5px;color:var(--ink3);margin-top:5px;line-height:1.35}
+@media(max-width:700px){.stat b{font-size:19px}.stat{padding:18px 8px}}
+
+.proof{max-width:760px;margin:0 auto;padding:30px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:26px;text-align:left}
+@media(max-width:700px){.proof{grid-template-columns:1fr;gap:20px;padding-top:24px}}
+.proof-k{grid-column:1/-1;font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink3);text-align:center;margin-bottom:-6px}
+.proof-i{display:flex;gap:12px;align-items:flex-start}
+.proof-i .tick{width:18px;height:18px;flex:none;margin-top:3px;border-radius:50%;background:rgba(30,116,196,.14);
+  display:grid;place-items:center}
+.proof-i .tick svg{width:10px;height:10px;stroke:var(--accent-lift);stroke-width:3;fill:none;
+  stroke-linecap:round;stroke-linejoin:round}
+.proof-i p{font-size:14px;line-height:1.55;color:var(--ink2);margin:0}
+.proof-i p b{color:var(--ink);font-weight:700}
+
+.sec{padding:96px 0}
+.sec-k{font-size:11.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:18px}
+.sec h2{font-size:38px;line-height:1.14;font-weight:700;letter-spacing:-.035em;margin:0 0 20px;max-width:680px}
+@media(max-width:820px){.sec h2{font-size:29px}.sec{padding:64px 0}}
+.sec p.body{font-size:17px;line-height:1.66;color:var(--ink2);max-width:640px;margin:0 0 18px;letter-spacing:-.008em}
+.sec p.body b{color:var(--ink);font-weight:600}
+.rule{height:1px;background:var(--hair);margin:0}
+
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px;max-width:820px}
+@media(max-width:760px){.notes{grid-template-columns:1fr}}
+.note{background:var(--surf);border:1px solid var(--hair);box-shadow:0 2px 10px rgba(11,40,74,.04);border-radius:16px;padding:24px 26px}
+.note h4{font-size:15px;font-weight:700;letter-spacing:-.015em;margin:0 0 8px}
+.note p{font-size:14px;line-height:1.6;color:var(--ink2);margin:0}
+
+.ideas{display:flex;flex-direction:column;gap:0;margin-top:14px;border-top:1px solid var(--hair)}
+.idea{display:grid;grid-template-columns:52px 1fr 180px;gap:26px;align-items:start;
+  padding:30px 4px;border-bottom:1px solid var(--hair);text-align:left;width:100%;transition:.18s}
+.idea:hover{background:rgba(255,255,255,.7)}
+@media(max-width:780px){.idea{grid-template-columns:38px 1fr;gap:16px}}
+.idea .no{font-size:13px;font-weight:700;color:var(--ink3);padding-top:4px;letter-spacing:.02em}
+.idea h3{font-size:21px;line-height:1.25;font-weight:700;letter-spacing:-.024em;margin:0 0 7px}
+@media(max-width:820px){.idea h3{font-size:18px}}
+.idea p{font-size:14.5px;line-height:1.6;color:var(--ink2);margin:0;max-width:540px}
+.idea .out{text-align:right;padding-top:3px}
+@media(max-width:780px){.idea .out{grid-column:2;text-align:left;padding-top:12px}}
+.idea .out b{display:block;font-size:19px;font-weight:700;letter-spacing:-.025em;color:var(--accent-lift);white-space:nowrap}
+.idea .out span{display:block;font-size:10.5px;color:var(--ink3);margin-top:3px;letter-spacing:.04em;text-transform:uppercase;font-weight:600}
+.idea .seeit{display:inline-flex;align-items:center;gap:5px;margin-top:11px;font-size:12.5px;
+  font-weight:600;color:var(--accent-lift)}
+.idea .seeit svg{width:12px;height:12px}
+
+.band{background:var(--surf);border:1px solid var(--hair);border-radius:28px;box-shadow:0 2px 10px rgba(11,40,74,.04);padding:40px 44px;margin-top:44px;
+  display:flex;align-items:center;gap:36px;flex-wrap:wrap}
+@media(max-width:700px){.band{padding:28px 24px;gap:22px}}
+.band .lab{font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
+.band .txt{flex:1;min-width:240px}
+.band .txt p{font-size:15.5px;line-height:1.6;color:var(--ink2);margin:0}
+.band .nums{display:flex;gap:34px}
+.band .nums div b{display:block;font-size:30px;font-weight:700;letter-spacing:-.035em;color:var(--accent-lift)}
+.band .nums div span{display:block;font-size:11px;color:var(--ink3);margin-top:2px;letter-spacing:.04em;
+  text-transform:uppercase;font-weight:600}
+
+.cta-row{display:flex;justify-content:center;margin-top:52px;align-items:center;gap:22px;flex-wrap:wrap}
+.bigbtn{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+  font-size:15px;font-weight:700;letter-spacing:-.01em;padding:15px 26px;border-radius:30px;transition:.16s}
+.bigbtn:hover{filter:brightness(1.06)}
+.bigbtn svg{width:15px;height:15px}
+
+.foot{border-top:1px solid var(--hair);padding:36px 0 70px;font-size:12.5px;line-height:1.6;color:var(--ink3)}
+
+/* ============ prototype stage ============ */
+.stage{display:grid;grid-template-columns:minmax(440px,1fr) minmax(400px,470px);gap:0;
+  align-items:start;min-height:calc(100vh - 58px)}
+@media(max-width:1080px){.stage{grid-template-columns:1fr}}
+.phonecol{padding:34px 24px 46px;display:flex;flex-direction:column;align-items:center;gap:18px}
+.panelcol{border-left:1px solid var(--hair);background:var(--panel);color:var(--panel-ink);
+  min-height:calc(100vh - 58px);position:sticky;top:58px;max-height:calc(100vh - 58px);overflow-y:auto}
+@media(max-width:1080px){.panelcol{position:static;max-height:none;border-left:none;border-top:1px solid var(--hair)}}
+
+.phone{position:relative;width:390px;height:844px;flex:none;background:#000;border:11px solid #000;
+  border-radius:46px;box-shadow:0 0 0 1.5px #D3DAE0,0 34px 70px -22px rgba(11,40,74,.35)}
+.phone-in{position:absolute;inset:0;border-radius:36px;overflow:hidden;background:var(--b-bg);color-scheme:only light}
+.island{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:104px;height:30px;background:#000;
+  border-radius:16px;z-index:60;pointer-events:none}
+.sbar{position:absolute;top:0;left:0;right:0;height:50px;z-index:55;pointer-events:none;display:flex;
+  align-items:center;justify-content:space-between;padding:14px 28px 0 34px;font:600 15px/1 -apple-system,BlinkMacSystemFont,sans-serif;color:#111;transition:color .3s}
+.sbar.light{color:#fff}
+.sbar .glyphs{display:flex;gap:5px;align-items:center}
+.homebar{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:134px;height:5px;
+  border-radius:3px;background:#111;z-index:56;pointer-events:none;transition:background .3s}
+.homebar.light{background:rgba(255,255,255,.9)}
+.screenwrap{position:absolute;inset:0;overflow:hidden;background:var(--b-bg)}
+
+/* ============ phone screens ============ */
+/* engine: screen stack + slots (keep) */
+.scr{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--b-bg);color:var(--b-ink);
+  font-family:var(--b-font);
+  transform:translateX(100%);transition:transform .36s cubic-bezier(.32,.72,0,1);z-index:10;will-change:transform}
+.scr.is-active{transform:translateX(0);z-index:20}
+.scr.is-past{transform:translateX(-24%)}
+.scr.sheet{transform:translateY(100%)}
+.scr.sheet.is-active{transform:translateY(0);z-index:30}
+.scr.nofx{transition:none}
+.scr-top{flex:none;padding:52px 0 0;position:relative;z-index:2}
+.scr-body{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;position:relative;z-index:2}
+.scr-body::-webkit-scrollbar{display:none}
+.scr-foot{flex:none;padding:10px 20px 30px;position:relative;z-index:2;background:var(--b-bg)}
+.scr-foot.hair{border-top:1px solid var(--b-line)}
+
+/* SCREENS:START (EDIT) — Fishing Points' components, ported from the earlier volume and prefixed s-;
+   colours only var(--b-*) (+ white/black alpha) */
+.s-ic{display:inline-flex;width:22px;height:22px;flex:none}.s-ic svg{width:100%;height:100%;display:block}
+.scr button{font-family:var(--b-font)}
+.s-fill{display:flex;flex-direction:column}
+
+/* welcome — their screen; the headline and button answer the search */
+.scr.s-wel{background:var(--b-primary);color:var(--b-primary-ink)}
+.s-hero-ph{display:block;width:100%;height:auto;flex:none}
+.s-wel .s-in{flex:1;display:flex;flex-direction:column;padding:6px 30px 44px}
+.s-wel h1{font:700 32px/1.13 var(--b-font);margin:0;letter-spacing:-.2px}
+.s-wsub{font:600 15.5px/1.36 var(--b-font);margin:14px 0 0}
+.s-legal2{margin:auto -14px 0;text-align:center;font:400 12.5px/1.5 var(--b-font)}
+.s-legal2 a{color:var(--b-accent2);text-decoration:none}
+.s-ybtn{align-self:center;margin-top:30px;min-width:48%;padding:0 24px;height:46px;border:0;border-radius:var(--b-btn);background:var(--b-accent2);color:var(--b-ink);font:600 16.5px var(--b-font);box-shadow:0 2px 5px rgba(0,0,0,.14)}
+
+/* quiz — their component */
+.s-qtop{display:flex;align-items:center;gap:22px;padding:62px 20px 0 16px;flex:none}
+.s-bk{padding:0;width:22px;height:22px;color:var(--b-primary);flex:none}
+.s-bk svg{width:22px;height:22px;display:block}
+.s-track{flex:1;height:7px;border-radius:4px;background:var(--b-track);overflow:hidden}.s-track i{display:block;height:100%;border-radius:4px;background:var(--b-primary)}
+.s-qb{flex:1;display:flex;flex-direction:column;padding:0 16px 36px;min-height:0}
+.s-qh{font:700 23px/1.36 var(--b-font);color:var(--b-primary);margin:24px 0 0;text-shadow:0 2px 5px rgba(0,0,0,.14)}
+.s-qs{font:400 14.5px var(--b-font);color:var(--b-ink);margin:10px 0 0}
+.s-qs.s-kw{color:var(--b-primary);font-weight:600}
+.s-opts{display:flex;flex-direction:column;gap:11px;margin-top:28px}
+.s-opt{height:54px;border:1.5px solid var(--b-line);border-radius:var(--b-radius);background:var(--b-surface);font:400 15px var(--b-font);color:var(--b-ink);width:100%}
+.s-opt.on{background:var(--b-tint);border-color:var(--b-primary);color:var(--b-primary);font-weight:500}
+.s-opts.s-m{gap:8px;margin-top:20px}
+.s-mo{display:flex;align-items:center;gap:14px;height:46px;padding:0 14px;border:1.5px solid var(--b-line);border-radius:var(--b-radius);background:var(--b-surface);font:400 14.5px var(--b-font);color:var(--b-ink);text-align:left;width:100%}
+.s-mo .s-ic{width:20px;height:20px}
+.s-mo .s-ml{flex:1}
+.s-cb{width:21px;height:21px;border:1.5px solid var(--b-line);border-radius:5px;display:flex;align-items:center;justify-content:center;color:var(--b-primary-ink);flex:none}
+.s-cb svg{width:14px;height:14px;opacity:0}
+.s-mo.on{background:var(--b-tint);border-color:var(--b-primary);color:var(--b-primary);font-weight:500}
+.s-mo.on .s-cb{background:var(--b-primary);border-color:var(--b-primary)}.s-mo.on .s-cb svg{opacity:1}
+.s-qcta{margin:auto auto 0;width:54%;height:44px;flex:none;border:0;border-radius:var(--b-btn);background:var(--b-primary);color:var(--b-primary-ink);font:600 15px var(--b-font)}
+.s-qcta:disabled{opacity:.45}
+
+/* loader — their ring, reading the answers back */
+.s-ld .scr-body{align-items:center}
+.s-ldc{margin-top:178px;position:relative;width:132px;height:132px;flex:none}
+.s-ldc svg{width:132px;height:132px;transform:rotate(-90deg);display:block}
+.s-ldc .s-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 27px var(--b-font);color:var(--b-ink)}
+.s-lt{font:600 15.5px var(--b-font);color:var(--b-ink);margin:24px 0 0}
+.s-echo{list-style:none;margin:24px 0 0;padding:0;display:flex;flex-direction:column;gap:12px;width:282px}
+.s-echo li{display:flex;gap:11px;align-items:center;font:400 14px/1.3 var(--b-font);color:var(--b-ink2);opacity:.4;transition:opacity .3s}
+.s-echo li.done{opacity:1;color:var(--b-ink)}
+.s-echo .s-tk{width:19px;height:19px;border-radius:50%;background:var(--b-line);display:flex;align-items:center;justify-content:center;color:var(--b-primary-ink);flex:none}
+.s-echo li.done .s-tk{background:var(--b-primary)}
+.s-echo .s-tk svg{width:11px;height:11px}
+.s-lproof{margin:auto 0 44px;width:322px;background:var(--b-tint);border-radius:var(--b-card);padding:14px 18px;text-align:center;min-height:86px;display:flex;flex-direction:column;justify-content:center;flex:none}
+.s-lproof b{display:block;font:700 18px var(--b-font);color:var(--b-primary)}
+.s-lproof span{display:block;font:400 13px/1.45 var(--b-font);color:var(--b-ink);margin-top:4px}
+
+/* payoff — idea 1: their picks, named */
+.s-ptop{position:relative;height:300px;background:var(--b-tint);overflow:hidden;flex:none}
+.s-ptop img{position:absolute;left:50%;top:56px;width:214px;transform:translateX(-50%);filter:drop-shadow(0 14px 22px rgba(0,0,0,.2))}
+.s-ptop:after{content:"";position:absolute;left:0;right:0;bottom:0;height:60px;background:linear-gradient(rgba(255,255,255,0),rgba(255,255,255,1))}
+.s-po .s-in{flex:1;display:flex;flex-direction:column;padding:0 20px 36px;margin-top:-14px;position:relative;min-height:0}
+.s-po h1{font:700 24px/1.22 var(--b-font);color:var(--b-primary);margin:0;text-shadow:0 2px 5px rgba(0,0,0,.12)}
+.s-pmeta{font:500 14px var(--b-font);color:var(--b-ink2);margin:6px 0 0}
+.s-plab{font:700 11px var(--b-font);letter-spacing:.07em;text-transform:uppercase;color:var(--b-ink2);margin:16px 0 4px}
+.s-pl .s-r{display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--b-line)}
+.s-pl .s-r:first-child{border-top:0}
+.s-pl .s-ic{color:var(--b-primary);width:21px;height:21px;margin-top:1px}
+.s-pl b{display:block;font:600 14.5px var(--b-font);color:var(--b-ink)}
+.s-pl small{display:block;font:400 12.5px/1.35 var(--b-font);color:var(--b-ink2);margin-top:1px}
+
+/* preview — idea 4, in their own forecast: Fish activity (Liquid Glass) or Tides (white) */
+.scr.s-fa{background:linear-gradient(180deg,var(--b-glass) 0%,var(--b-glass-mid) 34%,var(--b-glass-low) 100%);color:var(--b-primary-ink)}
+.scr.s-fa.s-tidev{background:var(--b-tidebg);color:var(--b-ink)}
+.s-fa:not(.s-tidev) .s-tide,.s-fa.s-tidev .s-act{display:none!important}
+.s-fhd{display:flex;align-items:flex-start;justify-content:space-between;padding:56px 18px 0;flex:none}
+.s-ftt{font:700 29px/1.1 var(--b-font);margin:0;letter-spacing:-.3px;white-space:nowrap}
+.s-ftt.s-long{font-size:20px;padding-top:6px}
+.s-floc{display:flex;align-items:center;gap:5px;font:600 14px var(--b-font);margin-top:4px}
+.s-floc svg{width:13px;height:13px}
+.s-floc small{font-weight:400;opacity:.75;margin-left:4px}
+.s-gb{display:flex;gap:8px}
+.s-gb span{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.62);color:var(--b-ink);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+.s-gb svg{width:19px;height:19px}
+.s-fdays{display:grid;grid-template-columns:repeat(7,1fr);padding:14px 10px 0;text-align:center;flex:none}
+.s-fdays div{position:relative;font:600 17px/1.1 var(--b-font);padding-bottom:7px}
+.s-fdays small{display:block;font:400 12.5px var(--b-font);opacity:.85;margin-top:2px}
+.s-fdays .s-past{opacity:.72}
+.s-fdays .s-now small{font-weight:700;opacity:1}
+.s-fdays .s-now:after{content:"";position:absolute;left:30%;right:30%;bottom:0;height:2px;border-radius:2px;background:var(--b-primary-ink)}
+.s-fdays .s-lk{color:rgba(255,255,255,.5)}
+.s-fdays .s-lk i{position:absolute;top:-6px;right:4px;width:15px;height:15px;border-radius:50%;background:var(--b-accent2);color:var(--b-ink);display:flex;align-items:center;justify-content:center}
+.s-fdays .s-lk i svg{width:9px;height:9px}
+.s-fg{position:relative;width:150px;height:150px;margin:18px auto 0;flex:none}
+.s-fg svg{position:absolute;inset:0;width:150px;height:150px}
+.s-fg b{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font:300 52px/1 var(--b-font)}
+.s-fg b small{font-size:12px;letter-spacing:2px;margin-top:4px}
+.s-fst{text-align:center;font:400 21px var(--b-font);margin:12px 0 0;flex:none}
+.s-fch{display:block;width:100%;height:92px;margin-top:14px;flex:none}
+.s-fchb{flex:1;background:rgba(255,255,255,.16)}
+.s-fsheet{position:absolute;left:0;right:0;bottom:0;background:var(--b-surface);color:var(--b-ink);border-radius:24px 24px 0 0;padding:20px 20px 34px;box-shadow:0 -10px 30px rgba(0,0,0,.18);display:flex;flex-direction:column;z-index:3}
+.s-fk{display:flex;align-items:center;gap:8px;font:700 20px var(--b-font);color:var(--b-primary)}
+.s-fk i{width:26px;height:26px;border-radius:50%;background:var(--b-accent2);color:var(--b-ink);display:flex;align-items:center;justify-content:center;flex:none}
+.s-fk i svg{width:13px;height:13px}
+.s-fsheet p{font:400 14.5px/1.4 var(--b-font);color:var(--b-ink);margin:6px 0 0}
+.s-fcmp{margin-top:12px}
+.s-fcmp .s-h,.s-fcmp .s-r{display:grid;grid-template-columns:1fr 62px 78px;align-items:center}
+.s-fcmp .s-h{font:600 10.5px var(--b-font);letter-spacing:.07em;text-transform:uppercase;color:var(--b-ink2);padding-bottom:4px}
+.s-fcmp .s-h span:nth-child(n+2),.s-fcmp .s-r span:nth-child(n+2){text-align:center}
+.s-fcmp .s-h span:nth-child(3){color:var(--b-primary)}
+.s-fcmp .s-r{font:400 13.5px var(--b-font);padding:7px 0;border-top:1px solid var(--b-line)}
+.s-fcmp .s-r span:nth-child(2){color:var(--b-ink2)}
+.s-fcmp .s-r span:nth-child(3){font-weight:700;color:var(--b-primary)}
+.s-fsheet .s-qcta{margin-top:16px}
+/* their Tides screen (rebuilt from the fishingpoints.app render) */
+.s-tidev .s-fhd{background:var(--b-tidetop);padding-bottom:0}
+.s-tidev .s-floc{color:var(--b-primary)}
+.s-tidev .s-floc small{color:var(--b-ink2);opacity:1}
+.s-tidev .s-gb span{background:var(--b-surface);box-shadow:0 1px 6px rgba(0,0,0,.08)}
+.s-tidev .s-fdays{background:var(--b-tidetop);border-radius:0 0 18px 18px;box-shadow:0 4px 10px rgba(0,0,0,.04)}
+.s-tidev .s-fdays .s-now{color:var(--b-primary)}
+.s-tidev .s-fdays .s-now:after{background:var(--b-primary)}
+.s-tidev .s-fdays .s-lk{color:rgba(0,0,0,.28)}
+.s-tcard{margin:12px 10px 0;background:var(--b-surface);border-radius:18px;padding:8px 0 10px;flex:none}
+.s-tch{display:block;width:100%;height:150px}
+.s-tax{display:flex;justify-content:space-around;font:400 11px var(--b-font);color:var(--b-ink);padding:0 18px 0 30px}
+.s-tst{display:grid;grid-template-columns:1fr 1.1fr 1fr;text-align:center;margin:8px 12px 0;padding-top:8px;border-top:1px solid var(--b-line)}
+.s-tst small{display:block;font:400 11.5px var(--b-font);color:var(--b-ink2)}
+.s-tst b{display:block;font:400 16px var(--b-font);margin-top:2px}
+.s-tst b.s-big{font-weight:700;font-size:21px}
+.s-tst em{display:block;font:italic 400 12px var(--b-font);color:var(--b-ink);margin-top:1px}
+
+/* paywall — their art direction (proposed) */
+.scr.s-pw{background:var(--b-grad);color:var(--b-primary-ink)}
+.s-pnav{display:flex;justify-content:space-between;padding:52px 18px 0;flex:none}
+.s-pnav button,.s-pnav span{color:var(--b-primary-ink);font:400 16px var(--b-font);padding:0}
+.s-pw h1{text-align:center;font:700 27px/1.1 var(--b-font);margin:0}
+.s-pw h1 em{font-style:normal;color:var(--b-accent2)}
+.s-tri{text-align:center;color:var(--b-accent2);font:700 18px var(--b-font);margin:6px 0 0}
+.s-art{display:block;width:300px;margin:2px auto 0;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 55%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 55%,transparent 100%)}
+.s-art.s-wv{width:290px;margin:6px auto 0;-webkit-mask-image:radial-gradient(ellipse 50% 60% at 50% 55%,#000 60%,transparent 100%);mask-image:radial-gradient(ellipse 50% 60% at 50% 55%,#000 60%,transparent 100%)}
+.s-cm{text-align:center}
+.s-cm b{display:block;font:700 18px var(--b-font)}
+.s-cm span{display:block;font:400 13px/1.38 var(--b-font);opacity:.92;margin:3px 26px 0}
+.s-car{position:relative;height:186px;flex:none;margin-top:4px}
+.s-slide{position:absolute;inset:0;opacity:0;transition:opacity .45s;display:flex;flex-direction:column;justify-content:flex-end}
+.s-slide.on{opacity:1}
+.s-slide .s-art{margin-bottom:auto}
+.s-slide .s-mcard{display:block;width:150px;margin:4px auto auto;border-radius:12px;box-shadow:0 8px 22px rgba(0,0,0,.35)}
+.s-dots{display:flex;justify-content:center;gap:6px;padding:8px 0 0}
+.s-dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);display:block;cursor:pointer;transition:.2s}
+.s-dots i.on{background:var(--b-accent2)}
+.s-pproof{margin:12px 18px 14px;border:1px solid rgba(255,255,255,.18);border-radius:var(--b-card);background:rgba(255,255,255,.06);padding:10px 12px;text-align:center;flex:none}
+.s-pproof b{display:block;font:600 14px var(--b-font)}
+.s-tstars{color:var(--b-accent2);letter-spacing:1px;margin-right:6px}
+.s-stars{display:inline-flex;gap:1.5px;vertical-align:-1px}
+.s-pproof small{display:block;font:400 12.5px/1.4 var(--b-font);opacity:.85;margin-top:3px}
+.s-sheetp{margin-top:auto;background:var(--b-sheet);padding:12px 16px 30px;color:var(--b-ink);display:flex;flex-direction:column;gap:9px;flex:none}
+.s-trow{display:flex;align-items:center;justify-content:space-between;background:var(--b-toggle);border-radius:14px;height:44px;padding:0 10px 0 16px;font:400 15px var(--b-font);color:var(--b-ink);width:100%}
+.s-sw{width:50px;height:30px;border-radius:15px;background:var(--b-line);position:relative;flex:none;transition:background .2s}
+.s-sw:after{content:"";position:absolute;top:2px;left:2px;width:26px;height:26px;border-radius:50%;background:var(--b-surface);box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+.s-sw.on{background:var(--b-primary)}.s-sw.on:after{transform:translateX(20px)}
+.s-pc{display:block;width:100%;text-align:left;background:var(--b-surface);border:2px solid transparent;border-radius:var(--b-card);padding:0;overflow:hidden;color:var(--b-ink)}
+.s-pc.on{border-color:var(--b-primary)}
+.s-pc .s-band{display:block;background:var(--b-primary);color:var(--b-primary-ink);text-align:center;font:600 12.5px var(--b-font);padding:3px 0}
+.s-pc .s-bd{display:flex;align-items:center;justify-content:space-between;padding:8px 14px 9px;gap:8px}
+.s-pc .s-nm{display:block;font:700 19px var(--b-font)}
+.s-pc .s-tm{display:block;font:400 12px var(--b-font);margin-top:1px;white-space:nowrap}
+.s-pc .s-pm{font:400 14.5px var(--b-font);white-space:nowrap}
+.s-pill{width:100%;height:52px;flex:none;border:0;border-radius:var(--b-pill);background:var(--b-primary);color:var(--b-primary-ink);font:700 17px var(--b-font);box-shadow:0 4px 10px rgba(0,0,0,.18)}
+.s-trust{text-align:center;font:400 12px var(--b-font);color:var(--b-ink2);margin:-2px 0 0}
+.s-terms{display:flex;justify-content:center;gap:16px;font:400 11px var(--b-font);color:var(--b-ink2)}
+
+/* offer on close — idea 5 */
+.s-ohd{position:relative;background:var(--b-grad);color:var(--b-primary-ink);padding:70px 24px 0;height:222px;flex:none;text-align:center;overflow:hidden}
+.s-ohd img{position:absolute;left:50%;bottom:-4px;width:300px;transform:translateX(-50%);-webkit-mask-image:radial-gradient(ellipse 50% 60% at 50% 60%,#000 60%,transparent 100%);mask-image:radial-gradient(ellipse 50% 60% at 50% 60%,#000 60%,transparent 100%)}
+.s-ohd h2{font:700 25px/1.18 var(--b-font);margin:0}
+.s-xb{position:absolute;top:54px;right:16px;color:var(--b-primary-ink);font:400 22px var(--b-font);opacity:.85;padding:0}
+.s-of .s-in{flex:1;display:flex;flex-direction:column;padding:18px 22px 24px;min-height:0}
+.s-of h3{font:700 22px var(--b-font);color:var(--b-primary);margin:0;text-shadow:0 2px 5px rgba(0,0,0,.12)}
+.s-opr{font:400 14.5px var(--b-font);color:var(--b-ink2);margin:4px 0 0}
+.s-tl{list-style:none;margin:16px 0 0;padding:0}
+.s-tl li{position:relative;padding:0 0 13px 36px}
+.s-tl li:before{content:"";position:absolute;left:10px;top:22px;bottom:0;width:2px;background:var(--b-line)}
+.s-tl li:last-child:before{display:none}
+.s-tl .s-dt{position:absolute;left:0;top:0;width:22px;height:22px;border-radius:50%;background:var(--b-tint);color:var(--b-primary);display:flex;align-items:center;justify-content:center}
+.s-tl .s-dt svg{width:12px;height:12px}
+.s-tl li:first-child .s-dt{background:var(--b-primary);color:var(--b-primary-ink)}
+.s-tl b{display:block;font:600 14.5px var(--b-font);color:var(--b-ink)}
+.s-tl .s-tx{display:block;font:400 13px/1.4 var(--b-font);color:var(--b-ink2);margin-top:1px}
+.s-of .s-fcmp{margin:14px 0 10px}
+.s-rv{background:var(--b-sheet);border-radius:var(--b-card);padding:11px 14px;font:400 13px/1.45 var(--b-font);color:var(--b-ink);margin-top:4px}
+.s-rv .s-tstars{font-size:12px;display:block;margin-bottom:2px}
+.s-rv small{display:block;color:var(--b-ink2);margin-top:3px;font-size:12px}
+.s-of .s-opc{margin-top:auto;margin-bottom:12px;cursor:default}
+.s-lnk{color:var(--b-primary);font:500 15px var(--b-font);padding:12px 0 0;align-self:center}
+.s-of:not(.s-freev) .s-free,.s-of.s-freev .s-tlv{display:none!important}
+
+/* sign in — their sheet, moved after the purchase (idea 2) */
+.s-aph{display:block;width:100%;height:auto;flex:none;-webkit-mask-image:linear-gradient(#000 76%,transparent);mask-image:linear-gradient(#000 76%,transparent)}
+.s-ac .s-in{flex:1;display:flex;flex-direction:column;padding:6px 26px 28px;min-height:0}
+.s-att{display:flex;align-items:center;gap:14px}
+.s-att img{width:52px;height:52px;border-radius:12px;flex:none}
+.s-ac h2{font:700 26px/1.15 var(--b-font);margin:0;color:var(--b-ink)}
+.s-ac p{font:400 15px/1.42 var(--b-font);color:var(--b-ink);margin:16px 0 0}
+.s-ok{display:flex;align-items:center;gap:8px;background:var(--b-tint);color:var(--b-primary);border-radius:10px;padding:9px 12px;font:600 13.5px var(--b-font);margin-top:14px}
+.s-ok .s-ic{width:18px;height:18px}
+.s-sso{display:flex;flex-direction:column;gap:12px;margin-top:auto}
+.s-sso button{height:44px;border-radius:var(--b-btn);border:0;font:500 16px var(--b-font);display:flex;align-items:center;justify-content:center;gap:9px}
+.s-sso .s-ic{width:18px;height:18px}
+.s-b-ap{background:var(--b-apple);color:var(--b-primary-ink)}
+.s-sso .s-b-go{background:var(--b-google);color:var(--b-ink);border:1px solid var(--b-line)}
+.s-b-fb{background:var(--b-fb);color:var(--b-primary-ink)}
+.s-b-em{background:var(--b-mail);color:var(--b-primary-ink)}
+.s-alg{font:400 12px/1.45 var(--b-font);color:var(--b-ink);margin-top:12px}
+.s-alg a{color:var(--b-primary);text-decoration:none}
+
+/* SCREENS:END */
+
+/* prototype toolbar, walkthrough, QR */
+.tools{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:520px}
+.seg{display:inline-flex;align-items:center;background:#fff;border:1px solid #DCE2E7;border-radius:20px;padding:3px;gap:2px}
+.seg button{padding:6px 11px;border-radius:16px;font:600 12px/1 'Plus Jakarta Sans',sans-serif;color:var(--ink2);transition:.14s}
+.seg button.on{background:var(--ink);color:#fff}
+.demo-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border-radius:20px;background:var(--accent);color:#fff;
+  font:700 12px/1 'Plus Jakarta Sans',sans-serif}
+.demo-cap{width:390px;max-width:calc(100vw - 24px);background:#fff;border:1px solid var(--hair);border-radius:16px;padding:14px 14px 12px;
+  display:flex;align-items:center;gap:12px;position:relative;overflow:hidden;box-shadow:0 4px 18px rgba(11,40,74,.07)}
+.demo-cap .bar{position:absolute;left:0;top:0;right:0;height:3px;background:#EDF1F4}
+.demo-cap .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s linear}
+.demo-cap p{flex:1;font-size:13.5px;line-height:1.45;color:var(--ink);margin:0;font-weight:500}
+.demo-cap button{font:700 12px/1 'Plus Jakarta Sans',sans-serif;color:var(--ink2);padding:7px 10px;border-radius:12px;border:1px solid #DCE2E7;flex:none}
+.finger{position:absolute;z-index:90;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:rgba(11,40,74,.26);
+  border:2px solid rgba(255,255,255,.95);box-shadow:0 4px 14px rgba(0,0,0,.25);pointer-events:none;opacity:0;left:50%;top:60%;
+  transition:left .32s cubic-bezier(.4,0,.2,1),top .32s cubic-bezier(.4,0,.2,1),opacity .2s,transform .15s}
+.finger.show{opacity:1}
+.finger.press{transform:scale(.78);background:rgba(11,40,74,.4)}
+.qr{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--hair);border-radius:16px;padding:10px 16px 10px 10px;text-align:left}
+.qr img{width:135px;height:135px;display:block;image-rendering:pixelated;border-radius:6px}
+.qr span{font-size:12.5px;line-height:1.45;color:var(--ink2)}
+.qr b{display:block;color:var(--ink);font-size:13.5px}
+@media(max-width:1080px){.qr{display:none}}
+
+#view-proto .tools{order:0} #view-proto .demo-cap{order:1} #view-proto .phone{order:2} #view-proto .chips{order:3}
+#view-proto .chiphint{order:4} #view-proto .qr{order:5}
+.cta-row .qr{order:2}
+/* on a phone: the prototype is the screen */
+@media(max-width:1px){
+  #view-proto .phonecol{padding:0 0 28px;gap:14px}
+  #view-proto .phone{width:100vw;height:calc(100svh - 58px);min-height:640px;border:0;border-radius:0;box-shadow:none;order:1}
+  #view-proto .phone-in{border-radius:0}
+  #view-proto .island,#view-proto .sbar,#view-proto .homebar{display:none}
+  #view-proto .scr-top{padding-top:12px}
+  #view-proto .scr--wel .scr-top{padding-top:0}
+  #view-proto .s-hero{height:300px}
+  #view-proto .scr-foot{padding-bottom:16px}
+  #view-proto .s-ltop{padding-top:10px}
+  #view-proto .tools{order:3;padding:0 12px}
+  #view-proto .demo-cap{position:fixed;left:12px;right:12px;bottom:12px;width:auto;max-width:none;z-index:95}
+  #view-proto .chips{order:4;padding:0 12px}
+  #view-proto .chiphint{order:5}
+}
+
+/* overview: walkthrough button */
+.herobtns{display:flex;justify-content:center;margin-top:30px}
+.ghostbtn{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--hair2);color:var(--ink);font-size:14px;
+  font-weight:700;padding:9px 20px 9px 9px;border-radius:30px;box-shadow:0 2px 12px rgba(11,40,74,.06);transition:.16s}
+.ghostbtn:hover{box-shadow:0 4px 18px rgba(11,40,74,.1)}
+.ghostbtn .pl{width:30px;height:30px;border-radius:50%;background:var(--accent);display:grid;place-items:center}
+.ghostbtn .pl svg{width:12px;height:12px;fill:#fff;margin-left:2px}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:470px;margin:0 auto}
+.chip{padding:7px 13px;border-radius:20px;border:1px solid #DCE2E7;background:#fff;
+  font:600 12px/1 'Plus Jakarta Sans',sans-serif;color:var(--ink2);transition:.14s}
+.chip:hover{color:var(--ink);border-color:#C3CCD4}
+.chip.offer{border-style:dashed;border-color:var(--b-primary);color:var(--accent-lift)}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff;border-style:solid}
+.chiphint{text-align:center;font-size:11px;color:var(--ink3);margin:0;max-width:430px}
+
+/* ============ the short panel ============ */
+.pn{padding:30px 30px 60px}
+.pn-n{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink)}
+.pn-n.ctx{color:var(--panel-muted)}
+.pn-t{font-size:23px;line-height:1.18;font-weight:700;letter-spacing:-.028em;margin:8px 0 0;color:var(--panel-ink)}
+.pn-hyp{font-size:15px;line-height:1.62;color:#2E3D4B;margin:16px 0 0}
+.pn-hyp b{font-weight:700;color:var(--panel-ink)}
+.pn-out{margin-top:22px;border-top:1px solid var(--panel-line);padding-top:18px}
+.pn-out .lab{font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--panel-muted)}
+.pn-out .v{font-size:31px;font-weight:700;letter-spacing:-.035em;color:var(--accent-ink);margin-top:7px;line-height:1}
+.pn-kept{margin-top:22px;font-size:12.5px;line-height:1.55;color:var(--panel-muted)}
+.pn-kept b{color:#2E3D4B;font-weight:700}
+.pn-foot{font-size:11.5px;line-height:1.55;color:var(--panel-muted);border-top:1px solid var(--panel-line);
+  padding-top:14px;margin-top:26px}
+.pn-sep{height:1px;background:var(--panel-line);margin:26px 0}
+.hidden{display:none !important}
+
+/* ============ lavender mist page, lit like the Ads Manager research page ============ */
+:root{--bg:#F4F2FA}
+body{background:radial-gradient(60% 50% at 0% 0%,rgba(115,70,224,.08),transparent 70%),
+  radial-gradient(55% 45% at 100% 100%,rgba(232,101,15,.07),transparent 70%),#F4F2FA;background-attachment:fixed}
+.nav{background:rgba(244,242,250,.86)}
+.hero::after{background:radial-gradient(40% 50% at 8% 20%,rgba(115,70,224,.12),transparent 70%),
+   radial-gradient(38% 45% at 92% 18%,rgba(232,101,15,.07),transparent 70%)}
+/* ============ keyword colours (Adapty ASA orange / purple; change only on a clash with their brand) ============ */
+:root{--ka:#E8650F;--ka-bg:#FFF2E8;--ka-ink:#B44A05;--kb:#7346E0;--kb-bg:#F2EDFF;--kb-ink:#5A2FC4}
+
+/* ---- ASA block on the overview ---- */
+.asa{padding:76px 0 0}
+.asa-card{position:relative;overflow:hidden;border-radius:28px;background:#0C1B2C;color:#fff;padding:46px 48px;
+  display:grid;grid-template-columns:1fr 250px;gap:44px;align-items:center;box-shadow:0 30px 60px -30px rgba(12,27,44,.55)}
+.asa-card::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(50% 70% at 0% 0%,rgba(115,70,224,.38),transparent 70%),radial-gradient(40% 60% at 100% 100%,rgba(232,101,15,.22),transparent 70%)}
+.asa-card>*{position:relative}
+.asa-card .sec-k{color:#B9A4FF;margin-bottom:14px}
+.asa-card h2{font-size:36px;line-height:1.12;font-weight:700;letter-spacing:-.035em;margin:0 0 18px;color:#fff}
+.asa-card h2 em{font-style:normal;background:linear-gradient(90deg,#FF9A4D,#A57CFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.asa-card p{font-size:16.5px;line-height:1.66;color:rgba(255,255,255,.78);margin:0;max-width:600px}
+.asa-card p b{color:#fff;font-weight:700}
+.asa-btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px;align-items:center}
+.asa-go{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(90deg,#7346E0,#9B6BFF);color:#fff;text-decoration:none;
+  font-size:16px;font-weight:700;letter-spacing:-.01em;padding:17px 28px;border-radius:32px;box-shadow:0 10px 30px -8px rgba(115,70,224,.7);transition:.16s}
+.asa-go:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.asa-go svg{width:16px;height:16px}
+.asa-alt{display:inline-flex;align-items:center;gap:8px;color:#fff;font-size:14.5px;font-weight:700;padding:15px 20px;border-radius:30px;
+  border:1px solid rgba(255,255,255,.22)}
+.asa-alt:hover{background:rgba(255,255,255,.08)}
+.asa-alt svg{width:13px;height:13px}
+.asa-stats{display:flex;flex-direction:column;gap:0;border-left:1px solid rgba(255,255,255,.14);padding-left:30px}
+.asa-stats div{padding:14px 0;border-top:1px solid rgba(255,255,255,.1)}
+.asa-stats div:first-child{border-top:none;padding-top:0}
+.asa-stats b{display:block;font-size:34px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.asa-stats b.o{color:#FF9A4D} .asa-stats b.p{color:#B9A4FF}
+.asa-stats span{display:block;font-size:12.5px;color:rgba(255,255,255,.62);margin-top:6px;line-height:1.4}
+@media(max-width:860px){.asa-card{grid-template-columns:1fr;padding:34px 26px;gap:28px}.asa-stats{border-left:none;padding-left:0;flex-direction:row;gap:18px;flex-wrap:wrap}
+  .asa-stats div{border-top:none;padding:0;flex:1;min-width:120px}.asa-card h2{font-size:28px}.asa{padding-top:56px}}
+
+html,body{overflow-x:clip}
+.nav-links{gap:4px}
+.nav-links button{padding:10px 20px;font-size:15px;border-radius:11px}
+.nav-links button.on{box-shadow:0 1px 6px rgba(11,40,74,.12),0 0 0 1px rgba(11,40,74,.06)}
+@media(max-width:640px){.nav-links button{padding:8px 13px;font-size:13.5px}}
+/* ---- overview: keyword table + next steps ---- */
+.band-kw{margin-top:12px!important;padding-top:12px;border-top:1px solid var(--hair);font-size:14.5px!important}
+.band-kw b{color:#7346E0;font-weight:700}
+.kwsec,.next{margin-top:96px}
+.kwt{margin-top:28px;background:#fff;border:1px solid var(--hair);border-radius:22px;overflow:hidden;box-shadow:0 2px 10px rgba(11,40,74,.04)}
+.kwt-h,.kwt-r{display:grid;grid-template-columns:150px 1fr 1fr 28px;gap:20px;align-items:center;padding:16px 24px;text-align:left;width:100%}
+.kwt-h{background:#FAF9FD;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.kwt-h .f{color:var(--ka-ink);text-transform:none;letter-spacing:-.01em;font-size:14px;font-weight:800}
+.kwt-h .b{color:var(--kb-ink);text-transform:none;letter-spacing:-.01em;font-size:14px;font-weight:800}
+.kwt-h::after{content:''}
+.kwt-r{border-top:1px solid var(--hair);font-size:14.5px;line-height:1.45;color:var(--ink2);transition:.15s}
+.kwt-r:hover{background:#FAF9FD}
+.kwt-r .s{font-weight:700;color:var(--ink)}
+.kwt-r i{font-style:normal;color:var(--ink3);font-weight:700;transition:.15s}
+.kwt-r:hover i{color:var(--ink);transform:translateX(3px)}
+.kwhyp{display:inline-block;margin-left:6px;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ka-ink);
+  border:1px dashed rgba(232,101,15,.5);border-radius:5px;padding:1px 6px;vertical-align:2px}
+@media(max-width:760px){.kwt-h{display:none}.kwt-r{grid-template-columns:1fr;gap:6px;padding:16px 20px}.kwt-r i{display:none}
+  .kwt-r span[data-k]::before{content:attr(data-k);font-weight:700}
+  .kwt-r span.ka::before{color:var(--ka-ink)} .kwt-r span.kb::before{color:var(--kb-ink)}}
+.next-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+.next-steps div{background:#fff;border:1px solid var(--hair);border-radius:20px;padding:24px 24px 26px;position:relative}
+.next-steps div::before{content:'';position:absolute;left:24px;right:24px;top:0;height:3px;border-radius:0 0 3px 3px;
+  background:linear-gradient(90deg,#E8650F,#7346E0)}
+.next-steps b{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#7346E0}
+.next-steps h4{font-size:19px;font-weight:700;letter-spacing:-.02em;margin:8px 0 8px}
+.next-steps p{font-size:14px;line-height:1.55;color:var(--ink2);margin:0}
+@media(max-width:760px){.next-steps{grid-template-columns:1fr}}
+.proof2{max-width:860px;grid-template-columns:1fr 1fr;gap:34px;padding-top:34px}
+.proof2 .proof-col{display:flex;flex-direction:column;gap:14px}
+.proof2 .proof-k{grid-column:auto;text-align:left;margin-bottom:2px}
+.proof2 .asa-col{border-left:1px solid var(--hair);padding-left:34px}
+.proof2 .asa-col .proof-k{color:#7346E0}
+.proof2 .asa-col .tick{background:rgba(115,70,224,.14)}
+.proof2 .asa-col .tick svg{stroke:#7346E0}
+@media(max-width:700px){.proof2{grid-template-columns:1fr;gap:26px}.proof2 .asa-col{border-left:none;padding-left:0}}
+/* ---- nav tools (prototype only) ---- */
+.nav-tools{display:none;align-items:center;gap:8px;margin-left:auto}
+body.proto .nav-tools{display:flex}
+body.proto .nav-links{margin-left:14px}
+.nav-in{max-width:none}
+#view-over .wrap{max-width:1080px}
+body:not(.proto) .nav-in{max-width:1080px}
+.hdemo-btn{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;font:700 12.5px/1 'Plus Jakarta Sans',sans-serif;
+  padding:9px 15px;border-radius:20px;transition:.16s;white-space:nowrap}
+.hdemo-btn:hover{filter:brightness(1.06)}
+.hdemo-btn svg{width:11px;height:11px;fill:#fff}
+@media(max-width:899px){body.proto .nav-tools{display:none}}
+
+/* ---- the two-phone stage ---- */
+html:not(.embed) #view-proto .stage{display:none}
+#view-proto.on{display:block}
+.p3{display:grid;grid-template-columns:minmax(0,1fr) 360px;height:calc(100vh - 58px);height:calc(100svh - 58px)}
+.p3-stage{position:relative;display:flex;flex-direction:column;min-width:0;min-height:0;padding:18px 20px 12px}
+.p3-mtools{display:none;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.p3-mtog{display:none;margin:0 auto 12px;background:#fff;border:1px solid #DCE2E7;border-radius:22px;padding:3px;gap:3px}
+.p3-mtog button{padding:8px 16px;border-radius:18px;font:700 13px/1 'Plus Jakarta Sans',sans-serif;color:var(--ink2)}
+.p3-mtog button[data-one=a].on{background:var(--ka);color:#fff}
+.p3-mtog button[data-one=b].on{background:var(--kb);color:#fff}
+.duo{flex:1;min-height:0;display:flex;justify-content:center;align-items:center;gap:22px}
+.flow{display:flex;flex-direction:column;align-items:center;gap:10px}
+.kwcard{width:188px;flex:none;align-self:center;border-radius:16px;padding:16px 16px 18px;border:1px solid}
+.kwcard.ka{background:var(--ka-bg);border-color:rgba(232,101,15,.25)} .kwcard.kb{background:var(--kb-bg);border-color:rgba(115,70,224,.25)}
+.kwcard .k{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.kwcard .q{display:flex;align-items:flex-start;gap:7px;font-size:16px;line-height:1.25;font-weight:800;letter-spacing:-.02em;margin:9px 0 10px}
+.kwcard .q svg{width:15px;height:15px;flex:none;margin-top:3px}
+.kwcard.ka .q{color:var(--ka-ink)} .kwcard.kb .q{color:var(--kb-ink)}
+.kwcard p{font-size:12.5px;line-height:1.5;color:var(--ink2)}
+.kwcard .who{display:block;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin:12px 0 4px}
+.kwpill{display:none;align-items:center;gap:7px;font-weight:800;font-size:13px;padding:7px 14px 7px 11px;border-radius:20px;white-space:nowrap}
+.kwpill svg{width:13px;height:13px}
+.kwpill.ka{background:var(--ka-bg);color:var(--ka-ink)} .kwpill.kb{background:var(--kb-bg);color:var(--kb-ink)}
+.kwpill small{font-weight:600;opacity:.7;font-size:11px}
+.p3.top .kwcard{display:none} .p3.top .kwpill{display:inline-flex}
+.pbox{position:relative;flex:none}
+.pbox iframe{position:absolute;top:0;left:0;width:390px;height:844px;border:0;transform-origin:0 0;border-radius:46px;background:transparent}
+.pbox::after{content:'';position:absolute;inset:-5px;border-radius:52px;pointer-events:none;transition:box-shadow .2s}
+.flow.ka .pbox::after{box-shadow:0 0 0 3px var(--ka),0 30px 60px -28px rgba(232,101,15,.45)}
+.flow.kb .pbox::after{box-shadow:0 0 0 3px var(--kb),0 30px 60px -28px rgba(115,70,224,.45)}
+.p3-bar{flex:none;min-height:46px;display:flex;align-items:center;justify-content:center;margin-top:12px}
+.steps{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.step{position:relative;padding:8px 13px;border-radius:20px;border:1px solid #DCE2E7;background:#fff;
+  font:600 12px/1 'Plus Jakarta Sans',sans-serif;color:var(--ink2);transition:.14s}
+.step:hover{color:var(--ink);border-color:#C3CCD4}
+.step.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.step.diff::after{content:'';position:absolute;top:-3px;right:-3px;width:10px;height:10px;border-radius:50%;
+  background:linear-gradient(90deg,var(--ka) 50%,var(--kb) 50%);box-shadow:0 0 0 2px var(--bg)}
+.hcap{display:flex;align-items:center;gap:14px;background:var(--ink);color:#fff;border-radius:16px;padding:10px 12px 10px 18px;max-width:760px;width:100%}
+.hcap p{flex:1;font-size:13.5px;line-height:1.4;font-weight:600;margin:0}
+.hcap .bar{width:64px;height:4px;border-radius:2px;background:rgba(255,255,255,.2);overflow:hidden;flex:none}
+.hcap .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s linear}
+.hcap button{font-size:12px;font-weight:700;padding:7px 13px;border-radius:14px;background:rgba(255,255,255,.14)}
+
+/* ---- panel ---- */
+.p3-panel{border-left:1px solid var(--hair);background:var(--panel);color:var(--panel-ink);overflow-y:auto;min-height:0}
+.p3-panel .pn{padding:24px 26px 40px}
+.sh{position:relative;overflow:hidden;border-radius:16px;margin-bottom:24px;background:#0C1B2C;color:#fff;
+  box-shadow:0 14px 30px -18px rgba(12,27,44,.6)}
+.sh::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(70% 90% at 0% 0%,rgba(115,70,224,.42),transparent 70%),radial-gradient(60% 80% at 100% 100%,rgba(232,101,15,.22),transparent 70%)}
+.sh>*{position:relative}
+.sh summary{list-style:none;cursor:pointer;padding:15px 16px 14px}
+.sh summary::-webkit-details-marker{display:none}
+.sh .top{display:flex;align-items:flex-start;gap:10px}
+.sh .lab{flex:1;font-size:14px;font-weight:700;letter-spacing:-.01em;line-height:1.3}
+.sh .lab small{display:block;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#B9A4FF;margin-bottom:4px}
+.sh .more{flex:none;font-size:11.5px;font-weight:700;color:rgba(255,255,255,.75);padding:5px 10px;border-radius:12px;border:1px solid rgba(255,255,255,.2);white-space:nowrap}
+.sh[open] .more .o{display:none} .sh:not([open]) .more .c{display:none}
+.sh .lit{display:flex;align-items:center;gap:6px;margin-top:13px}
+.sh .lit button{width:30px;height:26px;border-radius:8px;font:800 11px/1 'Plus Jakarta Sans',sans-serif;
+  background:rgba(255,255,255,.08);color:rgba(255,255,255,.45);transition:.2s}
+.sh .lit button:hover{color:#fff}
+.sh .lit button.on{background:#f8d20b;color:#0b284a;box-shadow:0 0 0 3px rgba(248,210,11,.25),0 0 18px rgba(248,210,11,.5)}
+.sh .lit span{margin-left:auto;font-size:11px;font-weight:600;color:rgba(255,255,255,.6);white-space:nowrap}
+.sh ol{list-style:none;padding:0 16px 12px;margin:0}
+.sh li{display:flex;gap:10px;align-items:baseline;padding:9px 0;border-top:1px solid rgba(255,255,255,.1);font-size:12.5px;line-height:1.4;color:rgba(255,255,255,.82);cursor:pointer}
+.sh li:hover{color:#fff}
+.sh li.on{color:#fff;font-weight:700}
+.sh li .n{font-weight:800;color:rgba(255,255,255,.4);font-size:11px;width:16px;flex:none}
+.sh li.on .n{color:#f8d20b}
+.sh li .t{flex:1}
+.sh li .o{font-weight:700;color:#f8d20b;font-size:11.5px;white-space:nowrap}
+.pn-badge{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--panel-muted)}
+.pn-badge i{width:10px;height:10px;border-radius:50%;background:linear-gradient(90deg,var(--ka) 50%,var(--kb) 50%)}
+.pn-badge.same i{background:#C4CCD4}
+.kc{border-radius:14px;padding:15px 16px 15px 17px;margin-top:12px;border-left:4px solid}
+.kc.ka{background:var(--ka-bg);border-color:var(--ka)} .kc.kb{background:var(--kb-bg);border-color:var(--kb)}
+.kc .kk{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:800;letter-spacing:-.01em}
+.kc.ka .kk{color:var(--ka-ink)} .kc.kb .kk{color:var(--kb-ink)}
+.kc .kk svg{width:12px;height:12px}
+.kc p{font-size:13.5px;line-height:1.55;color:#2E3D4B;margin:7px 0 0}
+.kc p b{color:var(--panel-ink);font-weight:700}
+.kc .ko{display:flex;align-items:baseline;gap:8px;margin-top:10px;padding-top:9px;border-top:1px solid rgba(11,40,74,.08)}
+.kc .ko span{font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--panel-muted)}
+.kc .ko b{font-size:15.5px;font-weight:700;letter-spacing:-.02em;white-space:nowrap}
+.kc.ka .ko b{color:var(--ka-ink)} .kc.kb .ko b{color:var(--kb-ink)}
+.kc .ko b.nc{font-size:13px;color:var(--panel-muted)}
+.hyptag{display:block;margin-top:10px;font-size:11.5px;line-height:1.45;font-weight:600;color:var(--ka-ink);background:#fff;border:1px dashed rgba(232,101,15,.45);border-radius:8px;padding:7px 9px}
+.hyptag b{font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:10px;margin-right:4px}
+.pn-note{margin-top:14px;font-size:12.5px;line-height:1.55;color:#2E3D4B;background:#F4F2FA;border-radius:12px;padding:12px 14px}
+.pn-also{margin-top:20px;border-top:1px solid var(--panel-line);padding-top:16px}
+.pn-also .lab{font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--panel-muted)}
+.pn-also .row{display:flex;gap:10px;align-items:baseline;margin-top:9px;font-size:13px;line-height:1.4;color:#2E3D4B;font-weight:600}
+.pn-also .row .o{margin-left:auto;font-weight:700;color:var(--accent-ink);white-space:nowrap;font-size:12.5px}
+.drawer-btn{display:none;position:fixed;right:16px;bottom:16px;z-index:80;background:var(--ink);color:#fff;
+  font:700 13px/1 'Plus Jakarta Sans',sans-serif;padding:13px 18px;border-radius:24px;box-shadow:0 10px 26px rgba(11,40,74,.32)}
+.drawer-btn i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;background:linear-gradient(90deg,var(--ka) 50%,var(--kb) 50%)}
+@media(max-width:1249px){
+  .p3{grid-template-columns:minmax(0,1fr)}
+  .p3-panel{position:fixed;top:58px;right:0;bottom:0;width:min(380px,92vw);transform:translateX(102%);transition:transform .25s;z-index:75;
+    box-shadow:-24px 0 50px rgba(11,40,74,.16)}
+  body.drawer .p3-panel{transform:none}
+  body.proto .drawer-btn{display:block}
+}
+@media(max-width:899px){ .p3-mtools{display:flex} }
+@media(max-width:759px){
+  .p3{height:auto;min-height:calc(100svh - 58px)}
+  .p3-stage{padding:14px 12px 80px}
+  .p3-mtog{display:inline-flex}
+  .p3.one .flow{display:none} .p3.one .flow.show{display:flex}
+  .kwcard{display:none!important} .kwpill{display:none!important}
+  .duo{flex:none}
+}
+
+/* ---- embed: the iframe is just the phone ---- */
+html.embed,html.embed body{background:transparent!important;overflow:hidden}
+html.embed .nav,html.embed #view-over,html.embed .p3,html.embed .drawer-btn,html.embed .tools,html.embed .chips,html.embed .chiphint,
+html.embed .qr,html.embed .panelcol,html.embed .demo-cap{display:none!important}
+html.embed .stage{display:block;min-height:0}
+html.embed .phonecol{padding:0;display:block}
+html.embed .phone{box-shadow:none}
+
+/* ---- App Store search screen (phone) ---- */
+.scr--as{background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Plus Jakarta Sans',sans-serif}
+.as-bar{display:flex;align-items:center;gap:10px;padding:2px 14px 12px}
+.as-field{flex:1;display:flex;align-items:center;gap:7px;background:#EEEEF0;border-radius:11px;height:37px;padding:0 10px;font-size:16px;color:#111;min-width:0}
+.as-field svg{width:15px;height:15px;flex:none;color:#8E8E93}
+.as-field span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.as-clr{margin-left:auto;width:17px;height:17px;flex:none;border-radius:50%;background:#B4B4BA;color:#fff;font:700 10px/17px sans-serif;text-align:center;font-style:normal}
+.as-cancel{color:#0A7AFF;font-size:16px;flex:none}
+.as-ad{margin:2px 14px 0;padding:13px 12px 12px;border-radius:16px;background:#EEF4FE}
+.as-row{display:flex;gap:12px;align-items:center}
+.as-ic{width:64px;height:64px;border-radius:15px;flex:none;box-shadow:0 0 0 .5px rgba(0,0,0,.14)}
+.as-meta{flex:1;min-width:0}
+.as-meta b{display:block;font-size:15.5px;font-weight:600;color:#111;letter-spacing:-.01em;line-height:1.25}
+.as-meta .s{display:block;font-size:13px;color:#8E8E93;margin-top:1px}
+.as-meta .r{white-space:nowrap;display:flex;align-items:center;gap:6px;margin-top:4px;font-size:12px;color:#8E8E93}
+.as-meta .r .adb{background:#0A7AFF;color:#fff;font-weight:700;font-size:10.5px;border-radius:4px;padding:1px 5px;line-height:1.4}
+.as-get{background:#0A7AFF;color:#fff;font-weight:700;font-size:15px;padding:6px 19px;border-radius:17px;flex:none;min-width:72px;transition:.2s}
+.as-get.open{background:#E4E9F2;color:#0A7AFF}
+.as-shots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}
+.as-shot{position:relative;aspect-ratio:9/17;border-radius:11px;overflow:hidden;background:linear-gradient(180deg,var(--b-as1),var(--b-as2) 55%,var(--b-as3))}
+.as-shot img{position:absolute;left:0;right:0;bottom:0;width:100%;height:80%;object-fit:cover;display:block}
+.as-shot::before{content:'';position:absolute;z-index:1;inset:0 0 auto 0;height:40%;background:linear-gradient(var(--b-as1) 0,var(--b-as1) 52%,rgba(159,238,253,0))}
+.as-shot::after{content:'';position:absolute;inset:auto 0 0 0;height:14%;background:linear-gradient(rgba(17,121,205,0),var(--b-as3))}
+.as-shot b{position:absolute;left:6px;right:6px;top:9px;z-index:2;color:var(--b-cap);font:800 12.5px/1.15 var(--b-font);text-align:center;letter-spacing:-.02em}
+.as-org{margin:16px 14px 0;opacity:.5}
+.as-sk{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid #ECECEF}
+.as-sk i{width:52px;height:52px;border-radius:12px;background:#E6E8EC;flex:none}
+.as-sk div{flex:1}
+.as-sk span{display:block;height:10px;border-radius:5px;background:#E6E8EC;width:62%}
+.as-sk span+span{margin-top:7px;width:40%}
+.as-sk em{width:62px;height:28px;border-radius:14px;background:#EEF0F3;flex:none}
+</style>
+</head>
+<body>
+
+<!-- META (EDIT): what the overview, the two-phone host and the scripts read. Ideas: exactly five, ranked.
+     kwRows: the screens where the two keyword flows differ (4-6); hypA/hypB tags a cell that needs a product
+     they do not sell today. langs: [code, button label, name used in the panel]. liveUrl must match the
+     GitHub Pages repo publish-gh.sh pushes to (the QR points at liveUrl + "?open=proto"). -->
+<script type="application/json" id="meta">
+{
+ "app": "Fishing Points",
+ "liveUrl": "https://eddieatadapty.github.io/fishing-points-asa-rebuild/",
+ "asaUrl": "https://asa.adapty.io/fishbrain",
+ "langs": [["en","EN","English"],["es","ES","Spanish"]],
+ "langNote": "Spanish screens use your Spain App Store prices (19,99 € a year, 3,99 € a month) and your own Spanish Premium table and reviews from fishingpoints.app/es; the rest of the Spanish is our translation. The earlier audit ran in English and Brazilian Portuguese, so there were no Spanish strings to reuse.",
+ "kw": {
+  "a": {"q": "fishbrain", "short": "Fishbrain", "who": "Someone comparing fishing apps who searched another app by name. Ready to switch, and wants to see what Fishing Points does well."},
+  "b": {"q": "tide charts", "short": "Tides", "who": "Someone who wants tide times for their spot today. A utility search, with little intent to pay."}
+ },
+ "ideas": [
+  {"n": 1, "screen": "payoff", "title": "Use the answers you already collect", "impact": "CR +10–20%", "il": "to purchase",
+   "what": "Your quiz asks what kind of fishing they do and which forecasts and map features they want. Then “Preparing fishing maps...” hands everyone the same paywall. Name their picks on a “Your saltwater toolkit” screen, and again on the paywall."},
+  {"n": 2, "screen": "account", "title": "Ask for the account after the purchase", "short": "Account after the purchase", "impact": "CR +5–10%", "il": "to purchase · ARPU up to +17%",
+   "what": "Sign-in is step 3 today: Apple, Google, Facebook or email, then email, password and name, four screens before the first question. Move the same sheet to after the paywall, where “never lose your saved fishing spots and catches” is true."},
+  {"n": 3, "screen": "paywall", "title": "Start with the free week switched on", "impact": "CR +10–20%", "il": "to trial or purchase",
+   "what": "Your 7-day trial sits behind “Not sure? Enable Free Trial.”, switched off, so the first price people see is $49.99 due today. Switch it on by default, put 4.7 stars from 230K+ ratings above the plans, and say “No payment now” under the button."},
+  {"n": 4, "screen": "preview", "title": "Show what Free leaves out, in your own forecast", "short": "Show what Free leaves out", "impact": "CR +5–15%", "il": "to purchase",
+   "what": "Free shows fish activity, tides and weather for today only; Premium plans up to 3 months ahead. Show today’s forecast before the paywall with the rest of the week locked, and the limits for the forecasts they just ticked."},
+  {"n": 5, "screen": "offer", "title": "Catch the people who tap Back", "impact": "CR +5–10%", "il": "from people who close the paywall",
+   "what": "Back on the paywall goes straight to the map. Show one sheet instead: your $9.99 Monthly plan with its 7 free days, for people who don’t want a year yet. A price you already sell, no invented discount, no countdown."}
+ ],
+ "kwRows": [
+  {"screen": "search",    "label": "App Store",      "a": "Ad screenshots: Fish activity, nautical charts, tides", "b": "Ad screenshots: a tide chart, daily highs and lows, sun and moon"},
+  {"screen": "welcome",   "label": "Welcome",        "a": "“Forecasts, maps and tides in one app” · See my forecast", "b": "“Tides for your spot, today” · See today’s tides"},
+  {"screen": "forecasts", "label": "Forecasts",      "a": "Your eight options, in your order", "b": "Tides already ticked and moved to the top"},
+  {"screen": "preview",   "label": "Today free",     "a": "Your Fish activity: today open, the rest of the week locked", "b": "Your Tides chart for their spot: today open, the week locked"},
+  {"screen": "paywall",   "label": "Paywall",        "a": "Free week on, “Catch More Fish” for their trips", "b": "Free week on, a carousel: tides, sun and moon, fish activity"},
+  {"screen": "offer",     "label": "On Back",        "a": "$9.99 Monthly with its 7 free days as a timeline", "b": "“Today’s tides stay free”, or Monthly with 7 free days"}
+ ]
+}
+</script>
+
+
+<div class="nav">
+  <div class="nav-in">
+    <div class="nav-brand">
+      <img class="mk" src="assets/brand/appstore-icon.jpg" alt="Fishing Points">
+      <b>Search to Pro</b><span>· Fishing Points</span>
+    </div>
+<div class="nav-tools" id="navTools">
+      <div class="seg" data-hseg="lang"></div>
+      <button class="hdemo-btn" data-hdemo><svg viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg>30-sec walkthrough</button>
+    </div>
+    <div class="nav-links">
+      <button class="on" data-view="over">Overview</button>
+      <button data-view="proto">Prototype</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= OVERVIEW ======================= -->
+<div class="view on" id="view-over">
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Apple Ads × Onboarding · October 2026</div>
+    <h1>Fishing Points</h1>
+    <p class="lede">Everyone who installs searched for something first. Show them a flow that answers it, and turn more of them into Premium.</p>
+    <div class="meta">Prepared by <b>Adapty</b> · based on your recorded iOS onboarding, your App Store listing, fishingpoints.app and your Apple Ads keywords</div>
+    <div class="herobtns"><button class="ghostbtn" data-demo><span class="pl"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg></span>Watch the 30-second walkthrough</button></div>
+    <div class="stats">
+      <div class="stat"><b>30,000+</b><span>apps run subscriptions<br>on Adapty</span></div>
+      <div class="stat"><b>2</b><span>keyword flows, with<br>5 ideas built into each</span></div>
+      <div class="stat"><b>0</b><span>design changes<br>to your art direction</span></div>
+    </div>
+
+    <div class="proof proof2">
+      <div class="proof-col">
+        <div class="proof-k">Built in Adapty Flow Builder</div>
+        <div class="proof-i"><span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><p><b>Millions of dollars</b> in subscription revenue pass through Flow Builder every month.</p></div>
+        <div class="proof-i"><span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><p><b>Nearly 500 apps</b> build their paywalls and onboarding in it.</p></div>
+      </div>
+      <div class="proof-col asa-col">
+        <div class="proof-k">Run with Adapty Ads Manager</div>
+        <div class="proof-i"><span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><p>Trusted by teams managing <b>$100M+ in Apple Ads spend</b>.</p></div>
+        <div class="proof-i"><span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><p><b>36 keywords across about 25 markets</b> mapped for Fishing Points.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="asa">
+  <div class="wrap">
+    <div class="asa-card">
+      <div>
+        <div class="sec-k">New · Apple Ads × your flow</div>
+        <h2>Show every search <em>its own flow</em>.</h2>
+        <p>Someone who searched “fishbrain” and someone who searched “tide charts” want different things, but today they get the same onboarding and the same paywall. <b>Adapty Ads Manager passes the Apple Ads keyword into your flow</b>, so each search gets its own message, trial and offer, and every keyword is judged on revenue instead of installs. <b>You already win most “Fishbrain” searches, and those switchers land on the same onboarding as someone who searched “tide charts”.</b></p>
+        <div class="asa-btns">
+          <a class="asa-go" href="https://asa.adapty.io/fishbrain" target="_blank" rel="noopener">See Adapty’s Fishbrain research
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          <button class="asa-alt" data-view="proto">See both keyword flows
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+      <div class="asa-stats">
+        <div><b class="o">77.8%</b><span>your share of voice when people search “Fishbrain”</span></div>
+        <div><b class="p">36</b><span>keywords live: 7 brand, 16 category, 13 competitor</span></div>
+        <div><b>~25</b><span>countries the keywords run in</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="wrap">
+    <div class="sec-k">What this is</div>
+    <h2>We searched for Fishing Points the way a new user does, then rebuilt what happens after the tap.</h2>
+    <p class="body">Adapty powers subscriptions for <b>30,000+ apps</b>, so we get to see what moves conversion and ARPU across the market rather than inside one app. For Fishing Points we looked at two things. First, your app: your recorded iOS onboarding, your App Store listing and fishingpoints.app/premium, the same material as our earlier five-idea audit. Second, the App Store searches that lead to it: <b>36 Apple Ads keywords in about 25 countries</b>, 7 on your own name, 16 on the category (fishing, tides, tide charts, pesca, mareas…) and 13 on other fishing apps’ names. On one of them you already lead: Adapty’s public Fishbrain research puts you at <b>77.8% share of voice</b> when people search “Fishbrain”.</p>
+    <p class="body">What follows is the five ideas for the flow you have, and two keyword flows that show what happens when each search gets its own version. Every one is a hypothesis you can A/B test, and all of it is clickable. <b>The prototype uses your design, not ours.</b></p>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<div class="sec">
+  <div class="wrap">
+    <div class="sec-k">The five ideas</div>
+    <h2>Ranked by what we would test first.</h2>
+    <p class="body">The same five as in our earlier audit, with today’s prices. Each one opens that screen in both keyword flows.</p>
+
+    <div class="ideas" id="ideas"></div>
+
+    <div class="band">
+      <div class="txt">
+        <div class="lab">Potential outcome</div>
+        <p>Run together, these five work on three moments: what you ask before the paywall, what the paywall shows, and what happens when someone taps Back.</p>
+        <p class="band-kw"><b>On top of that,</b> Adapty’s Apple Ads research puts keyword-matched paywalls at <b>+30–50% conversion</b> over one paywall for every search.</p>
+      </div>
+      <div class="nums">
+        <div><b>+20%</b><span>CR to purchase</span></div>
+        <div><b>+15%</b><span>ARPU</span></div>
+      </div>
+    </div>
+
+    <div class="kwsec">
+      <div class="sec-k">Two keywords, two flows</div>
+      <h2>The same app, answering two different searches.</h2>
+      <p class="body">The five ideas sit underneath both. On six screens, what someone sees depends on what they typed into the App Store.</p>
+      <div class="kwt" id="kwt"></div>
+    </div>
+
+    <div class="next">
+      <div class="sec-k">What happens next</div>
+      <h2>From first call to first test in two weeks.</h2>
+      <div class="next-steps">
+        <div><b>Day 1</b><h4>Every keyword routed</h4><p>Your 36 keywords grouped by intent (brand, category, other apps’ names) and each group routed to its flow in Ads Manager. Your brand is already covered.</p></div>
+        <div><b>Week 1</b><h4>Keyword flows live</h4><p>After a one-time SDK setup, “Fishbrain” and “tide charts” searches get their own onboarding and paywall. No app release.</p></div>
+        <div><b>Week 2</b><h4>A/B tests per keyword</h4><p>Every keyword measured on trials and revenue, not installs, with a test running in each flow.</p></div>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <div class="qr"><img src="assets/qr-app.png" alt="QR code for the prototype"><span><b>Or open it on your phone</b>Scan to try both flows in your hand.</span></div>
+      <button class="bigbtn" data-view="proto">Open both keyword flows
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  <div class="wrap">
+    Impact ranges are Adapty’s expected effect from teardowns and A/B tests across subscription apps, not measured lift for Fishing Points; they overlap, so they don’t add up. Every price, rating, review and feature line here and in the prototype comes from Fishing Points’ own US and Spanish App Store listings (8 October 2026), fishingpoints.app (the Premium page and the Tides and Solunar pages, in English and Spanish) and your iOS onboarding as recorded by ScreensDesign and rebuilt in our earlier audit. The App Store ad screenshots are cut from your App Store screenshots, with our captions; the tide, moon and map images are fishingpoints.app renders, and Tampa, the 98 and the tide times are the example data in those renders. Apple Ads keywords are the ones we saw running for Fishing Points; the 77.8% share of voice comes from Adapty’s public Fishbrain research at asa.adapty.io/fishbrain. No new products are needed: every plan and trial shown (Yearly $49.99 and Monthly $9.99, each with 7 free days) is on sale today, and Basic ($29.99) and Advanced ($49.99) Premium are left out because their contents appear on no screen or page. Spanish prices come from your Spain storefront: 19,99 € a year, and 3,99 € read as the monthly plan because it matches the US 5:1 ratio (the listing does not show periods); we assume the Spanish monthly plan carries the same 7 free days. Light mode only: we have no dark-mode frames of your app, so there is no Dark switch.
+  </div>
+</div>
+</div><!-- /view-over -->
+
+<!-- ======================= PROTOTYPE ======================= -->
+<div class="view" id="view-proto">
+<div class="p3 side one" id="p3">
+  <div class="p3-stage" id="p3Stage">
+    <div class="p3-mtools">
+      <div class="seg" data-hseg="lang"></div>
+      <button class="hdemo-btn" data-hdemo><svg viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg>30-sec walkthrough</button>
+    </div>
+    <div class="p3-mtog" id="mtog"><button data-one="a" class="on"></button><button data-one="b"></button></div>
+    <div class="duo" id="duo">
+      <div class="kwcard ka" data-k="a"></div>
+      <div class="flow ka show" data-flow="a">
+        <div class="kwpill ka" data-k="a"></div>
+        <div class="pbox"><iframe src="?embed=1&amp;flow=a" title="Keyword flow A"></iframe></div>
+      </div>
+      <div class="flow kb" data-flow="b">
+        <div class="kwpill kb" data-k="b"></div>
+        <div class="pbox"><iframe src="?embed=1&amp;flow=b" title="Keyword flow B"></iframe></div>
+      </div>
+      <div class="kwcard kb" data-k="b"></div>
+    </div>
+    <div class="p3-bar" id="p3Bar">
+      <div class="steps" id="hSteps"></div>
+      <div class="hcap hidden" id="hCap"><p id="hCapT"></p><div class="bar"><i id="hProg"></i></div><button id="hStop">Stop</button></div>
+    </div>
+  </div>
+  <aside class="p3-panel"><div class="pn" id="hPanel"></div></aside>
+</div>
+<button class="drawer-btn" id="drawerBtn"><i></i>Ideas for this step</button>
+<div class="stage">
+  <div class="phonecol">
+    <div class="tools" id="tools">
+      <div class="seg" id="segLang"></div>
+      <button class="demo-btn" id="demoBtn"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M7 4.5v15l12-7.5z"/></svg>30-sec walkthrough</button>
+    </div>
+    <div class="phone">
+      <div class="phone-in" id="phoneIn">
+        <div class="island"></div>
+        <div class="sbar" id="sbar">
+          <span>9:41</span>
+          <span class="glyphs">
+            <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7.5" width="3" height="3.5" rx="1"/><rect x="4.5" y="5.5" width="3" height="5.5" rx="1"/><rect x="9" y="3" width="3" height="8" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+            <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 10.5 5.6 7.9a3.4 3.4 0 0 1 4.8 0L8 10.5Zm0-5.6a6.4 6.4 0 0 0-4.5 1.9L1.7 4.9a9 9 0 0 1 12.6 0l-1.8 1.9A6.4 6.4 0 0 0 8 4.9Z"/></svg>
+            <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".6" y=".6" width="20" height="10.8" rx="3" stroke="currentColor" stroke-opacity=".5"/><rect x="2.2" y="2.2" width="16.5" height="7.6" rx="1.8" fill="currentColor"/><path d="M22.3 4.1v3.8a2 2 0 0 0 0-3.8Z" fill="currentColor" fill-opacity=".5"/></svg>
+          </span>
+        </div>
+        <div class="homebar" id="homebar"></div>
+        <div class="finger" id="finger"></div>
+        <div class="screenwrap">
+
+<!-- SCREENS:START (EDIT) — one <section class="scr" data-id> per step, flow order = ORDER in the script.
+     The App Store search screen stays (engine): it shows the ad for this phone's keyword. -->
+<!-- APP STORE SEARCH -->
+<section class="scr scr--as" data-id="search">
+  <div class="scr-top">
+    <div class="as-bar"><div class="as-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span id="asKw"></span><i class="as-clr">✕</i></div>
+      <button class="as-cancel" data-t="as.cancel"></button></div>
+  </div>
+  <div class="scr-body">
+    <div class="as-ad">
+      <div class="as-row">
+        <img class="as-ic" src="assets/brand/appstore-icon.jpg" alt="">
+        <div class="as-meta"><b data-t="as.name"></b><span class="s" data-t="as.sub"></span>
+          <span class="r"><span class="adb" data-t="as.ad"></span><span class="s-stars" data-stars="10"></span><span data-t="as.cnt"></span></span></div>
+        <button class="as-get" id="asGet" data-t="as.get"></button>
+      </div>
+      <div class="as-shots" id="asShots"></div>
+    </div>
+    <div class="as-org">
+      <div class="as-sk"><i></i><div><span></span><span></span></div><em></em></div>
+      <div class="as-sk"><i></i><div><span></span><span></span></div><em></em></div>
+      <div class="as-sk"><i></i><div><span></span><span></span></div><em></em></div>
+    </div>
+  </div>
+</section>
+
+<!-- WELCOME — their screen; the headline and button answer the search -->
+<section class="scr s-wel" data-id="welcome">
+  <div class="scr-body s-fill">
+    <img class="s-hero-ph" src="assets/crop/welcome-hero.png" alt="">
+    <div class="s-in">
+      <h1 data-th="wl.h"></h1>
+      <p class="s-wsub" data-th="wl.s"></p>
+      <p class="s-legal2" data-th="wl.legal"></p>
+      <button class="s-ybtn" data-go="type" data-t="wl.cta"></button>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT TYPE OF FISHERMAN — their question, moved up from screen 7 -->
+<section class="scr" data-id="type">
+  <div class="scr-body s-fill">
+    <div class="s-qtop"><button class="s-bk" data-back aria-label="Back"><i class="s-ic" data-icon="back"></i></button><div class="s-track"><i style="width:30%"></i></div></div>
+    <div class="s-qb">
+      <h1 class="s-qh" data-th="ty.h"></h1>
+      <div class="s-opts" id="typeList">
+        <button class="s-opt" data-type="salt" data-t="ty.salt"></button>
+        <button class="s-opt" data-type="fresh" data-t="ty.fresh"></button>
+        <button class="s-opt" data-type="both" data-t="ty.both"></button>
+        <button class="s-opt" data-type="not" data-t="ty.not"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHICH FORECASTS — their question; the tides search starts with Tides ticked -->
+<section class="scr" data-id="forecasts">
+  <div class="scr-body s-fill">
+    <div class="s-qtop"><button class="s-bk" data-back aria-label="Back"><i class="s-ic" data-icon="back"></i></button><div class="s-track"><i style="width:65%"></i></div></div>
+    <div class="s-qb">
+      <h1 class="s-qh" data-th="fc.h"></h1>
+      <p class="s-qs" id="fcSub"></p>
+      <div class="s-opts s-m" id="fcList"></div>
+      <button class="s-qcta" id="fcBtn" data-go="loader" data-t="cont"></button>
+    </div>
+  </div>
+</section>
+
+<!-- LOADER — their ring and proof, reading the answers back -->
+<section class="scr s-ld" data-id="loader">
+  <div class="scr-body s-fill">
+    <div class="s-ldc">
+      <svg viewBox="0 0 132 132"><circle cx="66" cy="66" r="56" fill="none" style="stroke:var(--b-track)" stroke-width="12"/><circle id="ldRing" cx="66" cy="66" r="56" fill="none" style="stroke:var(--b-primary)" stroke-width="12" stroke-linecap="round" stroke-dasharray="351.9" stroke-dashoffset="351.9"/></svg>
+      <div class="s-pct" id="ldPct">0%</div>
+    </div>
+    <p class="s-lt" data-t="ld.t"></p>
+    <ul class="s-echo" id="ldEcho">
+      <li><i class="s-tk" data-icon="check"></i><span id="ldE1"></span></li>
+      <li><i class="s-tk" data-icon="check"></i><span id="ldE2"></span></li>
+      <li><i class="s-tk" data-icon="check"></i><span id="ldE3"></span></li>
+    </ul>
+    <div class="s-lproof" id="ldProof"><b></b><span></span></div>
+  </div>
+</section>
+
+<!-- PAYOFF — idea 1 -->
+<section class="scr s-po" data-id="payoff">
+  <div class="scr-body s-fill">
+    <div class="s-ptop"><img id="poImg" src="assets/site/Fishing_Points_Nautical3_97b0a0b56e.webp" alt=""></div>
+    <div class="s-in">
+      <h1 id="poH"></h1>
+      <p class="s-pmeta" id="poMeta"></p>
+      <p class="s-plab" data-t="po.lab"></p>
+      <div class="s-pl" id="poList"></div>
+      <button class="s-qcta" data-go="preview" data-t="cont"></button>
+    </div>
+  </div>
+</section>
+
+<!-- PREVIEW — idea 4, in their own forecast: Fish activity, or Tides for the tides search -->
+<section class="scr s-fa" data-id="preview">
+  <div class="scr-body s-fill">
+    <div class="s-act s-fill" style="flex:1">
+      <div class="s-fhd">
+        <div><h1 class="s-ftt" data-t="fa.t"></h1><div class="s-floc"><i class="s-ic" data-icon="pin" style="width:13px;height:13px"></i>Tampa<small data-t="fa.ex"></small></div></div>
+        <div class="s-gb"><span><i class="s-ic" data-icon="bellf" style="width:19px;height:19px"></i></span><span><i class="s-ic" data-icon="pinf" style="width:19px;height:19px"></i></span></div>
+      </div>
+      <div class="s-fdays" id="pvDays"></div>
+      <div class="s-fg"><svg viewBox="0 0 150 150"><circle cx="75" cy="75" r="66" fill="none" stroke="rgba(255,255,255,.95)" stroke-width="13" stroke-dasharray="1.6 5.31"/></svg><b>98<small>★★★</small></b></div>
+      <p class="s-fst" data-t="fa.st"></p>
+      <svg class="s-fch" viewBox="0 0 370 92" preserveAspectRatio="none"><path d="M0 30 C 25 28 40 50 62 52 S 95 30 110 36 S 130 10 145 12 S 160 60 172 62 S 205 20 225 22 S 250 48 268 50 S 300 8 318 10 S 335 64 346 60 S 362 40 370 30 L370 92 L0 92 Z" fill="rgba(255,255,255,.16)"/><path d="M0 30 C 25 28 40 50 62 52 S 95 30 110 36 S 130 10 145 12 S 160 60 172 62 S 205 20 225 22 S 250 48 268 50 S 300 8 318 10 S 335 64 346 60 S 362 40 370 30" fill="none" stroke="rgba(255,255,255,1)" stroke-width="3"/><circle cx="172" cy="62" r="6" style="fill:var(--b-mail)" stroke="rgba(255,255,255,1)" stroke-width="2"/></svg>
+      <div class="s-fchb"></div>
+    </div>
+    <div class="s-tide s-fill" style="flex:1">
+      <div class="s-fhd">
+        <div><h1 class="s-ftt" data-t="td.t"></h1><div class="s-floc"><i class="s-ic" data-icon="pin" style="width:13px;height:13px"></i>Tampa<small data-t="fa.ex"></small></div></div>
+        <div class="s-gb"><span><i class="s-ic" data-icon="stations" style="width:19px;height:19px"></i></span><span><i class="s-ic" data-icon="pinf" style="width:19px;height:19px"></i></span></div>
+      </div>
+      <div class="s-fdays" id="tdDays"></div>
+      <div class="s-tcard">
+        <svg class="s-tch" viewBox="0 0 370 150" preserveAspectRatio="none">
+          <defs><linearGradient id="tdFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--b-primary)" stop-opacity=".22"/><stop offset="1" style="stop-color:var(--b-primary)" stop-opacity="0"/></linearGradient></defs>
+          <g stroke="rgba(0,0,0,.25)" stroke-width="1" stroke-dasharray="3 4"><path d="M62 6V140M124 6V140M186 6V140M248 6V140M310 6V140"/></g>
+          <path d="M0 50 C 20 10 50 0 70 22 S 120 140 146 138 S 200 18 230 20 S 285 128 305 128 S 350 70 370 40 L370 140 L0 140 Z" fill="url(#tdFill)"/>
+          <path d="M0 50 C 20 10 50 0 70 22 S 120 140 146 138 S 200 18 230 20 S 285 128 305 128 S 350 70 370 40" fill="none" style="stroke:var(--b-primary)" stroke-width="2.6"/>
+          <circle cx="160" cy="124" r="6" fill="#fff" style="stroke:var(--b-primary)" stroke-width="2.2"/>
+        </svg>
+        <div class="s-tax"><span>4:00 AM</span><span>8:00 AM</span><span>12:00 PM</span><span>4:00 PM</span><span>8:00 PM</span></div>
+        <div class="s-tst">
+          <div><small data-t="td.next"></small><b>5 h 1 min</b></div>
+          <div><small data-t="td.now"></small><b class="s-big">0.19 ft</b><em data-t="td.rise"></em></div>
+          <div><small data-t="td.cur"></small><b>4 in/h</b></div>
+        </div>
+      </div>
+    </div>
+    <div class="s-fsheet">
+      <div class="s-fk"><i data-icon="lock"></i><span data-t="pv.h"></span></div>
+      <p data-t="pv.s"></p>
+      <div class="s-fcmp"><div class="s-h"><span data-t="pv.c1"></span><span data-t="pv.c2"></span><span>Premium</span></div><div id="pvRows"></div></div>
+      <button class="s-qcta" data-go="paywall" data-t="pv.cta"></button>
+    </div>
+  </div>
+</section>
+
+<!-- PAYWALL — their art direction; the free week starts switched on -->
+<section class="scr s-pw" data-id="paywall" data-light="1">
+  <div class="scr-body s-fill">
+    <div class="s-pnav"><button id="payClose" data-t="pw.back"></button><span data-t="pw.restore"></span></div>
+    <h1><span data-th="pw.h"></span><br><em>Premium</em></h1>
+    <p class="s-tri" id="pwTri" data-t="pw.tri"></p>
+    <div class="s-one">
+      <img class="s-art" src="assets/crop/pw-fish.png" alt="">
+      <div class="s-cm"><b data-t="pw.cm"></b><span id="pwSub"></span></div>
+    </div>
+    <div class="s-car" id="car">
+      <div class="s-slide on"><img class="s-art s-wv" src="assets/crop/pw-waves.png" alt=""><div class="s-cm"><b data-t="sl.1"></b><span data-t="sl.1s"></span></div></div>
+      <div class="s-slide"><img class="s-mcard" src="assets/site/Fishing_Points_Solunar_Moon_Cutout_Shadow_6a8cfad293.webp" alt=""><div class="s-cm"><b data-t="sl.2"></b><span data-t="sl.2s"></span></div></div>
+      <div class="s-slide"><img class="s-art" src="assets/crop/pw-fish.png" alt=""><div class="s-cm"><b data-t="sl.3"></b><span data-t="sl.3s"></span></div></div>
+    </div>
+    <div class="s-dots" id="dots"><i class="on"></i><i></i><i></i></div>
+    <div class="s-pproof"><b><span class="s-tstars">★★★★★</span><span data-t="pw.rate"></span></b><small data-t="pw.dl"></small></div>
+    <div class="s-sheetp">
+      <button class="s-trow" id="trTog"><span id="trTxt"></span><i class="s-sw" id="pwSw"></i></button>
+      <button class="s-pc" data-v="year"><span class="s-band" data-t="pw.off"></span><span class="s-bd"><span><span class="s-nm" data-t="pw.yr"></span><span class="s-tm" id="tmY"></span></span><span class="s-pm" data-t="pw.yrpm"></span></span></button>
+      <button class="s-pc" data-v="month"><span class="s-bd"><span><span class="s-nm" data-t="pw.mo"></span><span class="s-tm" id="tmM"></span></span><span class="s-pm" data-t="pw.mopm"></span></span></button>
+      <button class="s-pill" id="payCta"></button>
+      <p class="s-trust" id="payTrust"></p>
+      <div class="s-terms"><span data-t="terms"></span><span data-t="privacy"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFER — slides up when they tap Back on the paywall -->
+<section class="scr sheet s-of" data-id="offer" data-light="1">
+  <div class="scr-body s-fill">
+    <div class="s-ohd">
+      <button class="s-xb" id="offClose" aria-label="Close">✕</button>
+      <h2 data-th="of.h"></h2>
+      <img src="assets/crop/pw-waves.png" alt="">
+    </div>
+    <div class="s-in">
+      <h3 data-t="of.t"></h3>
+      <p class="s-opr" data-t="of.p"></p>
+      <ul class="s-tl s-tlv">
+        <li><i class="s-dt" data-icon="check"></i><b data-t="of.d0"></b><span class="s-tx" id="ofToday"></span></li>
+        <li><i class="s-dt" data-icon="bell"></i><b data-t="of.d7"></b><span class="s-tx" data-t="of.d7s"></span></li>
+        <li><i class="s-dt" data-icon="x"></i><b data-t="of.da"></b><span class="s-tx" data-t="pw.trust"></span></li>
+      </ul>
+      <div class="s-fcmp s-free"><div class="s-h"><span data-t="pv.c1"></span><span data-t="pv.c2"></span><span>Premium</span></div><div id="ofRows"></div></div>
+      <div class="s-rv"><span class="s-tstars">★★★★★</span><span data-t="of.rv"></span><small data-t="of.rvc"></small></div>
+      <div class="s-pc on s-opc"><span class="s-bd"><span><span class="s-nm" data-t="pw.mo"></span><span class="s-tm" data-t="pw.mot"></span></span><span class="s-pm" data-t="pw.mopm"></span></span></div>
+      <button class="s-pill" id="offerCta" data-t="of.cta"></button>
+      <button class="s-lnk" id="offFree" data-t="of.free"></button>
+    </div>
+  </div>
+</section>
+
+<!-- SIGN IN — their sheet, moved after the purchase (idea 2) -->
+<section class="scr s-ac" data-id="account">
+  <div class="scr-body s-fill">
+    <img class="s-aph" src="assets/crop/signin-hero.png" alt="">
+    <div class="s-in">
+      <div class="s-att"><img src="assets/brand/logo-fp.png" alt=""><h2 data-th="ac.h"></h2></div>
+      <div class="s-ok" id="acOk"><i class="s-ic" data-icon="check"></i><span id="acOkT"></span></div>
+      <p data-t="ac.p"></p>
+      <div class="s-sso">
+        <button class="s-b-ap" data-done><i class="s-ic" data-icon="apple"></i><span data-t="ac.ap"></span></button>
+        <button class="s-b-go" data-done><i class="s-ic" data-icon="google"></i><span data-t="ac.go"></span></button>
+        <button class="s-b-fb" data-done><i class="s-ic" data-icon="facebook"></i><span data-t="ac.fb"></span></button>
+        <button class="s-b-em" data-done><i class="s-ic" data-icon="mail"></i><span data-t="ac.em"></span></button>
+      </div>
+      <button class="s-lnk" data-done data-t="ac.nn"></button>
+      <p class="s-alg" data-th="ac.lg"></p>
+    </div>
+  </div>
+</section>
+<!-- SCREENS:END -->
+
+        </div>
+      </div>
+    </div>
+    <div class="demo-cap hidden" id="demoCap"><div class="bar"><i id="demoProg"></i></div><p id="demoTxt"></p><button id="demoStop">Stop</button></div>
+    <div class="chips" id="chips"></div>
+    <p class="chiphint">Jump to any screen — answers already filled in.</p>
+    <div class="qr"><img src="assets/qr-app.png" alt="QR code for this prototype"><span><b>Open it on your phone</b>Scan to try the flow in your hand.</span></div>
+  </div>
+  <div class="panelcol"><div class="pn" id="panel"></div></div>
+</div>
+</div><!-- /view-proto -->
+
+<script>
+/* ================= COPY (EDIT): phone-screen copy, one entry per language in META.langs order =================
+   data-t="key" sets textContent, data-th="key" sets innerHTML; {tokens} are filled by t(key,{...}).
+   {yr} {mo} {yrmo} {save} are that storefront's prices (PRICE below). Spanish is our translation except
+   where fishingpoints.app/es has their own words (the Premium table, the reviews, the proof lines). */
+var META = JSON.parse(document.getElementById('meta').textContent);
+var LANGS = META.langs.map(function(l){ return l[0]; });
+function langName(c){ return (META.langs.filter(function(l){ return l[0]===c; })[0]||[c,c,c])[2]; }
+/* ---- the overview and host pieces that come from META (rendered before any wiring below) ---- */
+(function renderMeta(){
+  var Q=function(k){ return '“'+META.kw[k].q+'”'; };
+  var ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>';
+  var ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var el=function(id){ return document.getElementById(id); };
+  if(el('ideas')) el('ideas').innerHTML=META.ideas.map(function(x){
+    return '<button class="idea" data-jump="'+x.screen+'"><span class="no">0'+x.n+'</span><span><h3>'+x.title+'</h3><p>'+x.what+'</p>'
+      +'<span class="seeit">See the screen '+ARROW+'</span></span><span class="out"><b>'+x.impact+'</b><span>'+x.il+'</span></span></button>'; }).join('');
+  var HYP='<span class="kwhyp">Hypothesis</span>';
+  if(el('kwt')) el('kwt').innerHTML='<div class="kwt-h"><span>Screen</span><span class="f">'+Q('a')+'</span><span class="b">'+Q('b')+'</span></div>'
+    +META.kwRows.map(function(r){ return '<button class="kwt-r" data-kwjump="'+r.screen+'"><span class="s">'+r.label+'</span>'
+      +'<span class="ka" data-k="'+META.kw.a.short+' · ">'+r.a+(r.hypA?' '+HYP:'')+'</span><span class="kb" data-k="'+META.kw.b.short+' · ">'+r.b+(r.hypB?' '+HYP:'')+'</span><i>→</i></button>'; }).join('');
+  document.querySelectorAll('.kwcard[data-k]').forEach(function(c){ var k=c.dataset.k;
+    c.innerHTML='<div class="k">Apple Ads keyword</div><div class="q">'+ICON+Q(k)+'</div><span class="who">Who searches this</span><p>'+META.kw[k].who+'</p>'; });
+  document.querySelectorAll('.kwpill[data-k]').forEach(function(c){ c.innerHTML=ICON+Q(c.dataset.k)+' <small>· Apple Ads</small>'; });
+  document.querySelectorAll('#mtog button').forEach(function(b){ b.textContent=Q(b.dataset.one); });
+  var segs=function(attr){ return META.langs.map(function(l,i){ return '<button '+attr+'="'+l[0]+'"'+(i?'':' class="on"')+'>'+l[1]+'</button>'; }).join(''); };
+  document.querySelectorAll('.seg[data-hseg=lang]').forEach(function(s){ s.innerHTML=segs('data-hlang'); });
+  if(el('segLang')) el('segLang').innerHTML=segs('data-lang');
+})();
+/* each storefront's published In-App Purchase prices: US listing and Spain listing, 8 October 2026 */
+var PRICE = {en:{yr:'$49.99',mo:'$9.99',yrmo:'$4.17',save:'58%'}, es:{yr:'19,99 €',mo:'3,99 €',yrmo:'1,67 €',save:'58 %'}};
+var T = {
+ 'as.cancel':["Cancel","Cancelar"],
+ 'as.ad':   ["Ad","Anuncio"],
+ 'as.get':  ["Get","Obtener"],
+ 'as.open': ["Open","Abrir"],
+ 'as.name': ["Fishing Points: Map & Forecast","Fishing Points: Pesca Mejor"],
+ 'as.sub':  ["Fish Spots, Tides & Best Times","Mapas, Mareas & Tiempo"],
+ 'as.cnt':  ["31K","2,2 mil"],
+ 'as.a1':   ["Fish activity forecasts","Previsión de actividad de los peces"],
+ 'as.a2':   ["Worldwide nautical charts","Cartas náuticas de todo el mundo"],
+ 'as.a3':   ["Tides for any spot","Mareas en cualquier lugar"],
+ 'as.b1':   ["Tide charts for your spot","Mareas para tu lugar"],
+ 'as.b2':   ["Daily highs and lows","Pleamares y bajamares diarias"],
+ 'as.b3':   ["Sun and moon times","Horas del sol y la luna"],
+ 'wl.h':    ["Welcome to<br>Fishing Points!","¡Bienvenido a<br>Fishing Points!"],
+ 'wl.s':    ["Your new ultimate tool to fish better -<br>everywhere and anytime","Tu nueva herramienta definitiva para pescar mejor, en cualquier lugar y en cualquier momento"],
+ 'wl.legal':["By using this application, you agree to our <a>Terms of Use</a> &amp;&nbsp;<a>Privacy Policy</a>","Al usar esta aplicación, aceptas nuestros <a>Términos de uso</a> y la <a>Política de privacidad</a>"],
+ 'wl.cta':  ["Continue","Continuar"],
+ 'ty.h':    ["What type of fisherman<br>are you?","¿Qué tipo de pescador<br>eres?"],
+ 'ty.salt': ["Saltwater","Agua salada"],
+ 'ty.fresh':["Freshwater","Agua dulce"],
+ 'ty.both': ["Both","Ambos"],
+ 'ty.not':  ["Not a fisherman","No soy pescador"],
+ 'fc.h':    ["Which forecasts interest<br>you most?","¿Qué previsiones te<br>interesan más?"],
+ 'fc.sub':  ["You can select multiple answers","Puedes elegir varias respuestas"],
+ 'cont':    ["Continue","Continuar"],
+ 'more':    ["+{n} more","+{n}"],
+ 'ld.t':    ["Preparing fishing maps...","Preparando mapas de pesca..."],
+ 'ld.salt': ["Saltwater spots","Lugares de agua salada"],
+ 'ld.fresh':["Freshwater spots","Lugares de agua dulce"],
+ 'ld.both': ["Saltwater & freshwater spots","Lugares de agua salada y dulce"],
+ 'ld.any':  ["Fishing maps for your area","Mapas de pesca de tu zona"],
+ 'ld.fc':   ["{l} forecasts","Previsiones: {l}"],
+ 'ld.fc0':  ["Today’s forecasts","Previsiones de hoy"],
+ 'ld.tide': ["Nearest of 10,000+ tide stations","La estación mareográfica más cercana"],
+ 'ld.map':  ["Map tools","Herramientas de mapa"],
+ 'po.hw':   ["Your {w} toolkit","Tu kit para {w}"],
+ 'po.h0':   ["Your fishing toolkit","Tu kit de pesca"],
+ 'po.pick': ["{n} picks","{n} elecciones"],
+ 'po.pick1':["1 pick","1 elección"],
+ 'po.lab':  ["You picked","Elegiste"],
+ 'fa.t':    ["Fish activity","Actividad de los peces"],
+ 'fa.ex':   ["example spot","lugar de ejemplo"],
+ 'fa.st':   ["Very high fish activity","Actividad de los peces muy alta"],
+ 'td.t':    ["Tides","Mareas"],
+ 'td.next': ["Next high tide","Próxima pleamar"],
+ 'td.now':  ["Tide right now","Marea ahora"],
+ 'td.rise': ["Rising","Subiendo"],
+ 'td.cur':  ["Tidal current","Corriente"],
+ 'pv.h':    ["Today is free.","Hoy es gratis."],
+ 'pv.s':    ["Tomorrow, the weekend and the next 3 months come with Premium.","Mañana, el fin de semana y los próximos 3 meses vienen con Premium."],
+ 'pv.c1':   ["Your picks","Tus elecciones"],
+ 'pv.c2':   ["Free","Gratis"],
+ 'pv.cta':  ["See Premium","Ver Premium"],
+ 'pw.back': ["Back","Atrás"],
+ 'pw.restore':["Restore","Restaurar"],
+ 'pw.h':    ["Unlock Fishing Points","Desbloquea Fishing Points"],
+ 'pw.tri':  ["7-Day Free Trial","7 días gratis"],
+ 'pw.cm':   ["Catch More Fish","Pesca más peces"],
+ 'pw.sub':  ["Know exactly when fish are most active, up to 3 months ahead for {trip}.","Sabe exactamente cuándo están más activos los peces, hasta 3 meses antes, para {trip}."],
+ 'pw.trip': ["your {w} trips","tus salidas de pesca en {w}"],
+ 'pw.trip0':["your fishing trips","tus salidas de pesca"],
+ 'sl.1':    ["Tides 3 months ahead","Mareas a 3 meses vista"],
+ 'sl.1s':   ["High and low tides for your spot, every day, up to 3 months ahead.","Pleamares y bajamares de tu lugar, cada día, hasta 3 meses antes."],
+ 'sl.2':    ["Sun and moon, every day","Sol y luna, cada día"],
+ 'sl.2s':   ["Moonrise, moonset and moon phases next to your tides.","Salida y puesta de la luna y fases lunares junto a tus mareas."],
+ 'sl.3':    ["Know when fish are most active","Sabe cuándo están más activos los peces"],
+ 'sl.3s':   ["Fish activity from solunar theory, tides and other factors.","Actividad de los peces según la teoría solunar, las mareas y otros factores."],
+ 'pw.rate': ["4.7 · 230K+ ratings","4,7 · más de 230 000 reseñas"],
+ 'pw.dl':   ["12+ million downloads on iOS and Android","12+ millones de descargas en iOS y Android"],
+ 'pw.ton':  ["Free Trial Enabled","Prueba gratis activada"],
+ 'pw.toff': ["Not sure? Enable Free Trial.","¿No lo tienes claro? Activa la prueba gratis."],
+ 'pw.off':  ["{save} OFF","{save} DE DESCUENTO"],
+ 'pw.yr':   ["Yearly","Anual"],
+ 'pw.yrt':  ["7 days free, then {yr}/year","7 días gratis, luego {yr}/año"],
+ 'pw.yrn':  ["{yr}/year","{yr}/año"],
+ 'pw.yrpm': ["{yrmo}/month","{yrmo}/mes"],
+ 'pw.mo':   ["Monthly","Mensual"],
+ 'pw.mot':  ["7 days free, then {mo}/month","7 días gratis, luego {mo}/mes"],
+ 'pw.mon':  ["{mo}/month","{mo}/mes"],
+ 'pw.mopm': ["{mo}/month","{mo}/mes"],
+ 'pw.ctat': ["Try free and subscribe","Prueba gratis y suscríbete"],
+ 'pw.ctan': ["Subscribe","Suscribirse"],
+ 'pw.trustt':["No payment now · ","Nada que pagar ahora · "],
+ 'pw.trust':["Cancel anytime in Settings","Cancela cuando quieras en Ajustes"],
+ 'terms':   ["Terms of Use","Términos de uso"],
+ 'privacy': ["Privacy Policy","Política de privacidad"],
+ 'of.h':    ["Not ready for a<br>full year?","¿Aún no quieres<br>un año entero?"],
+ 'of.t':    ["Try Premium free for 7 days","Prueba Premium gratis 7 días"],
+ 'of.p':    ["Then {mo}/month. No commitment.","Luego {mo}/mes. Sin compromiso."],
+ 'of.d0':   ["Today","Hoy"],
+ 'of.d7':   ["Day 7","Día 7"],
+ 'of.d7s':  ["Monthly plan starts at {mo}/month","Empieza el plan mensual: {mo}/mes"],
+ 'of.da':   ["Anytime","Cuando quieras"],
+ 'of.full': ["Full Premium: ","Premium completo: "],
+ 'of.rv':   ["“An excellent tool! I’ve been using it since 2018 and have the Premium version. No regrets at all, it’s worth every penny.”","“¡Una herramienta excelente! La uso desde 2018 y tengo la versión Premium. No me arrepiento en absoluto, vale cada centavo.”"],
+ 'of.rvc':  ["Germany","Alemania"],
+ 'of.cta':  ["Start my free week","Empezar mi semana gratis"],
+ 'of.free': ["Continue with the free version","Seguir con la versión gratis"],
+ 'ac.h':    ["Sign in to<br>Fishing Points","Inicia sesión en<br>Fishing Points"],
+ 'ac.ok':   ["You’re all set. Your purchase was successful.","Todo listo. Tu compra se ha completado."],
+ 'ac.free': ["Free version: today’s forecasts and up to 5 saved locations.","Versión gratis: previsiones de hoy y hasta 5 ubicaciones guardadas."],
+ 'ac.p':    ["Log in or create Fishing Points account to never lose your saved fishing spots and catches.","Inicia sesión o crea una cuenta de Fishing Points para no perder nunca tus lugares de pesca y capturas guardados."],
+ 'ac.ap':   ["Sign in with Apple","Iniciar sesión con Apple"],
+ 'ac.go':   ["Sign in with Google","Iniciar sesión con Google"],
+ 'ac.fb':   ["Sign in with Facebook","Iniciar sesión con Facebook"],
+ 'ac.em':   ["Sign in with email","Iniciar sesión con correo"],
+ 'ac.nn':   ["Not now","Ahora no"],
+ 'ac.lg':   ["By continuing, you are indicating that you accept our <a>Terms of Service</a> and <a>Privacy Policy</a>.","Al continuar, aceptas nuestros <a>Términos del servicio</a> y la <a>Política de privacidad</a>."]
+};
+/* their forecast options, their order (recorded onboarding), and the type words */
+var FC = [
+  ['radar',  ["Rain radar","Radar de lluvia"]],
+  ['waves',  ["Waves","Olas"]],
+  ['river',  ["River Data","Datos de ríos"]],
+  ['weather',["Weather","Tiempo"]],
+  ['fishact',["Fish activity","Actividad de los peces"]],
+  ['tides',  ["Tides","Mareas"]],
+  ['sun',    ["Sun and moon","Sol y luna"]],
+  ['none',   ["None","Ninguna"]]
+];
+var TW = {salt:["saltwater","agua salada"], fresh:["freshwater","agua dulce"], both:["saltwater & freshwater","agua salada y dulce"]};
+/* what each pick does (condensed from fishingpoints.app) */
+var INFO = {
+  fishact:[["Fish activity","When fish will be most active during the day, based on solunar theory, tides and other factors."],["Actividad de los peces","Cuándo estarán más activos los peces durante el día, según la teoría solunar, las mareas y otros factores."]],
+  tides:  [["Tides","High and low tide times and daily extremes."],["Mareas","Horas de pleamar y bajamar y extremos diarios."]],
+  waves:  [["Waves","Wave conditions for the days ahead."],["Olas","Condiciones de oleaje para los próximos días."]],
+  weather:[["Weather","Weather and wind forecast."],["Tiempo","Previsión del tiempo y del viento."]],
+  sun:    [["Sun and moon","Sunrise, sunset, moonrise and moon phase."],["Sol y luna","Salida y puesta del sol, salida de la luna y fase lunar."]],
+  radar:  [["Rain radar","Real-time rain radar to stay safe on the water."],["Radar de lluvia","Radar de lluvia en tiempo real para pescar con seguridad."]],
+  river:  [["River Data","River heights and flows."],["Datos de ríos","Niveles y caudal de los ríos."]]
+};
+/* Free vs Premium, from "What’s Included in Premium" on fishingpoints.app/premium (EN) and /es/premium (their Spanish) */
+var CMP = {
+  fishact:[["Best fishing times","Today","3 months"],["Mejores horas para pescar","Hoy","3 meses"]],
+  tides:  [["Tides & daily extremes","Today","3 months"],["Mareas y extremos diarios","Hoy","3 meses"]],
+  waves:  [["Wave conditions","Today","7 days"],["Condiciones de oleaje","Hoy","7 días"]],
+  weather:[["Weather & wind","Today","7 days"],["Tiempo y viento","Hoy","7 días"]],
+  sun:    [["Sun & moon data","Today","3 months"],["Datos del sol y la luna","Hoy","3 meses"]],
+  radar:  [["Rain radar","Current","2 hours"],["Radar de lluvia","Actual","2 horas"]],
+  river:  [["River heights & flows","✕","✓"],["Niveles y flujo de ríos","✕","✓"]],
+  nautical:[["Nautical maps","✕","✓"],["Cartas náuticas","✕","✓"]],
+  locations:[["Saving locations","Up to 5","Unlimited"],["Guardar ubicaciones","Hasta 5","Ilimitado"]]
+};
+var TODAY = {fishact:["3-month fish activity","actividad de los peces a 3 meses"], tides:["3-month tides","mareas a 3 meses"], waves:["7-day waves","olas a 7 días"],
+  weather:["7-day weather","tiempo a 7 días"], sun:["3-month sun & moon","sol y luna a 3 meses"], radar:["2-hour rain radar","radar de lluvia de 2 horas"],
+  river:["river data","datos de ríos"], nautical:["nautical maps","cartas náuticas"], locations:["unlimited locations","ubicaciones ilimitadas"]};
+var DAYS = [[['15','Sun'],['16','Mon'],['17','Tue'],['18','Today'],['19','Thu'],['20','Fri'],['21','Sat']],
+            [['15','dom'],['16','lun'],['17','mar'],['18','Hoy'],['19','jue'],['20','vie'],['21','sáb']]];
+/* the proof their loader cycles today; the review is verbatim from fishingpoints.app (and its Spanish version) */
+var PROOF = [
+  [['12+ million downloads','On iOS and Android'],['★ 4.7 stars','Average rating · 230K+ ratings'],['★★★★★','“I used and tested many apps but I felt this app to be the most accurate in terms of fish activity. Thanks.” · United States']],
+  [['12+ millones de descargas','En iOS y Android'],['★ 4,7 estrellas','Valoración media · Más de 230 000 reseñas'],['★★★★★','“He usado y probado muchas aplicaciones, pero esta me pareció la más precisa en cuanto a la actividad de los peces. Gracias.” · Estados Unidos']]
+];
+/* their site renders: the payoff header follows the water they fish */
+var RENDER = {salt:'assets/site/Fishing_Points_Nautical3_97b0a0b56e.webp', fresh:'assets/site/Fishing_Points_Satellite1_e113f15de1.webp',
+              both:'assets/site/Fishing_Points_Satellite1_e113f15de1.webp', not:'assets/site/Fishing_Points_Catch_3a2cb7bc7b.webp'};
+var ICONS = {
+  back:'<path d="M15 4.5 7.5 12l7.5 7.5" stroke-width="2.6"/>',
+  check:'<path d="M5 12.5 9.5 17 19 7.5" stroke-width="3"/>',
+  x:'<path d="M7 7l10 10M17 7 7 17" stroke-width="2.4"/>',
+  lock:'<rect x="5" y="10.5" width="14" height="10" rx="2" fill="currentColor" stroke="none"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke-width="2.4"/>',
+  pin:'<path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z" fill="currentColor" stroke="none"/><circle cx="12" cy="10" r="2.4" fill="rgba(0,0,0,.35)" stroke="none"/>',
+  pinf:'<path d="M12 20s-5.5-5.4-5.5-9.5a5.5 5.5 0 0 1 11 0C17.5 14.6 12 20 12 20z" fill="currentColor" stroke="none"/><circle cx="12" cy="10.3" r="2" fill="rgba(255,255,255,1)" stroke="none"/><path d="M8 20.5h8" stroke-width="2"/>',
+  bellf:'<path d="M6 10.2a6 6 0 0 1 12 0c0 5 2 6.5 2 6.5H4s2-1.5 2-6.5z" fill="currentColor" stroke="none"/><path d="M10 19.6a2 2 0 0 0 4 0" stroke-width="2"/>',
+  stations:'<rect x="4" y="5" width="16" height="3.4" rx="1" fill="currentColor" stroke="none"/><rect x="4" y="10.3" width="16" height="3.4" rx="1" fill="currentColor" stroke="none"/><rect x="4" y="15.6" width="16" height="3.4" rx="1" fill="currentColor" stroke="none"/>',
+  radar:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><path d="M12 12l5.5-5.5"/>',
+  waves:'<path d="M3 18.5c1.2-6 4.8-10 9.4-10 3.2 0 5.1 2.3 4 4.7-.9 1.9-3.6 2-4.2.1"/>',
+  river:'<path d="M3 8c2-1.6 4-1.6 6 0s4 1.6 6 0 4-1.6 6 0M3 13c2-1.6 4-1.6 6 0s4 1.6 6 0 4-1.6 6 0M3 18c2-1.6 4-1.6 6 0s4 1.6 6 0 4-1.6 6 0"/>',
+  weather:'<circle cx="9" cy="8.5" r="3.2"/><path d="M9 2.5V4M3 8.5h1.5M4.8 4.3l1 1M13.2 4.3l-1 1"/><path d="M7.5 20.5h9.5a3.4 3.4 0 0 0 .4-6.8 4.8 4.8 0 0 0-9.2 1.3 2.8 2.8 0 0 0-.7 5.5z"/>',
+  fishact:'<rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M12 12.2l1.1 2.1 2.3.3-1.7 1.6.4 2.3-2.1-1.1-2.1 1.1.4-2.3-1.7-1.6 2.3-.3z" stroke-width="1.3"/>',
+  tides:'<path d="M4 3v17.5h17"/><path d="M4 15.5c2.8-6.5 4.8-6.5 7-2.3s4.3 4.2 8.5-5.2"/>',
+  sun:'<path d="M19.5 14.8A8 8 0 1 1 9.2 4.5a6.4 6.4 0 0 0 10.3 10.3z"/>',
+  none:'<rect x="4.5" y="4.5" width="15" height="15" rx="2"/>',
+  bell:'<path d="M6 10.2a6 6 0 0 1 12 0c0 5 2 6.5 2 6.5H4s2-1.5 2-6.5z"/><path d="M10 19.6a2 2 0 0 0 4 0"/>',
+  apple:'<path fill="currentColor" stroke="none" d="M16.4 12.6c0-2.4 2-3.5 2-3.6-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.8-3.5.8-.7 0-1.8-.8-3-.8-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.5 1.3-2.6 0 0-2.5-1-2.5-3.6zM14.1 5.6c.6-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.4-.6.7-1.2 1.8-1 2.9 1 .1 2.1-.5 2.8-1.3z"/>',
+  google:'<path d="M20 12.2c0-.6-.1-1.2-.2-1.7H12v3.3h4.5a3.9 3.9 0 0 1-1.7 2.5v2.1h2.7c1.6-1.5 2.5-3.6 2.5-6.2z" fill="currentColor" stroke="none"/><path d="M12 20.5c2.3 0 4.2-.8 5.5-2.1l-2.7-2.1c-.8.5-1.7.8-2.8.8-2.2 0-4-1.5-4.7-3.4H4.5v2.2a8.5 8.5 0 0 0 7.5 4.6z" fill="currentColor" stroke="none"/><path d="M7.3 13.7a5 5 0 0 1 0-3.4V8.1H4.5a8.5 8.5 0 0 0 0 7.8z" fill="currentColor" stroke="none"/><path d="M12 6.9c1.3 0 2.4.4 3.3 1.3l2.4-2.4A8.4 8.4 0 0 0 4.5 8.1l2.8 2.2C8 8.4 9.8 6.9 12 6.9z" fill="currentColor" stroke="none"/>',
+  facebook:'<circle cx="12" cy="12" r="10" fill="currentColor" stroke="none"/><path d="M13.3 21v-6.6h2.2l.3-2.6h-2.5v-1.6c0-.7.2-1.3 1.3-1.3h1.3V6.6a17 17 0 0 0-2-.1c-2 0-3.3 1.2-3.3 3.4v1.9H8.4v2.6h2.2V21" stroke="none" style="fill:var(--b-fb)"/>',
+  mail:'<rect x="3" y="5.5" width="18" height="13" rx="1.5" fill="currentColor" stroke="none"/><path d="M3.5 6.5l8.5 7 8.5-7" style="stroke:var(--b-mail)" stroke-width="2"/>'
+};
+function svgI(k){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+(ICONS[k]||'')+'</svg>'; }
+document.querySelectorAll('[data-icon]').forEach(function(el){ el.innerHTML=svgI(el.dataset.icon); });
+
+/* ================= one flow per Apple Ads keyword (engine) + per-keyword copy (EDIT) =================
+   FT.a / FT.b override T keys for that keyword's phone. SHOTS = the ad's three screenshots per keyword
+   (their art, a caption key, object-position) -- literal assets/ paths so publish-gh.sh finds them. */
+var EMBED = /[?&]embed/.test(location.search);
+if(EMBED) document.documentElement.classList.add('embed');
+var FLOW = (location.search.match(/[?&]flow=(a|b)/)||[])[1] || '';
+var FT = {
+ a:{
+  'wl.h':  ["Forecasts, maps<br>&amp; tides in one app.","Previsiones, mapas<br>y mareas en una app."],
+  'wl.s':  ["Fish activity, worldwide nautical charts and tides from 10,000+ stations. Start free.","Actividad de los peces, cartas náuticas de todo el mundo y mareas de más de 10.000 estaciones. Empieza gratis."],
+  'wl.cta':["See my forecast","Ver mi previsión"]
+ },
+ b:{
+  'wl.h':  ["Tides for your<br>spot, today.","Las mareas de tu<br>lugar, hoy."],
+  'wl.s':  ["High and low tides from 10,000+ tide stations. Today’s tides are free.","Pleamares y bajamares de más de 10.000 estaciones mareográficas. Las mareas de hoy son gratis."],
+  'wl.cta':["See today’s tides","Ver las mareas de hoy"],
+  'fc.sub':["We ticked Tides from your search. Add any others.","Marcamos Mareas por tu búsqueda. Añade otras."],
+  'pv.h':  ["Today’s tides are free.","Las mareas de hoy son gratis."],
+  'pv.s':  ["Tomorrow’s tides, the weekend and the next 3 months come with Premium.","Las mareas de mañana, el fin de semana y los próximos 3 meses vienen con Premium."],
+  'of.h':  ["Today’s tides<br>stay free.","Las mareas de hoy<br>siguen gratis."],
+  'of.t':  ["Want the whole week of tides?","¿Quieres las mareas de toda la semana?"],
+  'of.p':  ["Premium Monthly: 7 days free, then {mo}/month.","Premium mensual: 7 días gratis, luego {mo}/mes."],
+  'of.rv': ["“Absolutely worth the download. Spot on with the tides. Locks and stores all of my spots. Definitely recommend.”","“Vale la pena descargarla. Da en el clavo con las mareas. Bloquea y guarda todos mis puntos. La recomiendo sin duda.”"],
+  'of.rvc':["United States","Estados Unidos"],
+  'of.free':["Keep my free tides","Seguir con las mareas gratis"]
+ }
+};
+if(FT[FLOW]) Object.keys(FT[FLOW]).forEach(function(k){ T[k]=FT[FLOW][k]; });
+if(FLOW) document.documentElement.classList.add('flow-'+FLOW);
+var KW = (META.kw[FLOW]||META.kw.a).q;
+var SHOTS = FLOW==='b' ? [['assets/crop/ad-tides.jpg','as.b1','50% 30%'],['assets/site/Fishing_Points_Tides_Overview_3e14c191f9.webp','as.b2','50% 12%'],['assets/site/Fishing_Points_Solunar_e2504b7567.webp','as.b3','50% 12%']]
+                          : [['assets/crop/ad-activity.jpg','as.a1','50% 30%'],['assets/crop/ad-nautical.jpg','as.a2','50% 30%'],['assets/crop/ad-tides.jpg','as.a3','50% 30%']];
+/* the tides search puts Tides first; everyone else sees their order */
+var FC_ORDER = FLOW==='b' ? ['tides','radar','waves','river','weather','fishact','sun','none'] : FC.map(function(f){ return f[0]; });
+var FILL = FLOW==='b' ? ['tides','sun','fishact','weather','waves'] : ['fishact','tides','nautical','weather','locations'];
+
+/* ================= state (EDIT defaults(): answers pre-filled per keyword, so a step jump lands mid-flow) ================= */
+function defaults(){ return { lang:S0.lang, theme:S0.theme, type:'salt',
+  fc: FLOW==='b' ? ['tides','sun'] : ['fishact','tides','waves'],
+  plan:'year', trial:true, slide:0, paid:true }; }
+var S0 = {lang:'en', theme:'light'};
+var S = defaults();
+function L(){ return LANGS.indexOf(S.lang); }
+function t(k,v){ var s=(T[k]||[k])[L()]; if(v) Object.keys(v).forEach(function(x){ s=s.split('{'+x+'}').join(v[x]); });
+  var P=PRICE[S.lang]||PRICE.en; return s.replace(/\{(yr|mo|yrmo|save)\}/g,function(m,x){ return P[x]; }); }
+function picks(){ return S.fc.filter(function(k){ return k!=='none'; }); }
+function fcName(k){ return FC.filter(function(f){ return f[0]===k; })[0][1][L()]; }
+function listOf(a,max){ return a.length>max ? a.slice(0,max).join(', ')+' '+t('more',{n:a.length-max}) : a.join(', '); }
+function tw(){ return TW[S.type] ? TW[S.type][L()] : ''; }
+function cmpRows(n){ var rows=picks().filter(function(k){ return CMP[k]; });
+  FILL.forEach(function(k){ if(rows.indexOf(k)<0) rows.push(k); }); return rows.slice(0,n); }
+
+/* ================= marks ================= */
+var CK=svgI('check');
+function star(c,s){ return '<svg width="'+s+'" height="'+s+'" viewBox="0 0 14 14" fill="'+c+'"><path d="M7 .9l1.85 3.9 4.15.6-3 3 .71 4.3L7 10.66 3.29 12.7 4 8.4l-3-3 4.15-.6z"/></svg>'; }
+document.querySelectorAll('[data-stars]').forEach(function(el){ var h=''; for(var i=0;i<5;i++) h+=star(el.dataset.c||'#F5A623',+el.dataset.stars); el.innerHTML=h; });
+
+/* ================= builders (re-run on language change) ================= */
+function buildFc(){ var g=document.getElementById('fcList'); g.innerHTML='';
+  FC_ORDER.forEach(function(k){ var b=document.createElement('button'); b.className='s-mo'; b.dataset.v=k;
+    b.innerHTML='<i class="s-ic">'+svgI(k)+'</i><span class="s-ml">'+fcName(k)+'</span><i class="s-cb">'+CK+'</i>';
+    b.addEventListener('click',function(){
+      if(k==='none') S.fc = S.fc.indexOf('none')>-1 ? [] : ['none'];
+      else { S.fc=S.fc.filter(function(x){ return x!=='none'; }); var i=S.fc.indexOf(k); if(i>-1) S.fc.splice(i,1); else S.fc.push(k); }
+      syncScreen(); });
+    g.appendChild(b); }); }
+function days(el,locked){ el.innerHTML=DAYS[L()].map(function(d,i){
+    var c= i<3 ? 's-past' : i===3 ? 's-now' : (locked ? 's-lk' : '');
+    return '<div class="'+c+'">'+(c==='s-lk'?'<i>'+svgI('lock')+'</i>':'')+d[0]+'<small>'+d[1]+'</small></div>'; }).join(''); }
+function rowsHtml(keys){ return keys.map(function(k){ var r=CMP[k][L()]; return '<div class="s-r"><span>'+r[0]+'</span><span>'+r[1]+'</span><span>'+r[2]+'</span></div>'; }).join(''); }
+function applyStatic(){
+  document.documentElement.lang=S.lang;
+  document.querySelectorAll('[data-t]').forEach(function(el){ el.textContent=t(el.dataset.t); });
+  document.querySelectorAll('[data-th]').forEach(function(el){ el.innerHTML=t(el.dataset.th); });
+  buildFc(); buildShots();
+  document.getElementById('asKw').textContent=KW;
+  document.getElementById('asGet').classList.remove('open');
+  days(document.getElementById('pvDays'),true); days(document.getElementById('tdDays'),true);
+  scr.preview.classList.toggle('s-tidev',FLOW==='b');
+  if(FLOW==='b') delete scr.preview.dataset.light; else scr.preview.dataset.light='1';
+  scr.offer.classList.toggle('s-freev',FLOW==='b');
+  document.getElementById('ofRows').innerHTML=rowsHtml(['tides','sun','fishact']);
+  document.querySelector('.s-one').classList.toggle('hidden',FLOW==='b');
+  document.getElementById('car').classList.toggle('hidden',FLOW!=='b');
+  document.getElementById('dots').classList.toggle('hidden',FLOW!=='b');
+  document.querySelectorAll('.s-ftt').forEach(function(e){ e.classList.toggle('s-long',S.lang==='es' && e.dataset.t==='fa.t'); });
+}
+function buildShots(){ document.getElementById('asShots').innerHTML=SHOTS.map(function(x){
+  return '<div class="as-shot"><img src="'+x[0]+'" alt="" style="object-position:'+x[2]+'"><b>'+t(x[1])+'</b></div>'; }).join(''); }
+
+/* ================= everything downstream reads S ================= */
+function syncScreen(){
+  document.querySelectorAll('#typeList .s-opt').forEach(function(b){ b.classList.toggle('on', b.dataset.type===S.type); });
+  document.querySelectorAll('#fcList .s-mo').forEach(function(b){ b.classList.toggle('on', S.fc.indexOf(b.dataset.v)>-1); });
+  document.getElementById('fcBtn').disabled=!S.fc.length;
+  var sub=document.getElementById('fcSub'); sub.textContent=t('fc.sub'); sub.classList.toggle('s-kw',FLOW==='b');
+
+  var P=picks(), w=tw(), names=P.map(fcName);
+  document.getElementById('ldE1').textContent= w ? t('ld.'+S.type) : t('ld.any');
+  document.getElementById('ldE2').textContent= names.length ? t('ld.fc',{l:listOf(names,3)}) : t('ld.fc0');
+  document.getElementById('ldE3').textContent= P.indexOf('tides')>-1 ? t('ld.tide') : t('ld.map');
+
+  document.getElementById('poH').textContent= w ? t('po.hw',{w:w}) : t('po.h0');
+  var tl=S.type ? t('ty.'+S.type) : '';
+  document.getElementById('poMeta').textContent=[tl, P.length ? (P.length===1 ? t('po.pick1') : t('po.pick',{n:P.length})) : ''].filter(Boolean).join(' · ');
+  var show=(P.length ? P : ['fishact','tides','weather']).filter(function(k){ return INFO[k]; }).slice(0,4);
+  document.getElementById('poList').innerHTML=show.map(function(k){ var x=INFO[k][L()];
+    return '<div class="s-r"><i class="s-ic">'+svgI(k)+'</i><div><b>'+x[0]+'</b><small>'+x[1]+'</small></div></div>'; }).join('');
+  document.getElementById('poImg').setAttribute('src',RENDER[S.type]||RENDER.salt);
+
+  document.getElementById('pvRows').innerHTML=rowsHtml(cmpRows(3));
+
+  var trip= (S.type==='not'||!w) ? t('pw.trip0') : t('pw.trip',{w:w});
+  document.getElementById('pwSub').textContent=t('pw.sub',{trip:trip});
+  document.getElementById('pwTri').classList.toggle('hidden',!S.trial);
+  document.getElementById('pwSw').classList.toggle('on',S.trial);
+  document.getElementById('trTxt').textContent= S.trial ? t('pw.ton') : t('pw.toff');
+  document.querySelectorAll('.s-pw .s-pc').forEach(function(b){ b.classList.toggle('on', b.dataset.v===S.plan); });
+  document.getElementById('tmY').textContent= S.trial ? t('pw.yrt') : t('pw.yrn');
+  document.getElementById('tmM').textContent= S.trial ? t('pw.mot') : t('pw.mon');
+  document.getElementById('payCta').textContent= S.trial ? t('pw.ctat') : t('pw.ctan');
+  document.getElementById('payTrust').textContent= (S.trial ? t('pw.trustt') : '')+t('pw.trust');
+
+  document.getElementById('ofToday').textContent=t('of.full')+cmpRows(3).map(function(k){ return TODAY[k][L()]; }).join(', ');
+  document.getElementById('acOkT').textContent= S.paid ? t('ac.ok') : t('ac.free');
+}
+
+/* ================= router ================= */
+var ORDER=['search','welcome','type','forecasts','loader','payoff','preview','paywall','offer','account'];
+var LABEL={search:'App Store',welcome:'Welcome',type:'Fishing type',forecasts:'Forecasts',loader:'Loader',payoff:'Toolkit',preview:'Today free',paywall:'Paywall',offer:'On Back',account:'Sign in'};
+var scr={}, hist=[], cur='search', loadTimers=[], carTimer=null;
+document.querySelectorAll('.scr').forEach(function(s){ scr[s.dataset.id]=s; });
+
+function chrome(){ var dark=S.theme==='dark', l=dark || !!scr[cur].dataset.light;
+  document.getElementById('sbar').classList.toggle('light',l); document.getElementById('homebar').classList.toggle('light',dark); }
+function tell(m){ if(EMBED && window.parent!==window){ m.flow=FLOW; window.parent.postMessage(m,'*'); } }
+function enter(id){ chrome(); paintChips(); paintPanel(); clearLoad(); stopCar(); tell({ev:'screen',id:id});
+  if(id==='search') document.getElementById('asGet').classList.remove('open'),document.getElementById('asGet').textContent=t('as.get');
+  if(id==='loader') runLoader(); if(id==='paywall'){ setSlide(0); runCar(); } }
+function go(id,opts){
+  opts=opts||{}; if(id===cur) return;
+  var from=scr[cur], to=scr[id];
+  if(!opts.back) hist.push(cur);
+  if(from){ from.classList.remove('is-active');
+    if(!to.classList.contains('sheet') && !from.classList.contains('sheet')) from.classList.add('is-past'); }
+  if(to.classList.contains('sheet')) from.classList.add('is-active');
+  Object.keys(scr).forEach(function(k){ if(k!==id&&k!==cur) scr[k].classList.remove('is-active'); });
+  to.classList.remove('is-past'); to.classList.add('is-active');
+  cur=id; enter(id);
+}
+function back(){
+  if(!hist.length) return;
+  var prev=hist.pop();
+  scr[cur].classList.remove('is-active');
+  scr[prev].classList.remove('is-past'); scr[prev].classList.add('is-active');
+  cur=prev; enter(prev);
+}
+function jump(id){
+  var i=ORDER.indexOf(id);
+  Object.keys(scr).forEach(function(k){ scr[k].classList.add('nofx'); scr[k].classList.remove('is-active','is-past'); });
+  hist=ORDER.slice(0,i<0?0:i);
+  if(id==='offer') scr.paywall.classList.add('is-active');
+  scr[id].classList.add('is-active'); cur=id;
+  scr[id].querySelector('.scr-body').scrollTop=0;
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){
+    Object.keys(scr).forEach(function(k){ scr[k].classList.remove('nofx'); }); }); });
+  syncScreen(); enter(id);
+}
+var chipsBuilt=false;
+function paintChips(){
+  var c=document.getElementById('chips');
+  if(!chipsBuilt){ chipsBuilt=true;
+    ORDER.forEach(function(id){
+      var b=document.createElement('button'); b.className='chip'+(id==='offer'?' offer':''); b.textContent=LABEL[id];
+      b.dataset.id=id; b.onclick=function(){ stopDemo(); jump(id); }; c.appendChild(b);
+    });
+  }
+  c.querySelectorAll('.chip').forEach(function(b){ b.classList.toggle('on', b.dataset.id===cur); });
+}
+
+function clearLoad(){ loadTimers.forEach(clearTimeout); loadTimers=[]; }
+function paintLoad(p){
+  document.getElementById('ldRing').setAttribute('stroke-dashoffset',(351.9*(1-p)).toFixed(1));
+  document.getElementById('ldPct').textContent=Math.round(p*100)+'%';
+  document.querySelectorAll('#ldEcho li').forEach(function(li,i){ li.classList.toggle('done', p>=[.3,.62,.94][i]); });
+  var pr=PROOF[L()][p<.45?0:p<.85?1:2], pe=document.getElementById('ldProof');
+  pe.querySelector('b').textContent=pr[0]; pe.querySelector('span').textContent=pr[1];
+}
+function runLoader(){
+  var k=demo.on?0.48:1, dur=4200*k, t0=Date.now(); paintLoad(0);
+  (function tick(){ if(cur!=='loader') return; var p=Math.min(1,(Date.now()-t0)/dur); paintLoad(p);
+    if(p<1) loadTimers.push(setTimeout(tick,60)); })();
+  loadTimers.push(setTimeout(function(){ if(cur==='loader') go('payoff'); },dur+400*k));
+}
+var NSL=3;
+function setSlide(i){ S.slide=i;
+  document.querySelectorAll('#car .s-slide').forEach(function(n,k){ n.classList.toggle('on',k===i); });
+  document.querySelectorAll('#dots i').forEach(function(n,k){ n.classList.toggle('on',k===i); }); }
+function stopCar(){ if(carTimer){ clearInterval(carTimer); carTimer=null; } }
+function runCar(){ stopCar(); if(demo.on||FLOW!=='b') return; carTimer=setInterval(function(){ if(cur==='paywall') setSlide((S.slide+1)%NSL); },3600); }
+document.querySelectorAll('#dots i').forEach(function(d,i){ d.addEventListener('click',function(){ setSlide(i); runCar(); }); });
+
+/* ================= wiring ================= */
+document.querySelectorAll('[data-go]').forEach(function(b){ b.addEventListener('click',function(){ if(!b.disabled) go(b.dataset.go); }); });
+document.querySelectorAll('[data-back]').forEach(function(b){ b.addEventListener('click',back); });
+document.querySelectorAll('#typeList .s-opt').forEach(function(b){ b.addEventListener('click',function(){
+  S.type=b.dataset.type; syncScreen(); setTimeout(function(){ if(cur==='type') go('forecasts'); },demo.on?160:260); }); });
+document.querySelectorAll('.s-pw .s-pc').forEach(function(b){ b.addEventListener('click',function(){ S.plan=b.dataset.v; syncScreen(); }); });
+document.getElementById('trTog').addEventListener('click',function(){ S.trial=!S.trial; syncScreen(); });
+document.getElementById('payClose').addEventListener('click',function(){ go('offer'); });
+document.getElementById('payCta').addEventListener('click',function(){ S.paid=true; syncScreen(); go('account'); });
+document.getElementById('offerCta').addEventListener('click',function(){ S.paid=true; syncScreen(); go('account'); });
+document.getElementById('offClose').addEventListener('click',function(){ S.paid=false; syncScreen(); go('account'); });
+document.getElementById('offFree').addEventListener('click',function(){ S.paid=false; syncScreen(); go('account'); });
+document.querySelectorAll('[data-done]').forEach(function(b){ b.addEventListener('click',function(){ jump('welcome'); }); });
+document.getElementById('asGet').addEventListener('click',function(){ var b=this; if(b.classList.contains('open')) return;
+  b.classList.add('open'); b.textContent=t('as.open'); setTimeout(function(){ if(cur==='search') go('welcome'); },demo.on?420:650); });
+
+function setSeg(id,attr,val){ document.querySelectorAll('#'+id+' button').forEach(function(b){ b.classList.toggle('on', b.dataset[attr]===val); }); }
+function setLang(l){ S.lang=l; S0.lang=l; setSeg('segLang','lang',l); applyStatic(); syncScreen(); paintPanel(); }
+/* light only: no dark-mode frames of their app were available, so there is no Dark switch */
+function setTheme(th){ S.theme='light'; S0.theme='light'; chrome(); }
+document.querySelectorAll('#segLang button').forEach(function(b){ b.addEventListener('click',function(){ stopDemo(); setLang(b.dataset.lang); }); });
+
+/* ================= the 30-second walkthrough (engine; captions + taps in startDemo are EDIT) =================
+   Both phones run it at once; flow a's captions show in the host bar. ~30 s total, one caption per screen. */
+var demo={tok:0,on:false,t0:0,iv:null}, finger=document.getElementById('finger'), phoneIn=document.getElementById('phoneIn');
+function W(ms){ return new Promise(function(r){ setTimeout(r,ms); }); }
+function cap(txt){ document.getElementById('demoTxt').textContent=txt; if(FLOW==='a') tell({ev:'cap',txt:txt}); }
+async function tap(sel,tok){
+  if(demo.tok!==tok) throw 0;
+  var el=document.querySelector(sel); if(!el) return;
+  var r=el.getBoundingClientRect(), p=phoneIn.getBoundingClientRect(), z=p.width/phoneIn.offsetWidth||1;
+  finger.style.left=((r.left-p.left+r.width/2)/z)+'px'; finger.style.top=((r.top-p.top+r.height/2)/z)+'px';
+  finger.classList.add('show'); await W(380); if(demo.tok!==tok) throw 0;
+  finger.classList.add('press'); await W(120); finger.classList.remove('press'); el.click(); await W(160);
+  if(demo.tok!==tok) throw 0;
+}
+async function pause(ms,tok){ await W(ms); if(demo.tok!==tok) throw 0; }
+function startDemo(){
+  stopDemo(); var tok=++demo.tok; demo.on=true; demo.t0=Date.now();
+  var keep={lang:S.lang,theme:S.theme}; S=defaults(); S.lang=keep.lang; S.theme=keep.theme;
+  S.fc = FLOW==='b' ? ['tides'] : [];   /* a live flow: only the tides search starts with a tick */
+  applyStatic(); jump('search');
+  if(!EMBED) document.getElementById('demoCap').classList.remove('hidden');
+  demo.iv=setInterval(function(){ document.getElementById('demoProg').style.width=Math.min(100,(Date.now()-demo.t0)/300)+'%'; },200);
+  (async function(){
+    try{
+      cap('Same app, two Apple Ads searches. Each keyword opens its own flow.'); await pause(2100,tok);
+      await tap('#asGet',tok); await pause(700,tok);
+      cap('The first line answers the search: forecasts, maps and tides, or today’s tides.'); await pause(2300,tok);
+      await tap('[data-id=welcome] .s-ybtn',tok);
+      cap('Your own quiz, moved ahead of the sign-in.'); await pause(1000,tok);
+      await tap('#typeList [data-type=salt]',tok); await pause(500,tok);
+      cap('The tides search finds Tides already ticked, at the top. Both add Fish activity.'); await pause(1500,tok);
+      await tap('#fcList [data-v=fishact]',tok); await pause(500,tok);
+      await tap('#fcBtn',tok);
+      cap('Your loader reads their answers back while it works.'); await pause(2600,tok);
+      cap('Then their picks, named, with what each one does.'); await pause(1800,tok);
+      await tap('[data-id=payoff] .s-qcta',tok);
+      cap('Today is free in your own forecast: Fish activity in one flow, Tides in the other.'); await pause(2600,tok);
+      await tap('[data-id=preview] .s-qcta',tok);
+      cap('Your free week, switched on. The tides flow gets a carousel: tides, sun and moon, fish activity.'); await pause(1400,tok);
+      if(FLOW==='b'){ setSlide(1); } await pause(1500,tok);
+      cap('They tap Back. One gets Monthly with 7 free days; the other keeps today’s tides free.'); await tap('#payClose',tok); await pause(2600,tok);
+      await tap('#offerCta',tok);
+      cap('The account comes after the purchase, where “never lose your spots” is true.'); await pause(2200,tok);
+      cap('That is both flows. The steps under the phones jump to any screen.');
+      finger.classList.remove('show'); await pause(2000,tok); stopDemo(); tell({ev:'demoEnd'});
+    }catch(e){}
+  })();
+}
+function stopDemo(){ if(!demo.on) return; demo.tok++; demo.on=false; clearInterval(demo.iv); finger.classList.remove('show','press');
+  document.getElementById('demoCap').classList.add('hidden'); if(cur==='paywall') runCar(); }
+document.getElementById('demoBtn').addEventListener('click',startDemo);
+document.getElementById('demoStop').addEventListener('click',stopDemo);
+phoneIn.addEventListener('pointerdown',function(e){ if(e.isTrusted && demo.on){ stopDemo(); tell({ev:'demoStop'}); } });
+window.addEventListener('message',function(e){ var m=e.data||{}; if(!EMBED||!m.cmd) return;
+  if(m.cmd==='jump'){ stopDemo(); if(m.id!==cur) jump(m.id); }
+  if(m.cmd==='lang') setLang(m.v);
+  if(m.cmd==='theme') setTheme(m.v);
+  if(m.cmd==='demo') startDemo();
+  if(m.cmd==='stop') stopDemo();
+});
+</script>
+<script>
+/* ---- PANEL (EDIT): one entry per screen: the idea it carries, "Try X, because Y", the range, what was kept ----
+   ctx:true = context screen (no idea, no range). hyp2/n2/out2 = a second idea on the same screen. */
+var PANEL = {
+welcome:{ctx:true,t:'Your welcome, with the first line answering the search',
+ kept:'Your rod photo, blue background, yellow Continue button and legal line. Continue now opens your quiz instead of the sign-in sheet (idea 2).'},
+type:{ctx:true,t:'Your quiz, now screen 2',
+ kept:'Your own first question and its four answers, word for word, moved up from screen 7. The answer names the toolkit and the line on the paywall (idea 1).'},
+forecasts:{ctx:true,t:'Which forecasts interest you most?',
+ kept:'Your eight options and icons, your multi-select rows and blue Continue. What is ticked here comes back on the toolkit, the preview and the paywall.'},
+loader:{ctx:true,t:'Your loader, reading the answers back',
+ kept:'Same ring, same “Preparing fishing maps...”, the same proof it cycles today, plus the answers it is preparing for.'},
+payoff:{n:1,t:'Use the answers you already collect',
+ hyp:'<b>Try</b> a screen that names what they picked and what each pick does, <b>because</b> today their answers go into “Preparing fishing maps...” and come out as the same paywall for everyone.',
+ kept:'Your blue headline style, your forecast icons and your own feature descriptions from fishingpoints.app. The map phone is your site render.',
+ out:'CR +10–20%'},
+preview:{n:4,t:'Show what Free leaves out, in your own forecast',
+ hyp:'<b>Try</b> showing today’s forecast free and the rest of the week locked, <b>because</b> Free really is today-only, and a forecast they can see beats a feature list they have to imagine.',
+ kept:'Your Fish activity and Tides screens, rebuilt from your fishingpoints.app renders (Tampa and the numbers are their example data), and your Free vs Premium table.',
+ out:'CR +5–15%'},
+paywall:{n:3,t:'Start with the free week switched on',
+ hyp:'<b>Try</b> your trial switch on by default, with 4.7 stars from 230K+ ratings above the plans, <b>because</b> today the first price people see is $49.99 due now, and in utilities a free trial tends to raise lifetime value.',
+ kept:'The navy gradient, “Unlock Fishing Points Premium”, your line-art fish and waves, the trial switch, the 58% OFF Yearly card at $4.17/month, Monthly and the blue button.',
+ out:'CR +10–20%'},
+offer:{n:5,t:'Catch the people who tap Back',
+ hyp:'<b>Try</b> one sheet with your $9.99 Monthly plan and its 7 free days, <b>because</b> Back now drops people straight onto the map, and a year is the commitment they just said no to.',
+ kept:'Your navy header and waves, your plan card and blue button. No countdown, no discount: Monthly is a price you already sell.',
+ out:'CR +5–10%'},
+account:{n:2,t:'Ask for the account after the purchase',
+ hyp:'<b>Try</b> your sign-in sheet after the paywall, <b>because</b> today it is step 3, followed by email, password and name, and its own line, “never lose your saved spots”, only rings true once there is something to save.',
+ kept:'Your sign-in sheet word for word: the photo, Apple, Google, Facebook and email buttons in your colours. “Not now” lets free users in; drop it if an account is required before purchase.',
+ out:'CR +5–10% · ARPU up to +17%'}
+};
+
+function outBlock(lab,val){
+  return '<div class="pn-out"><div class="lab">'+lab+'</div><div class="v">'+val+'</div></div>';
+}
+function paintPanel(){
+  var d=PANEL[cur]; if(!d) return;
+  var h='';
+  if(d.ctx){
+    h += '<div class="pn-n ctx">Context · no change proposed</div><h3 class="pn-t">'+d.t+'</h3>'
+       + '<div class="pn-kept">'+d.kept+'</div>';
+  } else {
+    h += '<div class="pn-n">Idea '+d.n+' of 5</div><h3 class="pn-t">'+d.t+'</h3>'
+       + '<p class="pn-hyp">'+d.hyp+'</p>'
+       + outBlock('Potential outcome · based on Adapty data', d.out);
+    if(d.hyp2){
+      h += '<div class="pn-sep"></div>'
+         + '<div class="pn-n">Idea '+d.n2+' of 5</div>'
+         + '<p class="pn-hyp" style="margin-top:12px">'+d.hyp2+'</p>'
+         + outBlock('Potential outcome · based on Adapty data', d.out2);
+    }
+    h += '<div class="pn-kept"><b>Your design, unchanged.</b> '+d.kept+'</div>';
+  }
+  if(S.lang!=='en') h += '<div class="pn-kept"><b>Language.</b> Screens are shown in '+langName(S.lang)+' to show one flow serving every market. '+META.langNote+'</div>';
+  h += '<div class="pn-foot">Ranges are Adapty’s expected effect from tests across 30,000+ subscription apps, not measured lift for '+META.app+'. '
+     + 'Prices, ratings, reviews and feature lines come from your own published material.</div>';
+  document.getElementById('panel').innerHTML = h;
+}
+
+
+/* ================= host: two phones, one step bar =================
+   P3 (EDIT): per screen. diff:true = the keyword flows differ here -> a / b cards {hyp, out, tag (hypothesis)}.
+   Screens without diff fall back to PANEL. note = one grey line under the cards. Engine below it. */
+var P3 = {
+search:{diff:true,t:'Same app, two searches',
+ a:{hyp:'Someone typed “fishbrain”: they are comparing fishing apps and already know what one does, <b>so the ad shows what Fishing Points is known for</b>: Fish activity forecasts, worldwide nautical charts and tides, cut from your own App Store screenshots.'},
+ b:{hyp:'Someone typed “tide charts”: <b>they want today’s tides for their spot, not a fishing app</b>. The same ad slot shows your tide chart, the daily highs and lows and sun and moon times.'},
+ note:'Adapty reads the Apple Ads keyword when the app first opens and picks the matching flow. Either flow can change from the dashboard, without an app release.'},
+welcome:{diff:true,t:'Answer the search in the first line',idea:2,
+ a:{hyp:'The headline says “Forecasts, maps & tides in one app.” and the button says “See my forecast”, <b>because someone switching apps wants to know what this one does, in one line</b>. Nothing about any other app.',out:'CR +5–10%'},
+ b:{hyp:'The headline says “Tides for your spot, today.” and the button says “See today’s tides”, <b>because that is what they typed</b>. It also says today’s tides are free, which is true.',out:'CR +5–10%'},
+ note:'In both flows Continue now opens the quiz instead of the sign-in sheet, which moves behind the paywall (idea 2).'},
+type:{note:'Same in both flows. Jump here and the answers are pre-filled so later screens have something to read.'},
+forecasts:{diff:true,t:'Start from what the search already said',idea:1,
+ a:{hyp:'Your eight options in your order. <b>A search for another app says nothing about which forecast they want</b>, so nothing starts ticked in a live flow.',out:null},
+ b:{hyp:'Tides is already ticked and sits at the top, with “We ticked Tides from your search”, <b>because the keyword told you</b>. One tap to confirm, then the toolkit, the preview and the paywall talk about tides.',out:'CR +5–10%'},
+ note:'Jumping here pre-fills a few answers per flow, so the screens after it have something to read.'},
+loader:{note:'Same in both flows: the ring reads back the water and the forecasts they picked.'},
+payoff:{note:'Same screen in both flows; the list follows their picks, so the tides flow leads with Tides.'},
+preview:{diff:true,t:'Today free, in the forecast they came for',idea:4,
+ a:{hyp:'Your Fish activity screen: today’s 98 open, the rest of the week locked, <b>because the forecast is what Fishing Points is known for</b>, and a switcher should see it working before the price.',out:'CR +5–15%'},
+ b:{hyp:'Your Tides screen for their spot: today’s chart, next high tide and current open, the rest of the week locked, <b>because a utility searcher pays only once they see what Free leaves out</b>: tomorrow’s tides.',out:'CR +5–15%'}},
+paywall:{diff:true,t:'One paywall, two stories',idea:3,
+ a:{hyp:'Your paywall with the free week switched on and “Catch More Fish” naming their trips, <b>because a switcher already wants a fishing app; the trial removes the price as the reason to wait</b>.',out:'CR +10–20%'},
+ b:{hyp:'The art becomes a three-slide carousel in your style: tides 3 months ahead, sun and moon, fish activity, <b>because they came for tides and Premium’s first line should be about tides</b>. Tap the dots to see each slide.',out:'CR +10–20%'},
+ note:'Both use your real 7-day trial and today’s prices: $49.99 a year ($4.17 a month) and $9.99 a month. No new products.'},
+offer:{diff:true,t:'A second chance that fits the search',idea:5,
+ a:{hyp:'Your $9.99 Monthly plan with its 7 free days as a timeline, <b>because a switcher who said no to a year may still say yes to a month</b>.',out:'CR +5–10%'},
+ b:{hyp:'“Today’s tides stay free.” first, with Monthly and its 7 free days under it, <b>because a free tide user who stays is still a future trial</b>; one who deletes the app is not.',out:'CR +5–10%'}},
+account:{note:'Same in both flows. After a purchase it confirms it; after “Keep my free tides” it says what Free includes.'}
+};
+var IDEAS5 = META.ideas.map(function(x){ return [x.n, x.short||x.title, x.impact, x.screen]; });
+var H = {cur:{a:'search', b:'search'}, step:'search', ready:{}, demo:false, t0:0, iv:null, lang:'en', one:'a'};
+var KWI = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>';
+function frames(){ return {a:document.querySelector('.flow.ka iframe'), b:document.querySelector('.flow.kb iframe')}; }
+function send(flow,m){ var f=frames()[flow]; if(f&&f.contentWindow) f.contentWindow.postMessage(m,'*'); }
+function sendBoth(m){ send('a',m); send('b',m); }
+function hostJump(id){ hostStopDemo(true); H.cur.a=H.cur.b=id; sendBoth({cmd:'jump',id:id}); setStep(id); }
+function setStep(id){ H.step=id; paintSteps(); paintHostPanel(); }
+function paintSteps(){
+  var c=document.getElementById('hSteps');
+  if(!c.childElementCount) ORDER.forEach(function(id){ var b=document.createElement('button'); b.className='step'+(P3[id]&&P3[id].diff?' diff':'');
+    b.textContent=LABEL[id]; b.dataset.id=id; b.title=P3[id]&&P3[id].diff?'The two flows differ on this screen':'Same in both flows';
+    b.onclick=function(){ hostJump(id); }; c.appendChild(b); });
+  c.querySelectorAll('.step').forEach(function(b){ b.classList.toggle('on',b.dataset.id===H.step); });
+}
+function kcard(flow,d){
+  var kw='“'+META.kw[flow].q+'”';
+  var h='<div class="kc '+flow+'"><div class="kk">'+KWI+kw+'</div><p>'+d.hyp+'</p>';
+  if(d.tag) h+='<span class="hyptag"><b>Hypothesis</b>'+d.tag+'</span>';
+  if(d.out!==undefined) h+='<div class="ko"><span>Potential outcome</span>'+(d.out?'<b>'+d.out+'</b>':'<b class="nc">No change</b>')+'</div>';
+  return h+'</div>';
+}
+function paintHostPanel(){
+  var id=H.step, d=P3[id]||{}, b=PANEL[id]||{}, h='';
+  var here=d.diff?[d.idea,d.idea2]:[b.n,b.n2]; here=here.filter(Boolean);
+  h+='<details class="sh"><summary><div class="top"><span class="lab"><small>Built into both flows</small>The 5 ideas from the audit</span>'
+    +'<span class="more"><span class="o">Show all ▾</span><span class="c">Hide ▴</span></span></div><div class="lit">';
+  IDEAS5.forEach(function(x){ h+='<button class="'+(here.indexOf(x[0])>-1?'on':'')+'" data-go="'+x[3]+'" title="'+x[1]+'">0'+x[0]+'</button>'; });
+  h+='<span>'+(here.length?'Lit = on this screen':'None on this screen')+'</span></div></summary><ol>';
+  IDEAS5.forEach(function(x){ h+='<li class="'+(here.indexOf(x[0])>-1?'on':'')+'" data-go="'+x[3]+'"><span class="n">0'+x[0]+'</span><span class="t">'+x[1]+'</span><span class="o">'+x[2]+'</span></li>'; });
+  h+='</ol></details>';
+  if(d.diff){
+    h+='<div class="pn-badge"><i></i>'+LABEL[id]+' · differs by keyword</div><h3 class="pn-t">'+d.t+'</h3>';
+    h+=kcard('a',d.a)+kcard('b',d.b);
+    if(d.note) h+='<div class="pn-note">'+d.note+'</div>';
+    if(d.idea){ h+='<div class="pn-also"><div class="lab">Also on this screen, in both flows</div>';
+      [d.idea,d.idea2].filter(Boolean).forEach(function(n){ var x=IDEAS5[n-1]; h+='<div class="row"><span>Idea '+n+' · '+x[1]+'</span><span class="o">'+x[2]+'</span></div>'; });
+      h+='</div>'; }
+  } else if(b.ctx){
+    h+='<div class="pn-badge same"><i></i>'+LABEL[id]+' · same in both flows</div><h3 class="pn-t">'+b.t+'</h3><div class="pn-kept">'+b.kept+'</div>';
+  } else {
+    h+='<div class="pn-badge same"><i></i>'+LABEL[id]+' · same in both flows</div>';
+    h+='<div class="pn-n" style="margin-top:14px">Idea '+b.n+' of 5</div><h3 class="pn-t">'+b.t+'</h3><p class="pn-hyp">'+b.hyp+'</p>'
+      +outBlock('Potential outcome · based on Adapty data',b.out);
+    if(d.note) h+='<div class="pn-note">'+d.note+'</div>';
+    h+='<div class="pn-kept"><b>Your design, unchanged.</b> '+b.kept+'</div>';
+  }
+  if(H.lang!=='en') h+='<div class="pn-kept"><b>Language.</b> Screens are shown in '+langName(H.lang)+' to show both flows serving every market. '+META.langNote+'</div>';
+  h+='<div class="pn-foot">Ranges are Adapty’s expected effect from tests across 30,000+ subscription apps, not measured lift for '+META.app+'. Prices, ratings, quotes and feature lines come from your own published material.</div>';
+  var p=document.getElementById('hPanel'); var wasOpen=p.querySelector('details.sh[open]'); p.innerHTML=h;
+  if(wasOpen) p.querySelector('details.sh').open=true;
+  p.querySelectorAll('.sh [data-go]').forEach(function(el){ el.onclick=function(e){ e.preventDefault(); e.stopPropagation(); hostJump(el.dataset.go); }; });
+}
+function hostSeg(attr,v){ document.querySelectorAll('[data-h'+attr+']').forEach(function(b){ b.classList.toggle('on',b.getAttribute('data-h'+attr)===v); }); }
+document.querySelectorAll('[data-hlang]').forEach(function(b){ b.addEventListener('click',function(){ H.lang=b.dataset.hlang; hostSeg('lang',H.lang); sendBoth({cmd:'lang',v:H.lang}); paintHostPanel(); }); });
+document.querySelectorAll('[data-htheme]').forEach(function(b){ b.addEventListener('click',function(){ hostSeg('theme',b.dataset.htheme); sendBoth({cmd:'theme',v:b.dataset.htheme}); }); });
+function hostDemo(){
+  if(!(H.ready.a&&H.ready.b)){ setTimeout(hostDemo,150); return; }
+  hostStopDemo(true); H.demo=true; H.t0=Date.now(); H.cur.a=H.cur.b='search'; setStep('search');
+  document.getElementById('hSteps').classList.add('hidden'); document.getElementById('hCap').classList.remove('hidden');
+  document.getElementById('hCapT').textContent='';
+  H.iv=setInterval(function(){ document.getElementById('hProg').style.width=Math.min(100,(Date.now()-H.t0)/300)+'%'; },200);
+  sendBoth({cmd:'demo'});
+}
+function hostStopDemo(quiet){
+  if(!H.demo) return; H.demo=false; clearInterval(H.iv);
+  document.getElementById('hSteps').classList.remove('hidden'); document.getElementById('hCap').classList.add('hidden');
+  if(!quiet) sendBoth({cmd:'stop'});
+}
+document.getElementById('hStop').addEventListener('click',function(){ hostStopDemo(); });
+document.querySelectorAll('[data-hdemo]').forEach(function(b){ b.addEventListener('click',hostDemo); });
+window.addEventListener('message',function(e){
+  var m=e.data||{}; if(EMBED||!m.ev||!m.flow) return;
+  var other=m.flow==='a'?'b':'a';
+  if(m.ev==='screen'){ var was=H.ready.a&&H.ready.b; H.ready[m.flow]=true; H.cur[m.flow]=m.id;
+    if(!was&&H.ready.a&&H.ready.b){ var sp=(location.search.match(/[?&]step=(\w+)/)||[])[1]; if(sp&&ORDER.indexOf(sp)>-1){ hostJump(sp); return; } }
+    if(!H.demo && H.cur[other]!==m.id){ H.cur[other]=m.id; send(other,{cmd:'jump',id:m.id}); }
+    if(m.id!==H.step) setStep(m.id); }
+  if(m.ev==='cap') document.getElementById('hCapT').textContent=m.txt;
+  if(m.ev==='demoEnd') hostStopDemo(true);
+  if(m.ev==='demoStop') hostStopDemo();
+});
+/* mobile: one phone at a time */
+document.querySelectorAll('#mtog button').forEach(function(b){ b.addEventListener('click',function(){
+  H.one=b.dataset.one; document.querySelectorAll('#mtog button').forEach(function(x){ x.classList.toggle('on',x===b); });
+  document.querySelectorAll('.duo .flow').forEach(function(f){ f.classList.toggle('show',f.dataset.flow===H.one); }); fit(); }); });
+document.getElementById('drawerBtn').addEventListener('click',function(){ document.body.classList.toggle('drawer'); });
+/* phones scale to the window: always one screen, no scrolling */
+function fit(){
+  if(EMBED) return;
+  var p3=document.getElementById('p3'), st=document.getElementById('p3Stage'), duo=document.getElementById('duo');
+  if(!document.getElementById('view-proto').classList.contains('on')) return;
+  var W=st.clientWidth-40, mobile=innerWidth<760, s;
+  if(mobile){
+    p3.className='p3 top one';
+    var Hm=innerHeight-58-14-50-56-(document.querySelector('.p3-mtools').offsetHeight||0)-110;
+    s=Math.min(1,(W+16)/390);
+  } else {
+    var Hs=duo.clientHeight-4;
+    var sSide=Math.min(1,Hs/844,(W-2*188-3*22)/(2*390));
+    var sTop=Math.min(1,(Hs-42)/844,(W-22)/(2*390));
+    var side=sSide>=sTop-0.01; p3.className='p3 '+(side?'side':'top'); s=side?sSide:sTop;
+  }
+  s=Math.max(.42,s);
+  document.querySelectorAll('.pbox').forEach(function(p){ p.style.width=Math.round(390*s)+'px'; p.style.height=Math.round(844*s)+'px';
+    p.firstElementChild.style.transform='scale('+s+')'; });
+  p3.dataset.scale=Math.round(s*100);
+}
+addEventListener('resize',fit);
+
+/* ---- views, jumps from the overview ---- */
+function showView(v){
+  if(v!=='proto'){ stopDemo(); if(!EMBED) hostStopDemo(); document.body.classList.remove('drawer'); }
+  document.body.classList.toggle('proto',v==='proto' && !EMBED);
+  document.querySelectorAll('.view').forEach(function(x){ x.classList.remove('on'); });
+  document.getElementById('view-'+v).classList.add('on');
+  document.querySelectorAll('.nav-links button[data-view]').forEach(function(b){ b.classList.toggle('on', b.dataset.view===v); });
+  window.scrollTo(0,0);
+  if(v==='proto') requestAnimationFrame(fit);
+}
+document.querySelectorAll('[data-view]').forEach(function(b){ b.addEventListener('click',function(){ showView(b.dataset.view); }); });
+document.querySelectorAll('.idea[data-jump]').forEach(function(b){
+  b.addEventListener('click',function(){ showView('proto'); hostJump(b.dataset.jump); });
+});
+document.querySelectorAll('[data-kwjump]').forEach(function(b){
+  b.addEventListener('click',function(){ showView('proto'); hostJump(b.dataset.kwjump); });
+});
+document.querySelectorAll('[data-demo]').forEach(function(b){ b.addEventListener('click',function(){ showView('proto'); hostDemo(); }); });
+
+applyStatic();
+scr.search.classList.add('is-active');
+syncScreen(); chrome(); paintChips(); paintPanel();
+if(/[?&](open=proto|embed)/.test(location.search)) showView('proto');
+if(!EMBED){ paintSteps(); paintHostPanel(); fit(); }
+else if(window.parent===window){  /* a lone phone (shoot.sh): &lang= and &step= */
+  var lg0=(location.search.match(/[?&]lang=(\w+)/)||[])[1]; if(lg0&&LANGS.indexOf(lg0)>-1) setLang(lg0);
+  var st0=(location.search.match(/[?&]step=(\w+)/)||[])[1]; if(st0&&scr[st0]&&st0!==cur) jump(st0);
+} else tell({ev:'screen',id:cur});
+
+/* ---- ?selfcheck: the page audits its own wiring; asa-check.py reads the result off <body data-selfcheck> ---- */
+function selfCheck(){
+  var E=[], W=[], n=LANGS.length, has=function(o,k){ return Object.prototype.hasOwnProperty.call(o,k); };
+  Object.keys(T).forEach(function(k){ if(!Array.isArray(T[k])||T[k].length!==n) E.push('copy: T["'+k+'"] has '+(Array.isArray(T[k])?T[k].length:'no')+' entries for '+n+' languages'); });
+  ['a','b'].forEach(function(f){ Object.keys(FT[f]||{}).forEach(function(k){
+    if(!Array.isArray(FT[f][k])||FT[f][k].length!==n) E.push('copy: FT.'+f+'["'+k+'"] has '+(FT[f][k]||[]).length+' entries for '+n+' languages');
+    if(!has(T,k)) W.push('copy: FT.'+f+' overrides "'+k+'", which T does not define (the other flow shows the key name)'); }); });
+  document.querySelectorAll('[data-t],[data-th]').forEach(function(el){ var k=el.dataset.t||el.dataset.th; if(!has(T,k)) E.push('copy: data-t "'+k+'" is not in T'); });
+  var ids=Object.keys(scr);
+  ORDER.forEach(function(id){ if(!scr[id]) E.push('screens: ORDER names "'+id+'" but no <section data-id="'+id+'">'); if(!LABEL[id]) E.push('screens: LABEL has no "'+id+'"'); });
+  ids.forEach(function(id){ if(ORDER.indexOf(id)<0) W.push('screens: <section data-id="'+id+'"> is not in ORDER (unreachable from the step bar)'); });
+  if(ORDER[0]!=='search') E.push('screens: the flow must open on the App Store search screen ("search")');
+  var shown={};
+  ORDER.forEach(function(id){ var p=PANEL[id], d=P3[id]||{};
+    if(d.diff){
+      ['a','b'].forEach(function(f){ if(!d[f]||!d[f].hyp) E.push('panel: P3.'+id+' differs by keyword but has no '+f+'.hyp'); });
+      if(!d.t) E.push('panel: P3.'+id+' needs a title (t)');
+      [d.idea,d.idea2].forEach(function(x){ if(x) shown[x]=1; });
+    } else if(!p && id!=='search') E.push('panel: no PANEL.'+id+' and no P3.'+id+'.diff (the panel would be empty)');
+    if(p && !p.ctx){
+      if(!(p.n>=1&&p.n<=5)) E.push('panel: PANEL.'+id+'.n must be an idea number 1-5'); else shown[p.n]=1;
+      if(p.n2) shown[p.n2]=1;
+      if(!/\btry\b/i.test(p.hyp||'')||!/because/.test(p.hyp||'')) W.push('panel: PANEL.'+id+'.hyp should read "Try X, <b>because Y</b>"');
+      var words=(p.hyp||'').replace(/<[^>]+>/g,'').split(/\s+/).length; if(words>60) W.push('panel: PANEL.'+id+'.hyp is '+words+' words (keep it under ~55)');
+      if(!p.out) E.push('panel: PANEL.'+id+' has no potential outcome (out)');
+    }
+  });
+  if(META.ideas.length!==5) E.push('meta: '+META.ideas.length+' ideas -- the page promises five');
+  META.ideas.forEach(function(x,i){ if(x.n!==i+1) E.push('meta: ideas must be numbered 1-5 in order'); if(!scr[x.screen]) E.push('meta: idea '+x.n+' opens "'+x.screen+'", which is not a screen');
+    if(!shown[x.n]) W.push('meta: idea '+x.n+' is not lit on any screen (PANEL n/n2 or P3 idea/idea2)'); });
+  var rows=META.kwRows.map(function(r){ return r.screen; });
+  rows.forEach(function(s){ if(!scr[s]) E.push('meta: kwRows names "'+s+'", which is not a screen'); else if(!(P3[s]&&P3[s].diff)) W.push('meta: kwRows lists "'+s+'" but P3.'+s+' is not diff:true'); });
+  ORDER.forEach(function(id){ if(P3[id]&&P3[id].diff&&rows.indexOf(id)<0) W.push('meta: P3.'+id+' differs by keyword but is missing from kwRows'); });
+  ['a','b'].forEach(function(f){ var k=META.kw[f]||{}; ['q','short','who'].forEach(function(x){ if(!k[x]) E.push('meta: kw.'+f+'.'+x+' is empty'); }); });
+  if(!/^https:\/\/[\w-]+\.github\.io\/[\w.-]+\/$/.test(META.liveUrl||'')) W.push('meta: liveUrl should be https://<owner>.github.io/<repo>/ (publish-gh.sh refuses a mismatch)');
+  document.body.setAttribute('data-selfcheck',JSON.stringify({errors:E,warnings:W}));
+  return {errors:E,warnings:W};
+}
+if(!EMBED && /[?&]selfcheck/.test(location.search)) selfCheck();
+</script>
+</body>
+</html>
